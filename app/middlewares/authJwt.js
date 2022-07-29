@@ -28,9 +28,11 @@ verifyTokenPublic = (req, res, next) => {
 
 
   jwt.verify(token, config.secret, (err, decoded) => {
-
-    req.userId = decoded.id; 
-    next();
+    if(decoded !== undefined){
+      req.userId = decoded.id; 
+      return next();
+    }
+    return next();
   });
 };
 

@@ -6,35 +6,40 @@ const Apartment = db.apartment;
 exports.getAllApartments = async (req, res) => {
   let user = false;
   if(req.userId) {
-    user = await User.findById(req.userId).populate("roles", "-__v");
-  }
-
-  
+    //user = await User.findById(req.userId).populate("roles", "-__v");
+    user = {
+      id: req.userId,
+      username: req.userUsername
+    }
+  } 
 
   const apartments = await Apartment.find().sort({
       price: 1
   });
   
- // console.log("los apartamentos en la bbdd son: ", apartments); //ok
-  //return apartments;
-  /* res.render("/" ,{
-      document
-  }) */
-
   res.status(200).render('index.ejs', {
     user,
     apartments
   })
-
 }
 
+
 exports.getAddApartment = async (req, res) => {
-  const user = await User.findById(req.userId).populate("roles", "-__v");
+  let user = false;
+  if(req.userId) {
+    //user = await User.findById(req.userId).populate("roles", "-__v");
+    user = {
+      id: req.userId,
+      username: req.userUsername
+    }
+  } 
+ // const user = await User.findById(req.userId).populate("roles", "-__v");
   res.status(200).render('new-apartment.ejs', {
     user,
     apartment: {}
   })
 };
+
 
 exports.postAddApartment = async (req, res) => {
   const {
@@ -174,8 +179,17 @@ exports.postAddApartment = async (req, res) => {
 
 }
 
+
 exports.getEditApartment = async (req, res) => {
-  const user = await User.findById(req.userId).populate("roles", "-__v");
+  let user = false;
+  if(req.userId) {
+    //user = await User.findById(req.userId).populate("roles", "-__v");
+    user = {
+      id: req.userId,
+      username: req.userUsername
+    }
+  } 
+  //const user = await User.findById(req.userId).populate("roles", "-__v");
   const apartment = await Apartment.findById(req.params.apartment);
   console.log(apartment);
   res.status(200).render('new-apartment.ejs', {
@@ -187,10 +201,12 @@ exports.getEditApartment = async (req, res) => {
 exports.getViewApartment = async (req, res) => {
   let user = false;
   if(req.userId) {
-    //console.log("usuario: " + req.userId);
-
-    user = await User.findById(req.userId).populate("roles", "-__v");
-  }
+    //user = await User.findById(req.userId).populate("roles", "-__v");
+    user = {
+      id: req.userId,
+      username: req.userUsername
+    }
+  } 
 
   const apartment = await Apartment.findById(req.params.apartment);
   //console.log(apartment)

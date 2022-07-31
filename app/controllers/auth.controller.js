@@ -78,7 +78,7 @@ exports.signin = (req, res) => {
     username: req.body.username,
   })
     .populate("roles", "-__v")
-    .exec(async (err, user) => {  //async (consultar Oscar)
+    .exec(async (err, user) => {  
       if (err) {
         res.status(500).send({ message: err });
         return;
@@ -97,7 +97,7 @@ exports.signin = (req, res) => {
         return res.status(401).send({ message: "Invalid Password!" });
       }
 
-      var token = jwt.sign({ id: user.id }, config.secret, {
+      var token = jwt.sign({ id: user.id, username: user.username }, config.secret, {
         expiresIn: 86400, // 24 hours
       });
 
@@ -107,7 +107,9 @@ exports.signin = (req, res) => {
         authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
       }
 
+      //console.log("user: ", user);
       req.session.token = token;
+      //req.locals.user = user;
 
       //consultar OSCAR!!!
       const apartments = await Apartment.find().sort({
@@ -124,17 +126,8 @@ exports.signin = (req, res) => {
 exports.signout = async (req, res) => {
   try {
     req.session = null;
-    let user = false;
 
-    //consultar OSCAR!!!
-    const apartments = await Apartment.find().sort({
-      price: 1
-  });
-
-    return res.render('index.ejs', {
-      user,
-      apartments
-    });
+    res.redirect("/");
   } catch (err) {
     this.next(err);
   }

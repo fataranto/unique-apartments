@@ -20,6 +20,34 @@ app.set('view engine', 'ejs');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+/* 
+// todavia no esta funcionando, con esto intento guardar los datos de los usuarios para pasárselos a la vista
+
+var requestUser = async function(req, res, next) {
+  if(decoded !== undefined){
+    req.userId = decoded.id; 
+    req.user = await User.findById(req.userId).populate("roles","-__v");
+    
+    next();
+  };
+}
+
+app.use(requestUser);
+*/
+
+/* app.use( function (req, res, next) {// Make `user` and `authenticated` available in templates
+
+//saber si algún usuario está conectado y obtener su nombre y cargarlo en el menú de la vista
+ 
+}
+); */
+
+
+// fin de la función para guardar los datos de los usuarios
+
+ 
+
 var corsOptions = {
   origin: "http://localhost:8081"
 };
@@ -85,7 +113,7 @@ require("./app/routes/user.routes")(app);
 require("./app/routes/apartment.routes")(app);
 
 // set port, listen for requests
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });

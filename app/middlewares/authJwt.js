@@ -16,6 +16,7 @@ verifyToken = (req, res, next) => {
       return res.status(401).send({ message: "Unauthorized!" });
     }
     req.userId = decoded.id; //guardo el id del usuario (es el identificador único de la colección users)
+    req.userUsername = decoded.username; //guardo el username del usuario
     next();
   });
 };
@@ -26,10 +27,10 @@ verifyTokenPublic = (req, res, next) => {
     return next()
   }
 
-
   jwt.verify(token, config.secret, (err, decoded) => {
     if(decoded !== undefined){
       req.userId = decoded.id; 
+      req.userUsername = decoded.username;
       return next();
     }
     return next();

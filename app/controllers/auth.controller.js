@@ -85,7 +85,7 @@ exports.signin = (req, res) => {
       }
 
       if (!user) {
-        return res.status(404).send({ message: "User Not found." });
+        return res.status(404).json({ message: "User Not found." });
       }
 
       var passwordIsValid = bcrypt.compareSync(
@@ -113,13 +113,6 @@ exports.signin = (req, res) => {
 
       res.redirect("/");
 
-      //consultar OSCAR!!!
-/*       const apartments = await Apartment.find().sort({ price: 1 });
-
-      res.status(200).render("index.ejs",{
-        user,
-        apartments
-      }); */
     });
 };
 

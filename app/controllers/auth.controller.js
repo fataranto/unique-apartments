@@ -80,7 +80,7 @@ exports.signin = (req, res) => {
     .populate("roles", "-__v")
     .exec(async (err, user) => {  
       if (err) {
-        res.status(500).send({ message: err });
+        res.status(500).json({ message: err });
         return;
       }
 
@@ -94,7 +94,7 @@ exports.signin = (req, res) => {
       );
 
       if (!passwordIsValid) {
-        return res.status(401).send({ message: "Invalid Password!" });
+        return res.status(401).json({ message: "Invalid Password!" });
       }
 
       var token = jwt.sign({ id: user.id, username: user.username }, config.secret, {
@@ -107,11 +107,14 @@ exports.signin = (req, res) => {
         authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
       }
 
-      //console.log("user: ", user);
       req.session.token = token;
-      //req.locals.user = user;
 
-      res.redirect("/");
+      res.status(200).json({
+        message: "User successfully Logged in",
+        user: user.id,
+      });
+
+      //res.redirect("/");
 
     });
 };

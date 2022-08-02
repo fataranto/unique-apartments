@@ -92,8 +92,7 @@
 
               <!-- Password input -->
               <div class="form-outline mb-4">
-                <input type="password" class="form-control" name="password" aria-label="Password"
-                  required />
+                <input type="password" class="form-control" name="password" aria-label="Password" required />
                 <label class="form-label" for="form1Example2">Password</label>
               </div>
 
@@ -140,7 +139,8 @@
 
         <div class="container">
           <div class="row justify-content-center">
-            <form id="loginForm" class="bg-white  rounded-5 shadow-5-strong p-2" onsubmit="return setAction(this, event)">
+            <form id="loginForm" class="bg-white  rounded-5 shadow-5-strong p-2"
+              onsubmit="return setAction(this, event)">
               <!-- User input -->
               <div class="form-outline mb-4">
 
@@ -150,8 +150,7 @@
 
               <!-- Password input -->
               <div class="form-outline mb-4">
-                <input type="password" class="form-control" name="password" aria-label="Password"
-                  required />
+                <input type="password" class="form-control" name="password" aria-label="Password" required />
 
                 <label class="form-label" for="form1Example2">Password</label>
               </div>
@@ -174,7 +173,7 @@
                 </div>
               </div>
 
-              <div class="alert alert-danger" role="alert"></div>
+              <div class="alert alert-danger d-none" role="alert"></div>
 
               <!-- Submit button -->
               <div class="modal-footer">
@@ -199,7 +198,9 @@
 <script>
   async function setAction(form, event) {
     event.preventDefault();
+    try {
       const display = document.querySelector('.alert-danger');
+      display.innerHTML = '';
       const username = form.querySelector('input[name="username"]').value;
       const password = form.querySelector('input[name="password"]').value;
 
@@ -219,11 +220,22 @@
         headers: headers,
         body: body
       };
-      const res = await fetch(url, options)
-      .then(res => res.json())
-      .catch(error => console.error('Error:', error))
-      .then(response => console.log('Success:', response));
+      const res = await fetch(url, options);
 
+      const json = await res.json();
+      console.log(json);
 
-}
+      if (res.status === 400 || res.status === 401 || res.status === 404 || res.status === 500) {
+
+        display.classList.remove('d-none');
+        display.innerHTML = json.message;
+        return;
+      }
+
+      location.assign('/');
+
+    } catch (e) {
+      console.log(e.message);
+    }
+  }
 </script>

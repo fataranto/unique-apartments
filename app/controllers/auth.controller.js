@@ -111,15 +111,15 @@ exports.signin = (req, res) => {
       req.session.token = token;
       //req.locals.user = user;
 
+      res.redirect("/");
+
       //consultar OSCAR!!!
-      const apartments = await Apartment.find().sort({
-        price: 1
-    });
+/*       const apartments = await Apartment.find().sort({ price: 1 });
 
       res.status(200).render("index.ejs",{
         user,
         apartments
-      });
+      }); */
     });
 };
 

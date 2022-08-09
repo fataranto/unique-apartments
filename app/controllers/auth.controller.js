@@ -19,7 +19,7 @@ exports.signup = (req, res) => {
 
   user.save((err, user) => {
     if (err) {
-      res.status(500).send({ message: err });
+      res.status(500).json({ message: err });
       return;
     }
 
@@ -30,18 +30,21 @@ exports.signup = (req, res) => {
         },
         (err, roles) => {
           if (err) {
-            res.status(500).send({ message: err });
+            res.status(500).json({ message: err });
             return;
           }
 
           user.roles = roles.map((role) => role._id);
           user.save((err) => {
             if (err) {
-              res.status(500).send({ message: err });
+              res.status(500).json({ message: err });
               return;
             }
-
-            res.redirect("/");
+            res.status(200).json({
+              message: "User successfully registered",
+              user: user.id,
+            });
+            //res.redirect("/");
 
           });
         }
@@ -49,21 +52,26 @@ exports.signup = (req, res) => {
     } else {
       Role.findOne({ name: "user" }, (err, role) => {
         if (err) {
-          res.status(500).send({ message: err });
+          res.status(500).json({ message: err });
           return;
         }
 
         user.roles = [role._id];
         user.save((err) => {
           if (err) {
-            res.status(500).send({ message: err });
+            res.status(500).json({ message: err });
             return;
           }
 
-          console.log("user 2: ", user);
+          res.status(200).json({
+            message: "User successfully registered",
+            user: user.id,
+          });
+
+          //console.log("user 2: ", user);
           //res.send({ message: "User was registered successfully!" });
 
-          res.redirect("/");
+         // res.redirect("/");
           
         });
       });

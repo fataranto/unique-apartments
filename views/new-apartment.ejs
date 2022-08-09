@@ -82,7 +82,7 @@
                         <label for="availablefrom">Available to</label>
                         <input type="date" id="availableto" class="form-control" name="availableto"
                             <% if (apartment.availableto) { %>
-                            value="<%= apartment.availablefrom.toLocaleDateString('en-CA') %>" <% } %> required>
+                            value="<%= apartment.availableto.toLocaleDateString('en-CA') %>" <% } %> required>
                     </div>
                     <div class="col-md-1">
                         <label for="capacity">Capacity</label>
@@ -216,24 +216,52 @@
             <h5 class="modal-title mt-3">Location</h5>
         </div>
         <div class="form-group row g-3">
-            <div class="col-md-5">
-                <label for="city">City
-                    <input type="text" id="city" name="city" class="form-control" required>
-                </label>
-            </div>
             <div class="col-md-3">
                 <label for="state">State
-                    <input type="text" id="state" name="state" class="form-control" required>
+                    <select class="form-control" id="state" name="state">
+                        <option value="<% if (apartment.location) { %>
+                            <%= apartment.location.state %>
+                        <% } %>" 
+                        disabled selected>
+                            <% if (apartment.location) { %>
+                                <%= apartment.location.state %>
+                            <% } else { %>
+                                ---
+                            <% } %>
+                            </option>
+                        
+                      </select>
+                
+                </label>
+            </div>
+            <div class="col-md-5">
+                <label for="city">City
+                    <select class="form-control" id="city" name="city">
+                        <option value="<% if (apartment.location) { %>
+                            <%= apartment.location.city %>
+                        <% } %>" 
+                        disabled selected>
+                            <% if (apartment.location) { %>
+                                <%= apartment.location.city %>
+                            <% } else { %>
+                                ---
+                            <% } %>
+                            </option>
+                        
+                      </select>
+                
                 </label>
             </div>
             <div class="col-md-2">
                 <label for="lat">Latitude
-                    <input type="text" id="lat" name="lat" class="form-control" required>
+                    <input class="form-control" id="lat" type="text"  name="lat" required <% if(apartment.location) { %>
+                        value="<%= apartment.location.lat %>" <% } %> >
                 </label>
             </div>
             <div class="col-md-2">
                 <label for="long">Longitude
-                    <input type="text" id="long" name="long" class="form-control" required>
+                    <input class="form-control" id="long" type="text"  name="long" required <% if(apartment.location) { %>
+                        value="<%= apartment.location.long %>" <% } %> >
                 </label>
             </div>
         </div>
@@ -246,20 +274,37 @@
         <div class="form-group row g-3">
             <div class="col-md-8">
                 <label for="rules">Description
-                    <textarea id="rules" name="rules" class="form-control" required></textarea>
+                    <textarea id="rules" name="rules" class="form-control" required><% if (apartment.rules) { %><%= apartment.rules.rules %><% } %></textarea>
                     <small id="rulesHelp" class="form-text text-muted">Please tell your guests the general rules
                         of your home</small>
                 </label>
             </div>
 
             <div class="form-check col-md-2">
-                <input class="form-check-input" type="checkbox" value="true" id="smoking" name="smoking">
+                <input class="form-check-input" type="checkbox" value="true" id="smoking" name="smoking"
+                
+                <% if (apartment.rules) { %>
+                    <% if (apartment.rules.smoking) { %>
+                        checked
+                    <% } %>
+                <% } %>
+
+                >
                 <label class="form-check-label" for="smoking">
                     Smoking
                 </label>
             </div>
             <div class="form-check col-md-2">
-                <input class="form-check-input" type="checkbox" value="true" id="pets" name="pets" checked>
+                <input class="form-check-input" type="checkbox" value="true" id="pets" name="pets" 
+
+                <% if (apartment.rules) { %>
+                    <% if (apartment.rules.pets) { %>
+                        checked
+                    <% } %>
+                <% } %>
+
+                
+                >
                 <label class="form-check-label" for="pets">
                     Pets
                 </label>
@@ -278,28 +323,61 @@
         </div>
         <div class="form-group row g-3">
             <div class="form-check col-md-2">
-                <input class="form-check-input" type="checkbox" value="true" id="wifi" name="wifi">
+                <input class="form-check-input" type="checkbox" value="true" id="wifi" name="wifi"
+                <% if (apartment.amenities) { %>
+                    <% if (apartment.amenities.general.wifi) { %>
+                        checked
+                    <% } %>
+                <% } %>
+
+                
+                >
                 <label class="form-check-label" for="wifi">
                     Wifi
                 </label>
             </div>
 
             <div class="form-check col-md-2">
-                <input class="form-check-input" type="checkbox" value="true" id="tv" name="tv">
+                <input class="form-check-input" type="checkbox" value="true" id="tv" name="tv"
+                
+                <% if (apartment.amenities) { %>
+                    <% if (apartment.amenities.general.tv) { %>
+                        checked
+                    <% } %>
+                <% } %>
+
+
+                >
                 <label class="form-check-label" for="tv">
                     TV
                 </label>
             </div>
 
             <div class="form-check col-md-2">
-                <input class="form-check-input" type="checkbox" value="true" id="ac" name="ac">
+                <input class="form-check-input" type="checkbox" value="true" id="ac" name="ac"
+                <% if (apartment.amenities) { %>
+                    <% if (apartment.amenities.general.ac) { %>
+                        checked
+                    <% } %>
+                        
+                <% } %>
+
+                
+                
+                >
                 <label class="form-check-label" for="ac">
                     AC
                 </label>
             </div>
 
             <div class="form-check col-md-2">
-                <input class="form-check-input" type="checkbox" value="true" id="heating" name="heating">
+                <input class="form-check-input" type="checkbox" value="true" id="heating" name="heating"
+                <% if (apartment.amenities) { %>
+                    <% if (apartment.amenities.general.heating) { %>
+                        checked
+                    <% } %>
+                <% } %> 
+                >
                 <label class="form-check-label" for="heating">
                     Heating
                 </label>
@@ -307,7 +385,14 @@
 
 
             <div class="form-check col-md-2">
-                <input class="form-check-input" type="checkbox" value="true" id="parking" name="parking">
+                <input class="form-check-input" type="checkbox" value="true" id="parking" name="parking"
+                <% if (apartment.amenities) { %>
+                    <% if (apartment.amenities.general.parking) { %>
+                        checked
+                    <% } %>
+                <% } %>
+                
+                >
                 <label class="form-check-label" for="parking">
                     Parking
                 </label>
@@ -315,7 +400,14 @@
 
 
             <div class="form-check col-md-2">
-                <input class="form-check-input" type="checkbox" value="true" id="adapted" name="adapted">
+                <input class="form-check-input" type="checkbox" value="true" id="adapted" name="adapted"
+                <% if (apartment.amenities) { %>
+                    <% if (apartment.amenities.general.adapted) { %>
+                        checked
+                    <% } %>
+                <% } %>
+
+                >
                 <label class="form-check-label" for="adapted">
                     Adapted
                 </label>
@@ -332,28 +424,54 @@
         </div>
         <div class="form-group row g-3">
             <div class="form-check col-md-2">
-                <input class="form-check-input" type="checkbox" value="true" id="hairdryer" name="hairdryer">
+                <input class="form-check-input" type="checkbox" value="true" id="hairdryer" name="hairdryer"
+                <% if (apartment.amenities) { %>
+                    <% if (apartment.amenities.bathroom.hairdryer) { %>
+                        checked
+                    <% } %>
+                <% } %>  
+
+                >
                 <label class="form-check-label" for="hairdryer">
                     Hairdryer
                 </label>
             </div>
 
             <div class="form-check col-md-2">
-                <input class="form-check-input" type="checkbox" value="true" id="shampoo" name="shampoo">
+                <input class="form-check-input" type="checkbox" value="true" id="shampoo" name="shampoo"
+                <% if (apartment.amenities) { %>
+                    <% if (apartment.amenities.bathroom.shampoo) { %>
+                        checked
+                    <% } %>
+                <% } %>
+
+                >
                 <label class="form-check-label" for="shampoo">
                     Shampoo
                 </label>
             </div>
 
             <div class="form-check col-md-2">
-                <input class="form-check-input" type="checkbox" value="true" id="soap" name="soap">
+                <input class="form-check-input" type="checkbox" value="true" id="soap" name="soap"
+                <% if (apartment.amenities) { %>
+                    <% if (apartment.amenities.bathroom.soap) { %>
+                        checked
+                    <% } %>
+                <% } %> 
+                >
                 <label class="form-check-label" for="soap">
                     Soap
                 </label>
             </div>
 
             <div class="form-check col-md-2">
-                <input class="form-check-input" type="checkbox" value="true" id="hotwater" name="hotwater">
+                <input class="form-check-input" type="checkbox" value="true" id="hotwater" name="hotwater"
+                <% if (apartment.amenities) { %>
+                    <% if (apartment.amenities.bathroom.hotwater) { %>
+                        checked
+                    <% } %>
+                <% } %> 
+                >
                 <label class="form-check-label" for="hotwater">
                     Hotwater
                 </label>
@@ -372,28 +490,52 @@
         </div>
         <div class="form-group row g-3">
             <div class="form-check col-md-2">
-                <input class="form-check-input" type="checkbox" value="true" id="essentials" name="essentials">
+                <input class="form-check-input" type="checkbox" value="true" id="essentials" name="essentials"
+                <% if (apartment.amenities) { %>
+                    <% if (apartment.amenities.bedroom.essentials) { %>
+                        checked
+                    <% } %>
+                <% } %> 
+                >
                 <label class="form-check-label" for="essentials">
                     Essentials
                 </label>
             </div>
 
             <div class="form-check col-md-2">
-                <input class="form-check-input" type="checkbox" value="true" id="hangers" name="hangers">
+                <input class="form-check-input" type="checkbox" value="true" id="hangers" name="hangers"
+                <% if (apartment.amenities) { %>
+                    <% if (apartment.amenities.bedroom.hangers) { %>
+                        checked
+                    <% } %>
+                <% } %> 
+                >
                 <label class="form-check-label" for="hangers">
                     Hangers
                 </label>
             </div>
 
             <div class="form-check col-md-2">
-                <input class="form-check-input" type="checkbox" value="true" id="bedlinen" name="bedlinen">
+                <input class="form-check-input" type="checkbox" value="true" id="bedlinen" name="bedlinen"
+                <% if (apartment.amenities) { %>
+                    <% if (apartment.amenities.bedroom.bedlinen) { %>
+                        checked
+                    <% } %>
+                <% } %> 
+                >
                 <label class="form-check-label" for="bedlinen">
                     Bedlinen
                 </label>
             </div>
 
             <div class="form-check col-md-2">
-                <input class="form-check-input" type="checkbox" value="true" id="wardrobe" name="wardrobe">
+                <input class="form-check-input" type="checkbox" value="true" id="wardrobe" name="wardrobe"
+                <% if (apartment.amenities) { %>
+                    <% if (apartment.amenities.bedroom.wardrobe) { %>
+                        checked
+                    <% } %>
+                <% } %> 
+                >
                 <label class="form-check-label" for="wardrobe">
                     Wardrobe
                 </label>
@@ -407,28 +549,52 @@
         </div>
         <div class="form-group row g-3">
             <div class="form-check col-md-2">
-                <input class="form-check-input" type="checkbox" value="true" id="stove" name="stove">
+                <input class="form-check-input" type="checkbox" value="true" id="stove" name="stove"
+                <% if (apartment.amenities) { %>
+                    <% if (apartment.amenities.kitchen.stove) { %>
+                        checked
+                    <% } %>
+                <% } %> 
+                >
                 <label class="form-check-label" for="stove">
                     Stove
                 </label>
             </div>
 
             <div class="form-check col-md-2">
-                <input class="form-check-input" type="checkbox" value="true" id="fridge" name="fridge">
+                <input class="form-check-input" type="checkbox" value="true" id="fridge" name="fridge"
+                <% if (apartment.amenities) { %>
+                    <% if (apartment.amenities.kitchen.fridge) { %>
+                        checked
+                    <% } %>
+                <% } %> 
+                >
                 <label class="form-check-label" for="fridge">
                     Fridge
                 </label>
             </div>
 
             <div class="form-check col-md-2">
-                <input class="form-check-input" type="checkbox" value="true" id="microwave" name="microwave">
+                <input class="form-check-input" type="checkbox" value="true" id="microwave" name="microwave"
+                <% if (apartment.amenities) { %>
+                    <% if (apartment.amenities.kitchen.microwave) { %>
+                        checked
+                    <% } %>
+                <% } %> 
+                >
                 <label class="form-check-label" for="microwave">
                     Microwave
                 </label>
             </div>
 
             <div class="form-check col-md-2">
-                <input class="form-check-input" type="checkbox" value="true" id="tableware" name="tableware">
+                <input class="form-check-input" type="checkbox" value="true" id="tableware" name="tableware"
+                <% if (apartment.amenities) { %>
+                    <% if (apartment.amenities.kitchen.tableware) { %>
+                        checked
+                    <% } %>
+                <% } %> 
+                >
                 <label class="form-check-label" for="tableware">
                     Tableware
                 </label>
@@ -436,7 +602,13 @@
 
 
             <div class="form-check col-md-2">
-                <input class="form-check-input" type="checkbox" value="true" id="coffeemaker" name="coffeemaker">
+                <input class="form-check-input" type="checkbox" value="true" id="coffeemaker" name="coffeemaker"
+                <% if (apartment.amenities) { %>
+                    <% if (apartment.amenities.kitchen.coffeemaker) { %>
+                        checked
+                    <% } %>
+                <% } %> 
+                >
                 <label class="form-check-label" for="coffeemaker">
                     Coffee Maker
                 </label>
@@ -444,7 +616,13 @@
 
 
             <div class="form-check col-md-2">
-                <input class="form-check-input" type="checkbox" value="true" id="toaster" name="toaster">
+                <input class="form-check-input" type="checkbox" value="true" id="toaster" name="toaster"
+                <% if (apartment.amenities) { %>
+                    <% if (apartment.amenities.kitchen.toaster) { %>
+                        checked
+                    <% } %>
+                <% } %> 
+                >
                 <label class="form-check-label" for="toaster">
                     Toaster
                 </label>
@@ -459,28 +637,52 @@
         </div>
         <div class="form-group row g-3">
             <div class="form-check col-md-2">
-                <input class="form-check-input" type="checkbox" value="true" id="balcony" name="balcony">
+                <input class="form-check-input" type="checkbox" value="true" id="balcony" name="balcony"
+                <% if (apartment.amenities) { %>
+                    <% if (apartment.amenities.outdoor.balcony) { %>
+                        checked
+                    <% } %>
+                <% } %> 
+                >
                 <label class="form-check-label" for="balcony">
                     Balcony
                 </label>
             </div>
 
             <div class="form-check col-md-2">
-                <input class="form-check-input" type="checkbox" value="true" id="garden" name="garden">
+                <input class="form-check-input" type="checkbox" value="true" id="garden" name="garden"
+                <% if (apartment.amenities) { %>
+                    <% if (apartment.amenities.outdoor.garden) { %>
+                        checked
+                    <% } %>
+                <% } %> 
+                >
                 <label class="form-check-label" for="garden">
                     Garden
                 </label>
             </div>
 
             <div class="form-check col-md-2">
-                <input class="form-check-input" type="checkbox" value="true" id="pool" name="pool">
+                <input class="form-check-input" type="checkbox" value="true" id="pool" name="pool"
+                <% if (apartment.amenities) { %>
+                    <% if (apartment.amenities.outdoor.pool) { %>
+                        checked
+                    <% } %>
+                <% } %> 
+                >
                 <label class="form-check-label" for="pool">
                     Swimming-pool
                 </label>
             </div>
 
             <div class="form-check col-md-2">
-                <input class="form-check-input" type="checkbox" value="true" id="barbicue" name="barbicue">
+                <input class="form-check-input" type="checkbox" value="true" id="barbicue" name="barbicue"
+                <% if (apartment.amenities) { %>
+                    <% if (apartment.amenities.outdoor.barbicue) { %>
+                        checked
+                    <% } %>
+                <% } %> 
+                >
                 <label class="form-check-label" for="barbicue">
                     Barbicue
                 </label>
@@ -488,7 +690,13 @@
 
 
             <div class="form-check col-md-2">
-                <input class="form-check-input" type="checkbox" value="true" id="digningarea" name="digningarea">
+                <input class="form-check-input" type="checkbox" value="true" id="digningarea" name="digningarea"
+                <% if (apartment.amenities) { %>
+                    <% if (apartment.amenities.outdoor.digningarea) { %>
+                        checked
+                    <% } %>
+                <% } %> 
+                >
                 <label class="form-check-label" for="digningarea">
                     Digning Area
                 </label>
@@ -516,6 +724,7 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/scripts.js"></script>
 
 
 

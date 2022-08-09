@@ -1,0 +1,926 @@
+[
+ {
+   "state": 25,
+   "city": "Abella de la Conca"
+ },
+ {
+   "state": 25,
+   "city": "Àger"
+ },
+ {
+   "state": 25,
+   "city": "Agramunt"
+ },
+ {
+   "state": 25,
+   "city": "Aitona"
+ },
+ {
+   "state": 25,
+   "city": "Alamús, Els"
+ },
+ {
+   "state": 25,
+   "city": "Alàs i Cerc"
+ },
+ {
+   "state": 25,
+   "city": "Albagés, L'"
+ },
+ {
+   "state": 25,
+   "city": "Albatàrrec"
+ },
+ {
+   "state": 25,
+   "city": "Albesa"
+ },
+ {
+   "state": 25,
+   "city": "Albi, L'"
+ },
+ {
+   "state": 25,
+   "city": "Alcanó"
+ },
+ {
+   "state": 25,
+   "city": "Alcarràs"
+ },
+ {
+   "state": 25,
+   "city": "Alcoletge"
+ },
+ {
+   "state": 25,
+   "city": "Alfarràs"
+ },
+ {
+   "state": 25,
+   "city": "Alfés"
+ },
+ {
+   "state": 25,
+   "city": "Algerri"
+ },
+ {
+   "state": 25,
+   "city": "Alguaire"
+ },
+ {
+   "state": 25,
+   "city": "Alins"
+ },
+ {
+   "state": 25,
+   "city": "Almacelles"
+ },
+ {
+   "state": 25,
+   "city": "Almatret"
+ },
+ {
+   "state": 25,
+   "city": "Almenar"
+ },
+ {
+   "state": 25,
+   "city": "Alòs de Balaguer"
+ },
+ {
+   "state": 25,
+   "city": "Alpicat"
+ },
+ {
+   "state": 25,
+   "city": "Alt Àneu"
+ },
+ {
+   "state": 25,
+   "city": "Anglesola"
+ },
+ {
+   "state": 25,
+   "city": "Arbeca"
+ },
+ {
+   "state": 25,
+   "city": "Arres"
+ },
+ {
+   "state": 25,
+   "city": "Arsèguel"
+ },
+ {
+   "state": 25,
+   "city": "Artesa de Lleida"
+ },
+ {
+   "state": 25,
+   "city": "Artesa de Segre"
+ },
+ {
+   "state": 25,
+   "city": "Aspa"
+ },
+ {
+   "state": 25,
+   "city": "Avellanes i Santa Linya, Les"
+ },
+ {
+   "state": 25,
+   "city": "Baix Pallars"
+ },
+ {
+   "state": 25,
+   "city": "Balaguer"
+ },
+ {
+   "state": 25,
+   "city": "Barbens"
+ },
+ {
+   "state": 25,
+   "city": "Baronia de Rialb, La"
+ },
+ {
+   "state": 25,
+   "city": "Bassella"
+ },
+ {
+   "state": 25,
+   "city": "Bausen"
+ },
+ {
+   "state": 25,
+   "city": "Belianes"
+ },
+ {
+   "state": 25,
+   "city": "Bellaguarda"
+ },
+ {
+   "state": 25,
+   "city": "Bellcaire d'Urgell"
+ },
+ {
+   "state": 25,
+   "city": "Bell-lloc d'Urgell"
+ },
+ {
+   "state": 25,
+   "city": "Bellmunt d'Urgell"
+ },
+ {
+   "state": 25,
+   "city": "Bellpuig"
+ },
+ {
+   "state": 25,
+   "city": "Bellver de Cerdanya"
+ },
+ {
+   "state": 25,
+   "city": "Bellvís"
+ },
+ {
+   "state": 25,
+   "city": "Benavent de Segrià"
+ },
+ {
+   "state": 25,
+   "city": "Biosca"
+ },
+ {
+   "state": 25,
+   "city": "Bòrdes, Es"
+ },
+ {
+   "state": 25,
+   "city": "Borges Blanques, Les"
+ },
+ {
+   "state": 25,
+   "city": "Bossòst"
+ },
+ {
+   "state": 25,
+   "city": "Bovera"
+ },
+ {
+   "state": 25,
+   "city": "Cabanabona"
+ },
+ {
+   "state": 25,
+   "city": "Cabó"
+ },
+ {
+   "state": 25,
+   "city": "Camarasa"
+ },
+ {
+   "state": 25,
+   "city": "Canejan"
+ },
+ {
+   "state": 25,
+   "city": "Castell de Mur"
+ },
+ {
+   "state": 25,
+   "city": "Castellar de la Ribera"
+ },
+ {
+   "state": 25,
+   "city": "Castelldans"
+ },
+ {
+   "state": 25,
+   "city": "Castellnou de Seana"
+ },
+ {
+   "state": 25,
+   "city": "Castelló de Farfanya"
+ },
+ {
+   "state": 25,
+   "city": "Castellserà"
+ },
+ {
+   "state": 25,
+   "city": "Cava"
+ },
+ {
+   "state": 25,
+   "city": "Cervera"
+ },
+ {
+   "state": 25,
+   "city": "Cervià de les Garrigues"
+ },
+ {
+   "state": 25,
+   "city": "Ciutadilla"
+ },
+ {
+   "state": 25,
+   "city": "Clariana de Cardener"
+ },
+ {
+   "state": 25,
+   "city": "Cogul, El"
+ },
+ {
+   "state": 25,
+   "city": "Coll de Nargó"
+ },
+ {
+   "state": 25,
+   "city": "Coma i la Pedra, La"
+ },
+ {
+   "state": 25,
+   "city": "Conca de Dalt"
+ },
+ {
+   "state": 25,
+   "city": "Corbins"
+ },
+ {
+   "state": 25,
+   "city": "Cubells"
+ },
+ {
+   "state": 25,
+   "city": "Espluga Calba, L'"
+ },
+ {
+   "state": 25,
+   "city": "Espot"
+ },
+ {
+   "state": 25,
+   "city": "Estamariu"
+ },
+ {
+   "state": 25,
+   "city": "Estaràs"
+ },
+ {
+   "state": 25,
+   "city": "Esterri d'Àneu"
+ },
+ {
+   "state": 25,
+   "city": "Esterri de Cardós"
+ },
+ {
+   "state": 25,
+   "city": "Farrera"
+ },
+ {
+   "state": 25,
+   "city": "Fígols i Alinyà"
+ },
+ {
+   "state": 25,
+   "city": "Floresta, La"
+ },
+ {
+   "state": 25,
+   "city": "Fondarella"
+ },
+ {
+   "state": 25,
+   "city": "Foradada"
+ },
+ {
+   "state": 25,
+   "city": "Fuliola, La"
+ },
+ {
+   "state": 25,
+   "city": "Fulleda"
+ },
+ {
+   "state": 25,
+   "city": "Gavet de la Conca"
+ },
+ {
+   "state": 25,
+   "city": "Gimenells i el Pla de la Font"
+ },
+ {
+   "state": 25,
+   "city": "Golmés"
+ },
+ {
+   "state": 25,
+   "city": "Gósol"
+ },
+ {
+   "state": 25,
+   "city": "Granadella, La"
+ },
+ {
+   "state": 25,
+   "city": "Granja d'Escarp, La"
+ },
+ {
+   "state": 25,
+   "city": "Granyanella"
+ },
+ {
+   "state": 25,
+   "city": "Granyena de les Garrigues"
+ },
+ {
+   "state": 25,
+   "city": "Granyena de Segarra"
+ },
+ {
+   "state": 25,
+   "city": "Guimerà"
+ },
+ {
+   "state": 25,
+   "city": "Guingueta d'Àneu, La"
+ },
+ {
+   "state": 25,
+   "city": "Guissona"
+ },
+ {
+   "state": 25,
+   "city": "Guixers"
+ },
+ {
+   "state": 25,
+   "city": "Isona i Conca Dellà"
+ },
+ {
+   "state": 25,
+   "city": "Ivars de Noguera"
+ },
+ {
+   "state": 25,
+   "city": "Ivars d'Urgell"
+ },
+ {
+   "state": 25,
+   "city": "Ivorra"
+ },
+ {
+   "state": 25,
+   "city": "Josa i Tuixén"
+ },
+ {
+   "state": 25,
+   "city": "Juncosa"
+ },
+ {
+   "state": 25,
+   "city": "Juneda"
+ },
+ {
+   "state": 25,
+   "city": "Les"
+ },
+ {
+   "state": 25,
+   "city": "Linyola"
+ },
+ {
+   "state": 25,
+   "city": "Lladorre"
+ },
+ {
+   "state": 25,
+   "city": "Lladurs"
+ },
+ {
+   "state": 25,
+   "city": "Llardecans"
+ },
+ {
+   "state": 25,
+   "city": "Llavorsí"
+ },
+ {
+   "state": 25,
+   "city": "Lleida"
+ },
+ {
+   "state": 25,
+   "city": "Lles de Cerdanya"
+ },
+ {
+   "state": 25,
+   "city": "Llimiana"
+ },
+ {
+   "state": 25,
+   "city": "Llobera"
+ },
+ {
+   "state": 25,
+   "city": "Maials"
+ },
+ {
+   "state": 25,
+   "city": "Maldà"
+ },
+ {
+   "state": 25,
+   "city": "Massalcoreig"
+ },
+ {
+   "state": 25,
+   "city": "Massoteres"
+ },
+ {
+   "state": 25,
+   "city": "Menàrguens"
+ },
+ {
+   "state": 25,
+   "city": "Miralcamp"
+ },
+ {
+   "state": 25,
+   "city": "Mollerussa"
+ },
+ {
+   "state": 25,
+   "city": "Molsosa, La"
+ },
+ {
+   "state": 25,
+   "city": "Montellà i Martinet"
+ },
+ {
+   "state": 25,
+   "city": "Montferrer i Castellbò"
+ },
+ {
+   "state": 25,
+   "city": "Montgai"
+ },
+ {
+   "state": 25,
+   "city": "Montoliu de Lleida"
+ },
+ {
+   "state": 25,
+   "city": "Montoliu de Segarra"
+ },
+ {
+   "state": 25,
+   "city": "Montornès de Segarra"
+ },
+ {
+   "state": 25,
+   "city": "Nalec"
+ },
+ {
+   "state": 25,
+   "city": "Naut Aran"
+ },
+ {
+   "state": 25,
+   "city": "Navès"
+ },
+ {
+   "state": 25,
+   "city": "Odèn"
+ },
+ {
+   "state": 25,
+   "city": "Oliana"
+ },
+ {
+   "state": 25,
+   "city": "Oliola"
+ },
+ {
+   "state": 25,
+   "city": "Olius"
+ },
+ {
+   "state": 25,
+   "city": "Oluges, Les"
+ },
+ {
+   "state": 25,
+   "city": "Omellons, Els"
+ },
+ {
+   "state": 25,
+   "city": "Omells de na Gaia, Els"
+ },
+ {
+   "state": 25,
+   "city": "Organyà"
+ },
+ {
+   "state": 25,
+   "city": "Os de Balaguer"
+ },
+ {
+   "state": 25,
+   "city": "Ossó de Sió"
+ },
+ {
+   "state": 25,
+   "city": "Palau d'Anglesola, El"
+ },
+ {
+   "state": 25,
+   "city": "Penelles"
+ },
+ {
+   "state": 25,
+   "city": "Peramola"
+ },
+ {
+   "state": 25,
+   "city": "Pinell de Solsonès"
+ },
+ {
+   "state": 25,
+   "city": "Pinós"
+ },
+ {
+   "state": 25,
+   "city": "Plans de Sió, Els"
+ },
+ {
+   "state": 25,
+   "city": "Poal, El"
+ },
+ {
+   "state": 25,
+   "city": "Pobla de Cérvoles, La"
+ },
+ {
+   "state": 25,
+   "city": "Pobla de Segur, La"
+ },
+ {
+   "state": 25,
+   "city": "Pont de Bar, El"
+ },
+ {
+   "state": 25,
+   "city": "Pont de Suert, El"
+ },
+ {
+   "state": 25,
+   "city": "Ponts"
+ },
+ {
+   "state": 25,
+   "city": "Portella, La"
+ },
+ {
+   "state": 25,
+   "city": "Prats i Sansor"
+ },
+ {
+   "state": 25,
+   "city": "Preixana"
+ },
+ {
+   "state": 25,
+   "city": "Preixens"
+ },
+ {
+   "state": 25,
+   "city": "Prullans"
+ },
+ {
+   "state": 25,
+   "city": "Puiggròs"
+ },
+ {
+   "state": 25,
+   "city": "Puigverd d'Agramunt"
+ },
+ {
+   "state": 25,
+   "city": "Puigverd de Lleida"
+ },
+ {
+   "state": 25,
+   "city": "Rialp"
+ },
+ {
+   "state": 25,
+   "city": "Ribera d'Ondara"
+ },
+ {
+   "state": 25,
+   "city": "Ribera d'Urgellet"
+ },
+ {
+   "state": 25,
+   "city": "Riner"
+ },
+ {
+   "state": 25,
+   "city": "Riu de Cerdanya"
+ },
+ {
+   "state": 25,
+   "city": "Rosselló"
+ },
+ {
+   "state": 25,
+   "city": "Salàs de Pallars"
+ },
+ {
+   "state": 25,
+   "city": "Sanaüja"
+ },
+ {
+   "state": 25,
+   "city": "Sant Esteve de la Sarga"
+ },
+ {
+   "state": 25,
+   "city": "Sant Guim de Freixenet"
+ },
+ {
+   "state": 25,
+   "city": "Sant Guim de la Plana"
+ },
+ {
+   "state": 25,
+   "city": "Sant Llorenç de Morunys"
+ },
+ {
+   "state": 25,
+   "city": "Sant Martí de Riucorb"
+ },
+ {
+   "state": 25,
+   "city": "Sant Ramon"
+ },
+ {
+   "state": 25,
+   "city": "Sarroca de Bellera"
+ },
+ {
+   "state": 25,
+   "city": "Sarroca de Lleida"
+ },
+ {
+   "state": 25,
+   "city": "Senterada"
+ },
+ {
+   "state": 25,
+   "city": "Sentiu de Sió, La"
+ },
+ {
+   "state": 25,
+   "city": "Seròs"
+ },
+ {
+   "state": 25,
+   "city": "Seu d'Urgell, La"
+ },
+ {
+   "state": 25,
+   "city": "Sidamon"
+ },
+ {
+   "state": 25,
+   "city": "Soleràs, El"
+ },
+ {
+   "state": 25,
+   "city": "Solsona"
+ },
+ {
+   "state": 25,
+   "city": "Soriguera"
+ },
+ {
+   "state": 25,
+   "city": "Sort"
+ },
+ {
+   "state": 25,
+   "city": "Soses"
+ },
+ {
+   "state": 25,
+   "city": "Sudanell"
+ },
+ {
+   "state": 25,
+   "city": "Sunyer"
+ },
+ {
+   "state": 25,
+   "city": "Talarn"
+ },
+ {
+   "state": 25,
+   "city": "Talavera"
+ },
+ {
+   "state": 25,
+   "city": "Tàrrega"
+ },
+ {
+   "state": 25,
+   "city": "Tarrés"
+ },
+ {
+   "state": 25,
+   "city": "Tarroja de Segarra"
+ },
+ {
+   "state": 25,
+   "city": "Térmens"
+ },
+ {
+   "state": 25,
+   "city": "Tírvia"
+ },
+ {
+   "state": 25,
+   "city": "Tiurana"
+ },
+ {
+   "state": 25,
+   "city": "Torà"
+ },
+ {
+   "state": 25,
+   "city": "Torms, Els"
+ },
+ {
+   "state": 25,
+   "city": "Tornabous"
+ },
+ {
+   "state": 25,
+   "city": "Torre de Cabdella, La"
+ },
+ {
+   "state": 25,
+   "city": "Torrebesses"
+ },
+ {
+   "state": 25,
+   "city": "Torrefarrera"
+ },
+ {
+   "state": 25,
+   "city": "Torrefeta i Florejacs"
+ },
+ {
+   "state": 25,
+   "city": "Torregrossa"
+ },
+ {
+   "state": 25,
+   "city": "Torrelameu"
+ },
+ {
+   "state": 25,
+   "city": "Torres de Segre"
+ },
+ {
+   "state": 25,
+   "city": "Torre-serona"
+ },
+ {
+   "state": 25,
+   "city": "Tremp"
+ },
+ {
+   "state": 25,
+   "city": "Vall de Boí, La"
+ },
+ {
+   "state": 25,
+   "city": "Vall de Cardós"
+ },
+ {
+   "state": 25,
+   "city": "Vallbona de les Monges"
+ },
+ {
+   "state": 25,
+   "city": "Vallfogona de Balaguer"
+ },
+ {
+   "state": 25,
+   "city": "Valls d'Aguilar, Les"
+ },
+ {
+   "state": 25,
+   "city": "Valls de Valira, Les"
+ },
+ {
+   "state": 25,
+   "city": "Vansa i Fórnols, La"
+ },
+ {
+   "state": 25,
+   "city": "Verdú"
+ },
+ {
+   "state": 25,
+   "city": "Vielha e Mijaran"
+ },
+ {
+   "state": 25,
+   "city": "Vilagrassa"
+ },
+ {
+   "state": 25,
+   "city": "Vilaller"
+ },
+ {
+   "state": 25,
+   "city": "Vilamòs"
+ },
+ {
+   "state": 25,
+   "city": "Vilanova de Bellpuig"
+ },
+ {
+   "state": 25,
+   "city": "Vilanova de la Barca"
+ },
+ {
+   "state": 25,
+   "city": "Vilanova de l'Aguda"
+ },
+ {
+   "state": 25,
+   "city": "Vilanova de Meià"
+ },
+ {
+   "state": 25,
+   "city": "Vilanova de Segrià"
+ },
+ {
+   "state": 25,
+   "city": "Vila-sana"
+ },
+ {
+   "state": 25,
+   "city": "Vilosell, El"
+ },
+ {
+   "state": 25,
+   "city": "Vinaixa"
+ }
+]

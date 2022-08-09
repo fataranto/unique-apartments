@@ -46,7 +46,6 @@
 
 
 
-
 <!-- Registration form -->
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -60,39 +59,45 @@
 
         <div class="container">
           <div class="row justify-content-center">
-            <form class="bg-white  rounded-5 shadow-5-strong p-2" method="post" action="/api/auth/signup">
+
+            <form id="SignupForm" class="bg-white  rounded-5 shadow-5-strong p-2"
+              onsubmit="return setSignupAction(this, event)">
 
               <!-- User input -->
               <div class="form-outline mb-4">
+             
 
-                <input type="text" class="form-control" name="username" />
-                <label class="form-label" for="form1Example1">Username</label>
+                <input type="text" class="form-control" name="username" minlength="4" maxlength="8" pattern="^[a-zA-Z]\w{3,7}" required/>
+                <label class="form-label">Username</label>
               </div>
+              <!--  una expresión regular que permita entre 4 y 8 caracteres que comience por letras minúsculas o mayúscules y que luego pueda incluir dígitos y caracteres especiales-->
+
+
 
               <!-- Name input -->
               <div class="form-outline mb-4">
 
-                <input type="text" class="form-control" name="name" />
+                <input type="text" class="form-control" name="name" minlength="2" maxlength="30" pattern="^[a-zA-Z·]{2,30}" required/>
                 <label class="form-label" for="form1Example1">Name</label>
               </div>
 
               <!-- Lastname input -->
               <div class="form-outline mb-4">
 
-                <input type="text" class="form-control" name="lastname" />
+                <input type="text" class="form-control" name="lastname" minlength="2" maxlength="30" pattern="^[a-zA-Z·]{4,30}" required/>
                 <label class="form-label" for="form1Example1">Last name</label>
               </div>
 
               <!-- Email input -->
               <div class="form-outline mb-4">
 
-                <input type="email" class="form-control" name="email" />
+                <input type="email" class="form-control" name="email" required/>
                 <label class="form-label" for="form1Example1">Email</label>
               </div>
 
               <!-- Password input -->
               <div class="form-outline mb-4">
-                <input type="password" class="form-control" name="password" aria-label="Password" required />
+                <input type="password" class="form-control" name="password" aria-label="Password" minlength="4" maxlength="12" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{4,12}$" required />
                 <label class="form-label" for="form1Example2">Password</label>
               </div>
 
@@ -105,7 +110,7 @@
                 </label>
               </div>
 
-
+              <div id="SignupAlert" class="alert alert-danger d-none" role="alert"></div>
               <!-- Submit button -->
               <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">Sign up</button>
@@ -173,7 +178,7 @@
                 </div>
               </div>
 
-              <div class="alert alert-danger d-none" role="alert"></div>
+              <div id="loginAlert" class="alert alert-danger d-none" role="alert"></div>
 
               <!-- Submit button -->
               <div class="modal-footer">
@@ -196,10 +201,72 @@
 </div>
 
 <script>
+  async function setSignupAction(form, event) {
+    event.preventDefault();
+    try {
+      const display = document.querySelector('#SignupAlert');
+      display.innerHTML = '';
+      const username = form.querySelector('input[name="username"]').value;
+      const name = form.querySelector('input[name="name"]').value;
+      const lastname = form.querySelector('input[name="lastname"]').value;
+      const email = form.querySelector('input[name="email"]').value;
+      const password = form.querySelector('input[name="password"]').value;
+      const roles = form.querySelectorAll('input[name="roles"]');
+
+      const rolesArray = [];
+      for (const role of roles) {
+        if (role.checked) {
+          rolesArray.push(role.value);
+        }
+      }
+
+
+      const data = {
+        username: username,
+        name: name,
+        lastname: lastname,
+        email: email,
+        password: password,
+        roles: rolesArray
+      };
+
+
+
+      const url = '/api/auth/signup';
+      const method = 'POST';
+      const headers = {
+        'Content-Type': 'application/json'
+      };
+      const body = JSON.stringify(data);
+      const options = {
+        method: method,
+        headers: headers,
+        body: body
+      };
+      const res = await fetch(url, options);
+
+      const json = await res.json();
+      console.log(json);
+
+      if (res.status === 400 || res.status === 401 || res.status === 404 || res.status === 500) {
+
+        display.classList.remove('d-none');
+        display.innerHTML = json.message;
+        return;
+      }
+
+      location.assign('/'); 
+
+    } catch (e) {
+      console.log(e.message);
+    }
+  }
+
+
   async function setAction(form, event) {
     event.preventDefault();
     try {
-      const display = document.querySelector('.alert-danger');
+      const display = document.querySelector('#loginAlert');
       display.innerHTML = '';
       const username = form.querySelector('input[name="username"]').value;
       const password = form.querySelector('input[name="password"]').value;

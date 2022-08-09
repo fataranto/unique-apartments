@@ -10,7 +10,10 @@
 
         //console.log(selected);
 
-        state.innerHTML = '';
+        if (selected){
+            state.innerHTML = '';
+        }
+        
 
         states.forEach(theState => {
             const option = document.createElement('option');
@@ -49,11 +52,10 @@
         const tarragona = cities[3];
     
 
-        //Falta escoger la ciudad seleccionada previamente en el select y si es igual a la ciudad seleccionada, seleccionarla
-
-
+    
         const city = document.querySelector('#city');
         const selected = city.options[city.selectedIndex].value;
+        console.log(!selected);
         const state = document.querySelector('#state');
 
         state.addEventListener('change', function (e) {
@@ -71,6 +73,8 @@
                 city.appendChild(option);
             });
         });
-        state.dispatchEvent(new Event('change'));
+        if(selected) {
+            state.dispatchEvent(new Event('change'));
+        }
     }
 }

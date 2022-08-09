@@ -18,7 +18,7 @@ module.exports = function(app) {
 
   app.get("/apartment/:apartment/edit", [authJwt.verifyToken, authJwt.isHost], controller.getEditApartment);
 
-  //app.post("/apartment/:apartment/edit", [authJwt.verifyToken, authJwt.isHost], controller.postEditApartment);
+  app.post("/apartment/:apartment/update", [authJwt.verifyToken, authJwt.isHost], controller.postUpdateApartment);
 
   app.get("/apartment/:apartment", [authJwt.verifyTokenPublic], controller.getViewApartment);
 

@@ -36,7 +36,7 @@
         <div class="row">
             <form method="post" action="
             <% if (apartment._id) { %> 
-                 
+                 /apartment/<%- apartment._id %>/update
             <% } else { %>
                 /apartment/new-apartment
             <% } %>">
@@ -217,12 +217,11 @@
         </div>
         <div class="form-group row g-3">
             <div class="col-md-3">
-                <label for="state">State
+                <label for="state">Province
                     <select class="form-control" id="state" name="state">
-                        <option value="<% if (apartment.location) { %>
-                            <%= apartment.location.state %>
-                        <% } %>" 
-                        disabled selected>
+                        
+                        <option value="<% if (apartment.location) { %><%=apartment.location.state%><% } %>" 
+                         disabled selected>
                             <% if (apartment.location) { %>
                                 <%= apartment.location.state %>
                             <% } else { %>
@@ -237,10 +236,8 @@
             <div class="col-md-5">
                 <label for="city">City
                     <select class="form-control" id="city" name="city">
-                        <option value="<% if (apartment.location) { %>
-                            <%= apartment.location.city %>
-                        <% } %>" 
-                        disabled selected>
+                        <option value="<% if (apartment.location) { %><%=apartment.location.city%><% } %>" 
+                        selected>
                             <% if (apartment.location) { %>
                                 <%= apartment.location.city %>
                             <% } else { %>

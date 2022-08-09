@@ -1,16 +1,28 @@
 
 
 {
-    // new-apartment
+    // new-apartment - Dinamic States and Cities
     function setDynamicStates() {
         const states = ["Barcelona", "Girona", "Lleida", "Tarragona"];
 
         const state = document.querySelector('#state');
+        const selected = state.options[state.selectedIndex].value;
 
-        states.forEach(option => {
-            state.appendChild(new Option(option, option));
-            //console.log(option.label);
+        //console.log(selected);
+
+        state.innerHTML = '';
+
+        states.forEach(theState => {
+            const option = document.createElement('option');
+            option.value = theState;
+            option.text = theState;
+            if (theState === selected) {
+                option.selected = true;
+            }
+            
+            state.appendChild(option);
         });
+    
     }
 
     setDynamicStates();
@@ -30,22 +42,35 @@
     });
 
     function setDynamicCities(cities) {
-        console.log("the cities", cities);
+        //console.log("the cities", cities);
         const barcelona = cities[0];
         const girona = cities[1];
         const lleida = cities[2];
         const tarragona = cities[3];
     
+
+        //Falta escoger la ciudad seleccionada previamente en el select y si es igual a la ciudad seleccionada, seleccionarla
+
+
         const city = document.querySelector('#city');
+        const selected = city.options[city.selectedIndex].value;
         const state = document.querySelector('#state');
+
         state.addEventListener('change', function (e) {
             let stateName = e.target.value;
             let theCities = (eval(stateName.toLowerCase()));
             city.innerHTML = "";
-            theCities.forEach(option => {
-                let cityName = option.city;
-                city.appendChild(new Option(cityName, cityName));
+            theCities.forEach(theCity => {
+                //console.log(theCity);
+                const option = document.createElement('option');
+                option.value = theCity.city;
+                option.text = theCity.city;
+                if (theCity.city === selected) {
+                    option.selected = true;
+                }
+                city.appendChild(option);
             });
-    });
+        });
+        state.dispatchEvent(new Event('change'));
     }
 }

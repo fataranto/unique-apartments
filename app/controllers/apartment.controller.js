@@ -198,6 +198,138 @@ exports.getEditApartment = async (req, res) => {
   })
 }
 
+exports.postUpdateApartment = async (req, res) => {
+  const {
+    title,
+    description,
+    price,
+    availablefrom,
+    availableto,
+    capacity,
+    rooms,
+    bathrooms,
+    meters,
+    city,
+    state,
+    lat,
+    long,
+    rules,
+    smoking,
+    pets,
+    wifi,
+    tv,
+    ac,
+    heating,
+    parking,
+    adapted,
+    hairdryer,
+    shampoo,
+    soap,
+    hotwater,
+    essentials,
+    hangers,
+    bedlinen,
+    wardrobe,
+    stove,
+    fridge,
+    microwave,
+    tableware,
+    coffemaker,
+    toaster,
+    balcony,
+    garden,
+    pool,
+    barbicue,
+    digningarea,
+    photourl1,
+    photourl2,
+    photourl3,
+    photourl4,
+    photodescr1,
+    photodescr2,
+    photodescr3,
+    photodescr4
+  } = req.body;
+  console.log(req.body);
+
+  const apartment = await Apartment.findById(req.params.apartment);
+  apartment.title = title;
+  apartment.description = description;
+  apartment.price = price;
+  apartment.availablefrom = availablefrom;
+  apartment.availableto = availableto;
+  apartment.capacity = capacity;
+  apartment.rooms = rooms;
+  apartment.bathrooms = bathrooms;
+  apartment.meters = meters;
+  apartment.location = {
+    city,
+    state,
+    lat,
+    long
+  };
+  apartment.rules = {
+    rules,
+    smoking,
+    pets
+  };
+  apartment.amenities = {
+    general: {
+      wifi,
+      tv,
+      ac,
+      heating,
+      parking,
+      adapted
+    },
+    bathroom: {
+      hairdryer,
+      shampoo,
+      soap,
+      hotwater
+    },
+    bedroom: {
+      essentials,
+      hangers,
+      bedlinen,
+      wardrobe
+    },
+    kitchen: {
+      stove,
+      fridge,
+      microwave,
+      tableware,
+      coffemaker,
+      toaster,
+    },
+    outdoor: {
+      balcony,
+      garden,
+      pool,
+      barbicue,
+      digningarea,
+    },
+  };
+  apartment.photo1 = {
+    url: photourl1,
+    description: photodescr1
+  };
+  apartment.photo2 = {
+    url: photourl2,
+    description: photodescr2
+  };
+  apartment.photo3 = {
+    url: photourl3,
+    description: photodescr3
+  };
+  apartment.photo4 = {
+    url: photourl4,
+    description: photodescr4
+  };
+  await apartment.save();
+  res.redirect("/");
+}
+
 exports.getViewApartment = async (req, res) => {
   let user = false;
   if(req.userId) {

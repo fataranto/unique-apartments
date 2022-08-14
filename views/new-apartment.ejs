@@ -237,7 +237,7 @@
                 <label for="city">City
                     <select class="form-control" id="city" name="city">
                         <option value="<% if (apartment.location) { %><%=apartment.location.city%><% } %>" 
-                        selected>
+                        disabled selected>
                             <% if (apartment.location) { %>
                                 <%= apartment.location.city %>
                             <% } else { %>

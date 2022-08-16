@@ -31,6 +31,7 @@ verifyTokenPublic = (req, res, next) => {
     if(decoded !== undefined){
       req.userId = decoded.id; 
       req.userUsername = decoded.username;
+
       return next();
     }
     return next();

@@ -16,7 +16,7 @@
 
     <!-- Form -->
     <form class="ms-auto mt-10 mb-10 rounded border border-1 border-light bg-light"
-      style="max-width: 420px; padding: 30px 30px 60px 30px; color: #484848;">
+      style="max-width: 420px; padding: 30px 30px 60px 30px; color: #484848;" method="POST" action="/apartment/search-results">
       <h1 style="font-size: 2em; font-weight: bold; margin-bottom: 15px;">Book unique apartments.</h1>
       <div class="form-group" style=" font-size: small;">
         <label>WHERE</label><br>
@@ -25,12 +25,18 @@
               height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
               <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
             </svg></span>
-          <input type="text" class="form-control" placeholder="Choose a city" aria-label="Username"
-            aria-describedby="basic-addon1">
+          <input id="searchCity" type="text" class="form-control" placeholder="Choose a city">
+          <input type="text" class="d-none" name="city" id="city">
+          <input type="text" class="d-none" name="state" id="state">
+          <div id="suggestions_container" class="position-absolute top-100  ">
+            <ul id="suggestions">
+            </ul>
+          </div>   
+
         </div>
 
         <div class="input-group-prepend" style=" font-size: small;">
-          <label>CHECK IN</label> &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;
+          <label>CHECK IN</label> &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;
           <label>CHECK OUT</label><br>
         </div>
         <div class="input-group" style=" font-size: small;">
@@ -40,12 +46,8 @@
         <br>
         <div class="form-group" style=" font-size: small;">
           <label>GUESTS</label><br>
-          <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-            <option selected>1 guest</option>
-            <option value="Adults">Adults</option>
-            <option value="Children">Children</option>
-            <option value="Infants">Infant</option>
-          </select><br>
+          <input type="number" class="form-control" name="guests">
+          <br>
 
 
 
@@ -54,6 +56,7 @@
         <div class="form-group">
           <button type="submit" class="btn btn-primary btn-lg" style="float: right;">Search</button>
         </div>
+      </div>
     </form>
 
   </div>
@@ -101,6 +104,8 @@
 
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="/js/search-apartment-cities.js"></script>
 
 </body>
 

@@ -7,7 +7,8 @@ $custom-colors: (
 
 
 
-// Custom.scss
+
+
 // Option B: Include parts of Bootstrap
 
 // 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
@@ -51,3 +52,8 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
     --theme-spacer-#{$spacer}: #{$value};
   }
 }
+
+// Custom.scss
+/* .active {
+  background-color: $light !important;
+} */

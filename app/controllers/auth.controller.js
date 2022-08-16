@@ -105,8 +105,16 @@ exports.signin = (req, res) => {
         return res.status(401).json({ message: "Invalid Password!" });
       }
 
-      var token = jwt.sign({ id: user.id, username: user.username }, config.secret, {
+      const expiresIn = req.body.rememberMe ? "7d" : 86400; // 86400 = 1 day
+
+      //console.log("rememberMe: ", req.body.rememberMe);
+
+      /* var token = jwt.sign({ id: user.id, username: user.username }, config.secret, {
         expiresIn: 86400, // 24 hours
+      }); */
+
+      var token = jwt.sign({ id: user.id, username: user.username }, config.secret, {
+        expiresIn: expiresIn, 
       });
 
       var authorities = [];
@@ -116,6 +124,11 @@ exports.signin = (req, res) => {
       }
 
       req.session.token = token;
+
+      //mostrar por consola la fecha de expiracion del token
+      /* var expirationDate = (jwt.decode(token).exp)*1000;
+      const date = new Date(expirationDate);
+      console.log("Fecha de expiracion del token: ", date.toLocaleString()); */      
 
       res.status(200).json({
         message: "User successfully Logged in",

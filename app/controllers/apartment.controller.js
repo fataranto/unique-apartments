@@ -5,18 +5,18 @@ const Apartment = db.apartment;
 
 exports.getAllApartments = async (req, res) => {
   let user = false;
-  if(req.userId) {
+  if (req.userId) {
     //user = await User.findById(req.userId).populate("roles", "-__v");
     user = {
       id: req.userId,
       username: req.userUsername
     }
-  } 
+  }
 
   const apartments = await Apartment.find().sort({
-      price: 1
+    price: 1
   });
-  
+
   res.status(200).render('index.ejs', {
     user,
     apartments
@@ -26,14 +26,14 @@ exports.getAllApartments = async (req, res) => {
 
 exports.getAddApartment = async (req, res) => {
   let user = false;
-  if(req.userId) {
+  if (req.userId) {
     //user = await User.findById(req.userId).populate("roles", "-__v");
     user = {
       id: req.userId,
       username: req.userUsername
     }
-  } 
- // const user = await User.findById(req.userId).populate("roles", "-__v");
+  }
+  // const user = await User.findById(req.userId).populate("roles", "-__v");
   res.status(200).render('new-apartment.ejs', {
     user,
     apartment: {}
@@ -172,7 +172,7 @@ exports.postAddApartment = async (req, res) => {
     owner: req.userId
   });
 
-  console.log("apartment: ",apartment)
+  console.log("apartment: ", apartment)
 
   await apartment.save();
   res.redirect("/");
@@ -182,13 +182,13 @@ exports.postAddApartment = async (req, res) => {
 
 exports.getEditApartment = async (req, res) => {
   let user = false;
-  if(req.userId) {
+  if (req.userId) {
     //user = await User.findById(req.userId).populate("roles", "-__v");
     user = {
       id: req.userId,
       username: req.userUsername
     }
-  } 
+  }
   //const user = await User.findById(req.userId).populate("roles", "-__v");
   const apartment = await Apartment.findById(req.params.apartment);
   console.log(apartment);
@@ -332,13 +332,12 @@ exports.postUpdateApartment = async (req, res) => {
 
 exports.getViewApartment = async (req, res) => {
   let user = false;
-  if(req.userId) {
-    //user = await User.findById(req.userId).populate("roles", "-__v");
+  if (req.userId) {
     user = {
       id: req.userId,
       username: req.userUsername
     }
-  } 
+  }
 
   const apartment = await Apartment.findById(req.params.apartment);
   //console.log(apartment)
@@ -346,7 +345,54 @@ exports.getViewApartment = async (req, res) => {
   res.status(200).render('view-apartment.ejs', {
     user,
     apartment
-  }) 
+  })
 
   //${req.params.user}  ${req.userId} -> de aquí puedo coger la ruta de usuario y el id
 };
+
+exports.postSearchResults = async (req, res) => {
+  let user = false;
+  if (req.userId) {
+    user = {
+      id: req.userId,
+      username: req.userUsername
+    }
+  }
+
+  const {
+    city,
+    state,
+    checkin,
+    checkout,
+    guests
+  } = req.body;
+
+  const apartments = await Apartment.find({
+
+        $and:[
+          {'location.city': city},
+          {'location.state': state},
+          {'capacity': {$gte: 2}},
+          {'availablefrom': {$lte: checkin}},
+          {'availableto': {$gte: checkout}},
+        ]             
+      });
+
+  console.log(apartments);
+
+  //si no hay resultados busco todos los apartamentos de ese state
+   if (apartments.length === 0) {
+    const apartments = await Apartment.find({
+      'location.state': state
+    });
+    const message = `La búsqueda no ha devuelto resultados, pero hemos encontrado los siguientes apartamentos en ${state}:`;
+    console.log(message);
+    console.log(apartments);
+    res.send(`<h3>${message}<h3><p>${apartments}</p>`);
+  } else {
+    const message = `La búsqueda ha devuelto resultados:`;
+    console.log(message);
+    console.log(apartments);
+    res.send(`<h3>${message}<h3><p>${apartments}</p>`);
+  } 
+}

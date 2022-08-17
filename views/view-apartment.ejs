@@ -364,39 +364,12 @@
 
   checkin.value = new Date().toISOString().split('T')[0];
 
-
-
-
   checkin.addEventListener('focus', function() {
     const checkoutDate = checkout.valueAsDate;
     const maxDate = new Date(Number(checkoutDate));
     maxDate.setDate(checkoutDate.getDate() - 1);    
     this.max = maxDate.toISOString().split('T')[0];
   }); 
-
-
-
-   checkin.addEventListener('change', function() {
-    const checkinDate = checkin.valueAsDate;
-    const checkoutDate = checkout.valueAsDate;
-    if (checkinDate && checkoutDate) {
-      const diff = checkoutDate - checkinDate;
-      const nights = Math.floor(diff / (1000 * 60 * 60 * 24));
-      //const nights = days - 1;
-      const thePrice = <%= apartment.price %>;
-      const total = nights * thePrice;
-      const showTotal = document.getElementById('total');
-      showTotal.innerHTML = '';
-      showTotal.innerHTML = `<p class="small"><span class="fw-bold" >Total: </span>${thePrice} € x ${nights} nights = ${total} €</p>`;
-      console.log(checkinDate);
-      console.log("total: ", total);
-      console.log("nights: ", nights);
-    }
-  }); 
-
-
-
-
 
   //check out must be at least ONE DAY more than check in
   checkout.addEventListener('focus', function() {
@@ -406,11 +379,13 @@
     this.min = minDate.toISOString().split('T')[0];
   }); 
 
+  checkin.addEventListener('change', calculatePrice);
+
+  checkout.addEventListener('change', calculatePrice);
 
 
-
-  //despues de seleccionar la fecha de checkout, calculamos la cantidad de noches que se reservan
-   checkout.addEventListener('change', function() {
+   //despues de seleccionar la fecha de checkout, calculamos la cantidad de noches que se reservan
+   function calculatePrice() {
     const checkinDate = checkin.valueAsDate;
     const checkoutDate = checkout.valueAsDate;
     if (checkinDate && checkoutDate) {
@@ -425,10 +400,7 @@
       console.log("total: ", total);
       console.log("nights: ", nights);
     }
-  }); 
-
-
- 
+  }; 
 
 </script>
 

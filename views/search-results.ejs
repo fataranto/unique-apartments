@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('./partials/head'); %>
+</head>
+
+<body class="container-fluid">
+
+
+  <%- include('./partials/nav'); %>
+
+<h1>Search results</h1>
+<h3><%= message %></h3>
+
+  <!-- Container apartments list -->
+  <div class="row justify-content-center">
+
+    <!-- Each apartment card -->
+
+    <% apartments.forEach(function(d) { %>
+
+    <div class="card m-4 p-0 rounded-2 col-lg-3 col-md-5 col-sm-10 shadow">
+
+      <div class="bg-image card-img-top rounded-2"
+        style="background-image: url('<%= d.photo1.url %>');height: 30vh;background-size: cover;">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title"><%= d.title %></h5>
+        <p class="card-text"><%= d.location.city %>, <%= d.location.state %></p>
+        <div>
+          <p>
+            <%= d.capacity %> <img src="/imgs/bed.svg" alt="" style="width: 25px; margin-right: 12px;">
+            <%= d.rooms %> <img src="/imgs/rooms.svg" alt="" style="width: 25px; margin-right: 8px;">
+            <%= d.bathrooms %> <img src="/imgs/bathroom.svg" alt="" style="width: 25px; margin-right: 10px;">
+            <%= d.meters %> m<sup>2</sup></p>
+        </div>
+        <p class="card-text">
+          <img src="/imgs/calendar.svg" alt="" style="width: 22px; margin-right: 10px;">
+          <%= (d.availablefrom).toLocaleString('es-ES',{dateStyle:"short"}) %> -
+          <%= (d.availableto).toLocaleString('es-ES',{dateStyle:"short"}) %></p>
+        <small class="text-muted"><strong><%= d.price %> €</strong> night</small>
+        <a href="/apartment/<%= d._id %>" class=" stretched-link"></a>
+      </div>
+    </div>
+    <% }); %>
+  </div>
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+
+
+</body>
+
+</html>

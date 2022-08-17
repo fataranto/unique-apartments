@@ -1,6 +1,8 @@
 const db = require("../models");
 const User = db.user;
 const Apartment = db.apartment;
+const moment = require('moment');
+
 
 
 exports.getAllApartments = async (req, res) => {
@@ -359,7 +361,7 @@ exports.postSearchResults = async (req, res) => {
     }
   }
 
-  const {
+  var {
     city,
     state,
     checkin,
@@ -367,32 +369,54 @@ exports.postSearchResults = async (req, res) => {
     guests
   } = req.body;
 
-  const apartments = await Apartment.find({
+  console.log(req.body);
+
+  var message = "";
+
+  // si no hay fecha de entrada, se pone la fecha de hoy
+  if (!checkin) {
+    checkin = moment().format("YYYY-MM-DD");
+  }
+  // si no hay fecha de salida, se pone la fecha de entrada + 1 día
+  if (!checkout) {
+    checkout = moment(checkin).add(1, "days").format("YYYY-MM-DD");
+  }
+  // si no hay número de huéspedes, se pone 1
+  if (!guests) {
+    guests = 1;
+  }
+
+  var apartments = await Apartment.find({
 
         $and:[
           {'location.city': city},
           {'location.state': state},
-          {'capacity': {$gte: 2}},
+          {'capacity': {$gte: guests}},
           {'availablefrom': {$lte: checkin}},
           {'availableto': {$gte: checkout}},
         ]             
       });
 
-  console.log(apartments);
 
   //si no hay resultados busco todos los apartamentos de ese state
-   if (apartments.length === 0) {
-    const apartments = await Apartment.find({
+   if (apartments.length > 0) {
+    message = `we've found something for you!`;
+  } else {
+    apartments = await Apartment.find({
       'location.state': state
     });
-    const message = `La búsqueda no ha devuelto resultados, pero hemos encontrado los siguientes apartamentos en ${state}:`;
-    console.log(message);
-    console.log(apartments);
-    res.send(`<h3>${message}<h3><p>${apartments}</p>`);
-  } else {
-    const message = `La búsqueda ha devuelto resultados:`;
-    console.log(message);
-    console.log(apartments);
-    res.send(`<h3>${message}<h3><p>${apartments}</p>`);
+    message = `The search didn't match any results, but we found something in the province of ${state} that you might be interested in.`;
   } 
+  
+  if (apartments.length === 0) {
+    apartments = await Apartment.find();
+    message = `We didn't found any apartment in the province of ${state}. We have some in the rest of Catalunya`;
+  }
+  //console.log(message);
+  res.status(200).render('search-results.ejs', {
+    user,
+    apartments,
+    message
+  })
+
 }

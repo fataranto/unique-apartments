@@ -67,24 +67,23 @@
               <div class="form-outline mb-4">
              
 
-                <input type="text" class="form-control" name="username" minlength="4" maxlength="8" pattern="^[a-zA-Z]\w{3,7}" required/>
+                <input type="text" class="form-control" name="username" minlength="4" maxlength="8" pattern="^[a-zA-Z]\w{3,7}" title="Username should start with a letter and can only contain regular characters, digits and '_'" required/>
                 <label class="form-label">Username</label>
               </div>
-              <!--  una expresión regular que permita entre 4 y 8 caracteres que comience por letras minúsculas o mayúscules y que luego pueda incluir dígitos y caracteres especiales-->
 
 
 
               <!-- Name input -->
               <div class="form-outline mb-4">
 
-                <input type="text" class="form-control" name="name" minlength="2" maxlength="30" pattern="^[a-zA-Z·]{2,30}" required/>
+                <input type="text" class="form-control" name="name" minlength="2" maxlength="30" pattern="^[a-zA-Z·]{2,30}" title="Use only letters and spaces" required/>
                 <label class="form-label" for="form1Example1">Name</label>
               </div>
 
               <!-- Lastname input -->
               <div class="form-outline mb-4">
 
-                <input type="text" class="form-control" name="lastname" minlength="2" maxlength="30" pattern="^[a-zA-Z·]{4,30}" required/>
+                <input type="text" class="form-control" name="lastname" minlength="2" maxlength="30" pattern="^[a-zA-Z·]{4,30}" title="Use only letters and spaces" required/>
                 <label class="form-label" for="form1Example1">Last name</label>
               </div>
 
@@ -97,7 +96,7 @@
 
               <!-- Password input -->
               <div class="form-outline mb-4">
-                <input type="password" class="form-control" name="password" aria-label="Password" minlength="4" maxlength="12" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{4,12}$" required />
+                <input type="password" class="form-control" name="password" aria-label="Password" minlength="4" maxlength="12" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{4,12}$" title="Password should have between 4 and 12 characters and contain at least one lowercase, one uppercase and a digit" required />
                 <label class="form-label" for="form1Example2">Password</label>
               </div>
 

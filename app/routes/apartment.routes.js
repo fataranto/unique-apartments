@@ -24,4 +24,7 @@ module.exports = function(app) {
 
   app.post("/apartment/search-results", [authJwt.verifyTokenPublic], controller.postSearchResults);
 
+  app.post("/apartment/:apartment/book", [authJwt.verifyToken], controller.postBookApartment);
+
+
 };

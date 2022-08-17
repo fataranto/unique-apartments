@@ -1,6 +1,7 @@
 const db = require("../models");
 const User = db.user;
 const Apartment = db.apartment;
+const Booking = db.booking;
 const moment = require('moment');
 
 
@@ -419,4 +420,33 @@ exports.postSearchResults = async (req, res) => {
     message
   })
 
+}
+
+exports.postBookApartment = async (req, res) => {
+  const {
+    checkin,
+    checkout,
+    guests
+  } = req.body;
+  /* console.log(req.body);
+  console.log(req.params.apartment);
+  console.log(req.userId); */
+  
+  //si la fecha de entrada es mayor que la fecha de salida, muesto error por consola
+  if (moment(checkin).isAfter(moment(checkout))) {
+    console.log("error, la fecha de entrada es mayor que la fecha de salida");
+  }
+
+//guardo un nuevo booking en la base de datos
+  const booking = new Booking({
+    apartment: req.params.apartment,
+    user: req.userId,
+    checkin,
+    checkout,
+    guests,
+    state: "pending"
+  });
+  await booking.save();
+  
+  res.redirect("/");
 }

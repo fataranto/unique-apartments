@@ -115,8 +115,8 @@
                 </div>
 
                 <div class=" <%if(apartment._id){%> d-none <%}%>">
-                    <small id="photoHelp" class="form-text text-muted">Add up to 4 pictures, you can drag them later to
-                        select a cover photo</small>
+                    <small id="photoHelp" class="form-text text-muted">Add up to 5 pictures, you can drag them later to
+                        select the main photo</small>
                 </div>
                     <div class="form-group row g-3">
                         <div class=" <%if(apartment._id){%> d-none <%}%>">
@@ -153,6 +153,10 @@
                     <img height="150" class="rounded-3 me-2" src="<%= apartment.photo4.url %>" alt=""
                         data-id="<%= apartment.photo4.url %>||<%= apartment.photo4.description %>">
                     <% } %>
+                    <% if(apartment.photo5) { %>
+                        <img height="150" class="rounded-3 me-2" src="<%= apartment.photo5.url %>" alt=""
+                            data-id="<%= apartment.photo5.url %>||<%= apartment.photo5.description %>">
+                        <% } %>
 
                 </div>
 
@@ -197,6 +201,16 @@
                     <input class=" col-6 form-control" id="inputPhotoDesc4" type="text" <% if(apartment.photo4) { %>
                         value="<%= apartment.photo4.description %>" <% } %> placeholder="description photo 4"
                         name="photodescr4">
+
+                    <!-- photo 5 -->
+                    <label for="photourl4" class="mt-3">URL Photo 5</label>
+                    <input class=" col-9 form-control" id="inputPhoto5" type="text" <% if(apartment.photo5) { %>
+                        value="<%= apartment.photo5.url %>" <% } %> placeholder="url photo 5" placeholder="url photo 5"
+                        name="photourl5">
+                    <label for="photodescr4">Description Photo 5</label>
+                    <input class=" col-6 form-control" id="inputPhotoDesc5" type="text" <% if(apartment.photo5) { %>
+                        value="<%= apartment.photo5.description %>" <% } %> placeholder="description photo 5"
+                        name="photodescr5">    
 
                 </div>
 
@@ -733,7 +747,7 @@
         let button = document.querySelector("#photoOk");
         button.addEventListener("click", () => {
             totalPhotos++;
-            if (totalPhotos == 4) {
+            if (totalPhotos == 5) {
                 button.classList.add("disabled");
             }
             let container = document.querySelector("#photoContainer");

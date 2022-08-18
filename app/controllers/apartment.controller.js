@@ -80,7 +80,7 @@ exports.postAddApartment = async (req, res) => {
     fridge,
     microwave,
     tableware,
-    coffemaker,
+    coffeemaker,
     toaster,
     balcony,
     garden,
@@ -91,10 +91,12 @@ exports.postAddApartment = async (req, res) => {
     photourl2,
     photourl3,
     photourl4,
+    photourl5,
     photodescr1,
     photodescr2,
     photodescr3,
-    photodescr4
+    photodescr4,
+    photodescr5
   } = req.body;
   console.log(req.body);
 
@@ -145,7 +147,7 @@ exports.postAddApartment = async (req, res) => {
         fridge,
         microwave,
         tableware,
-        coffemaker,
+        coffeemaker,
         toaster,
       },
       outdoor: {
@@ -171,6 +173,10 @@ exports.postAddApartment = async (req, res) => {
     photo4: {
       url: photourl4,
       description: photodescr4
+    },
+    photo5: {
+      url: photourl5,
+      description: photodescr5
     },
     owner: req.userId
   });
@@ -237,7 +243,7 @@ exports.postUpdateApartment = async (req, res) => {
     fridge,
     microwave,
     tableware,
-    coffemaker,
+    coffeemaker,
     toaster,
     balcony,
     garden,
@@ -248,10 +254,12 @@ exports.postUpdateApartment = async (req, res) => {
     photourl2,
     photourl3,
     photourl4,
+    photourl5,
     photodescr1,
     photodescr2,
     photodescr3,
-    photodescr4
+    photodescr4,
+    photodescr5
   } = req.body;
   console.log(req.body);
 
@@ -302,7 +310,7 @@ exports.postUpdateApartment = async (req, res) => {
       fridge,
       microwave,
       tableware,
-      coffemaker,
+      coffeemaker,
       toaster,
     },
     outdoor: {
@@ -328,6 +336,10 @@ exports.postUpdateApartment = async (req, res) => {
   apartment.photo4 = {
     url: photourl4,
     description: photodescr4
+  };
+  apartment.photo5 = {
+    url: photourl5,
+    description: photodescr5
   };
   await apartment.save();
   res.redirect("/");

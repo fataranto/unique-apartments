@@ -73,11 +73,11 @@
 
               <% };%>
             </div>
-            <div class="col"><%if(apartment.photo3.url){%>
+            <div class="col"><%if(apartment.photo5.url){%>
               <div class="position-relative">
-                <img src="<%= apartment.photo3.url %>" alt="" class="img-fluid ">
+                <img src="<%= apartment.photo5.url %>" alt="" class="img-fluid ">
                 <p class="position-absolute bottom-0 start-0 p-2 mb-0 bg-black bg-opacity-50 text-light small">
-                  <%= apartment.photo3.description %></p>
+                  <%= apartment.photo5.description %></p>
               </div>
               <% };%>
             </div>
@@ -200,7 +200,7 @@
                     <% if (apartment.amenities.kitchen.stove) { %> <p><img src="/imgs/stove.svg" alt=""
                         style="width: 20px; margin-right: 5px;">Stove</p> <% } %>
                     <% if (apartment.amenities.kitchen.fridge) { %> <p><img src="/imgs/refrigerator.svg" alt=""
-                        style="width: 20px; margin-right: 5px;">Fridge</p> <% } %>
+                        style="width: 20px; margin-right: 5px;">Refrigerator</p> <% } %>
                     <% if (apartment.amenities.kitchen.microwave) { %> <p><img src="/imgs/microwave.svg" alt=""
                         style="width: 20px; margin-right: 5px;">Microwave</p> <% } %>
                   </div>
@@ -209,7 +209,8 @@
                         style="width: 20px; margin-right: 5px;">Tableware</p> <% } %>
                     <% if (apartment.amenities.kitchen.toaster) { %> <p><img src="/imgs/toaster.svg" alt=""
                         style="width: 20px; margin-right: 5px;">Toaster</p> <% } %>
-                    <p>Coffee Maker</p>
+                        <% if (apartment.amenities.kitchen.coffeemaker) { %> <p><img src="/imgs/coffeemaker.svg" alt=""
+                          style="width: 20px; margin-right: 5px;">Coffee Maker</p> <% } %>
                   </div>
                 </div>
 
@@ -286,8 +287,12 @@
         <!-- rules -->
         <h3 class="mt-3">Rules</h3>
         <p><%= apartment.rules.rules %></p>
-        <p>Pets - Smoking</p>
 
+
+         <p>
+          <span><img <% if (apartment.rules.pets) { %> src="/imgs/petsallowed.svg" <% } else { %> src="/imgs/petsnotallowed.svg" <% } %> alt="" style="width: 20px; margin-right: 5px;"><% if (apartment.rules.pets) { %> Pets are wellcome <% } else { %> Pets not allowed <% } %></span> <span class="mx-2">|</span> <span><img <% if (apartment.rules.smoking) { %> src="/imgs/smokingallowed.svg" <% } else { %> src="/imgs/smokingnotallowed.svg" <% } %> alt="" style="width: 20px; margin-right: 5px;"><% if (apartment.rules.smoking) { %> Smoking allowed <% } else { %> Smoking not allowed <% } %></span>
+        </p>
+        
         <!-- END rules -->
 
       </div>
@@ -296,7 +301,7 @@
         <div class="sticky-top p-3">
           <h3 class="text-center mt-5 mb-3"><%= apartment.price %> €/night</h3>
 
-
+          <% if (user){ %>
           <form class="ms-auto mt-1 rounded border border-1 border-light bg-light"
             style="color: #484848;" method="POST"
             action="/apartment/<%= apartment._id %>/book">
@@ -310,9 +315,9 @@
             <div class="input-group" style=" font-size: small;">
 
 
-              <input class="form-control" style="font-size: 0.8rem;" type="date" min="2022-01-01" onfocus="this.min=new Date().toISOString().split('T')[0]" id="checkin" name="checkin" required/>
+              <input class="form-control" style="font-size: 0.8rem;" type="date" min="2022-01-01" onkeydown="return false" onfocus="this.min=new Date().toISOString().split('T')[0]" id="checkin" name="checkin" required/>
 
-              <input class="form-control" style="font-size: 0.8rem;" type="date" min="2022-01-01" onfocus="this.min=new Date().toISOString().split('T')[0]" id="checkout" name="checkout" required/>
+              <input class="form-control" style="font-size: 0.8rem;" type="date" min="2022-01-01" onkeydown="return false" onfocus="this.min=new Date().toISOString().split('T')[0]" id="checkout" name="checkout" required/>
             </div>
 
             <br>
@@ -330,6 +335,11 @@
             </div>
 
           </form>
+          <% } else { %>
+            <p>please <span><a data-bs-toggle="modal" data-bs-target="#loginModal" href="#">login</a></span> to make a reservation</p>
+          <% } %>
+         
+
 
         </div>
       </div>
@@ -356,9 +366,10 @@
     map.flyTo([ <%= apartment.location.lat %> , <%= apartment.location.long %> ], 15);
   </script>
 
+
+<% if (user){ %>
 <script>
  
-
   checkin.addEventListener('change', calculatePrice);
 
   checkout.addEventListener('change', calculatePrice);
@@ -385,6 +396,7 @@
 </script>
 
 <script src="/js/validate-booking-dates.js"></script>
+<% } %>
 
 
 

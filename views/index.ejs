@@ -40,14 +40,14 @@
           <label>CHECK OUT</label><br>
         </div>
         <div class="input-group" style=" font-size: small;">
-          <input class="form-control" style="font-size: 0.8rem;" type="date" min="2022-01-01" onfocus="this.min=new Date().toISOString().split('T')[0]" id="checkin" name="checkin" required/>
+          <input class="form-control" style="font-size: 0.8rem;" type="date" min="2022-01-01" onkeydown="return false" onfocus="this.min=new Date().toISOString().split('T')[0]" id="checkin" name="checkin" required/>
 
-              <input class="form-control" style="font-size: 0.8rem;" type="date" min="2022-01-01" onfocus="this.min=new Date().toISOString().split('T')[0]" id="checkout" name="checkout" required/>
+              <input class="form-control" style="font-size: 0.8rem;" type="date" min="2022-01-01" onkeydown="return false" onfocus="this.min=new Date().toISOString().split('T')[0]" id="checkout" name="checkout" required/>
         </div>
         <br>
         <div class="form-group" style=" font-size: small;">
           <label>GUESTS</label><br>
-          <input type="number" class="form-control" name="guests">
+          <input type="number" class="form-control" min=1 value=1 name="guests" required>
           <br>
 
 

@@ -24,13 +24,36 @@ exports.userDashboard = async (req, res) => {
   const user = await User.findById(req.userId).populate("roles", "-__v");
   //console.log(user)
 
-  //buscar todos los apatarmentos del usuario, traer el id del apartamentp, el título, la ciudad y el estado  
-  const apartments = await Apartment.find({
-    owner: req.userId
-  },"_id title location.city location.state");
+  //si el usuario tiene el rol admin busco todos los apartamentos
+  let apartments = [];
+  const admin = user.roles.find(role => role.name === "admin");
+
+  //console.log(role);
+
+  if (admin) {
+    apartments = await Apartment.find({},
+      "_id title location.city location.state");
+
+  } else {
+    apartments = await Apartment.find({
+      owner: req.userId
+    },"_id title location.city location.state");
+  }
+
+  
    
-//si hay un apartamento, mostrar el apartamento, si no, mostrar un mensaje de que no hay apartamentos
-  if(apartments.length > 0) {
+
+apartments.length > 0 ? res.status(200).render('user-dashboard.ejs', {
+  user,
+  apartments
+}) : res.status(200).render('user-dashboard.ejs', {
+  user,
+  apartments: undefined
+})
+};
+
+
+/*   if(apartments.length > 0) {
     res.status(200).render('user-dashboard.ejs', {
       user,
       apartments
@@ -41,7 +64,7 @@ exports.userDashboard = async (req, res) => {
       user,
       apartments: undefined
     })
-  }
+  } */
 
 
   //console.log(apartments)
@@ -49,4 +72,4 @@ exports.userDashboard = async (req, res) => {
  
 
   //${req.params.user}  ${req.userId} -> de aquí puedo coger la ruta de usuario y el id
-};
+//};

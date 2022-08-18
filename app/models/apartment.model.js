@@ -77,6 +77,10 @@ const Apartment = mongoose.model(
         url: String,
         description: String
     },
+    photo5: {
+        url: String,
+        description: String
+    },
     owner: 
       {
         type: mongoose.Schema.Types.ObjectId,

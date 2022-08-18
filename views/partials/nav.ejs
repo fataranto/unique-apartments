@@ -7,21 +7,13 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarContent">
-      <!--             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-            </ul> -->
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link <% if (user){%> d-none <% } %>" data-bs-toggle="modal" data-bs-target="#exampleModal"
+          <a class="nav-link <% if (user){%> d-none <% } %>" data-bs-toggle="modal" data-bs-target="#signUpModal"
             href="#">Sign Up</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <% if (user){%> d-none <% } %>" data-bs-toggle="modal" data-bs-target="#exampleModal1"
+          <a class="nav-link <% if (user){%> d-none <% } %>" data-bs-toggle="modal" data-bs-target="#loginModal"
             href="#">Login</a>
         </li>
         <li class="nav-item dropdown <% if (!user){%> d-none <% } %>">
@@ -48,11 +40,11 @@
 
 <!-- Registration form -->
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="signUpModal" tabindex="-1" aria-labelledby="signUpModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Registration form</h5>
+        <h5 class="modal-title" id="signUpModalLabel">Registration form</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -130,11 +122,11 @@
 
 <!-- Sign in form -->
 <!-- Modal -->
-<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Welcome back!</h5>
+        <h5 class="modal-title" id="loginModalLabel">Welcome back!</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -144,11 +136,11 @@
         <div class="container">
           <div class="row justify-content-center">
             <form id="loginForm" class="bg-white  rounded-5 shadow-5-strong p-2"
-              onsubmit="return setAction(this, event)">
+              onsubmit="return setLoginAction(this, event)">
               <!-- User input -->
               <div class="form-outline mb-4">
 
-                <input type="text" class="form-control" name="username" />
+                <input type="text" class="form-control" name="username" required/>
                 <label class="form-label">Username</label>
               </div>
 
@@ -258,7 +250,7 @@
   }
 
 
-  async function setAction(form, event) {
+  async function setLoginAction(form, event) {
     event.preventDefault();
     try {
       const display = document.querySelector('#loginAlert');

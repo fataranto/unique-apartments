@@ -40,8 +40,9 @@
           <label>CHECK OUT</label><br>
         </div>
         <div class="input-group" style=" font-size: small;">
-          <input class="form-control" type="date" placeholder="dd-mm-yyyy" name="checkin" />
-          <input class="form-control" type="date" placeholder="dd-mm-yyyy" name="checkout" />
+          <input class="form-control" style="font-size: 0.8rem;" type="date" min="2022-01-01" onfocus="this.min=new Date().toISOString().split('T')[0]" id="checkin" name="checkin" required/>
+
+              <input class="form-control" style="font-size: 0.8rem;" type="date" min="2022-01-01" onfocus="this.min=new Date().toISOString().split('T')[0]" id="checkout" name="checkout" required/>
         </div>
         <br>
         <div class="form-group" style=" font-size: small;">
@@ -106,6 +107,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 
   <script src="/js/search-apartment-cities.js"></script>
+  <script src="/js/validate-booking-dates.js"></script>
 
 </body>
 

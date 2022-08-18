@@ -4,7 +4,6 @@
     const tarragona = '/data/tarragona.json';
     const lleida = '/data/lleida.json';
 
-
     const cities = [];
     fetch(barcelona)
         .then(blob => blob.json())
@@ -40,7 +39,6 @@
         }
 
         const matchArray = findMatches(this.value, cities);
-
 
         const html = matchArray.map((place, i) => {
 
@@ -81,8 +79,6 @@
         })
 
     }
-
-
 
 
     const searchInput = document.querySelector('#searchCity');

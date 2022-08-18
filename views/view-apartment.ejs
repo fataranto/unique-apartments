@@ -357,27 +357,7 @@
   </script>
 
 <script>
-  //validate dates
-
-  var checkin = document.getElementById('checkin');
-  var checkout = document.getElementById('checkout');
-
-  checkin.value = new Date().toISOString().split('T')[0];
-
-  checkin.addEventListener('focus', function() {
-    const checkoutDate = checkout.valueAsDate;
-    const maxDate = new Date(Number(checkoutDate));
-    maxDate.setDate(checkoutDate.getDate() - 1);    
-    this.max = maxDate.toISOString().split('T')[0];
-  }); 
-
-  //check out must be at least ONE DAY more than check in
-  checkout.addEventListener('focus', function() {
-    const checkinDate = checkin.valueAsDate;
-    const minDate = new Date(Number(checkinDate));
-    minDate.setDate(checkinDate.getDate() + 1);
-    this.min = minDate.toISOString().split('T')[0];
-  }); 
+ 
 
   checkin.addEventListener('change', calculatePrice);
 
@@ -393,7 +373,7 @@
       const nights = Math.floor(diff / (1000 * 60 * 60 * 24));
       const thePrice = <%= apartment.price %>;
       const total = nights * thePrice;
-      const showTotal = document.getElementById('total');
+      const showTotal = document.querySelector('#total');
       showTotal.innerHTML = '';
       showTotal.innerHTML = `<p class="small"><span class="fw-bold" >Total: </span>${thePrice} € x ${nights} nights = ${total} €</p>`;
       console.log(checkinDate);
@@ -403,6 +383,8 @@
   }; 
 
 </script>
+
+<script src="/js/validate-booking-dates.js"></script>
 
 
 

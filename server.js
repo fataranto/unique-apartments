@@ -43,6 +43,10 @@ app.use(
   })
 );
 
+
+
+
+
 const db = require("./app/models");
 const Role = db.role;
 const User = db.user;
@@ -72,6 +76,12 @@ app.get("/", [authJwt.verifyTokenPublic], controller.getAllApartments);
 require("./app/routes/auth.routes")(app);
 require("./app/routes/user.routes")(app);
 require("./app/routes/apartment.routes")(app);
+
+app.use((req, res) =>{
+  res.status(404).render('error.ejs', 
+      { error: "Error: The page you're looking for doesn't exist!" 
+      });
+  });
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

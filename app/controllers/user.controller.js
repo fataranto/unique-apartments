@@ -60,7 +60,9 @@ exports.userDashboard = async (req, res) => {
         },
         apartments
       })
-  } catch (error) {
-    res.status(500).send(error);
+  } catch (err) {
+    res.status(500).render('error.ejs', {
+      error: err 
+  })
   }
 };

@@ -180,11 +180,18 @@ exports.getEditApartment = async (req, res) => {
   let user = req.user ? req.user : false;
   //const user = await User.findById(req.userId).populate("roles", "-__v");
   const apartment = await Apartment.findById(req.params.apartment);
-  console.log(apartment);
+  //si el usuario no es el dueño del apartamento, muestro error por consola
+  if (apartment.owner != req.userId) {
+    res.status(400).render('error.ejs', {
+      error: "Error: Page not found or not authorized" 
+  })
+  } else {
+  //console.log(apartment);
   res.status(200).render('new-apartment.ejs', {
     user,
     apartment
   })
+}
 }
 
 exports.postUpdateApartment = async (req, res) => {
@@ -335,10 +342,10 @@ exports.getViewApartment = async (req, res) => {
       apartment
     })
   } catch (err) {
-    res.status(400).send(err);
+    res.status(400).render('error.ejs', {
+        error: err 
+    })
   }
-
-
 };
 
 exports.postSearchResults = async (req, res) => {

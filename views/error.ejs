@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/unique-styles.css">
+    <title>Error Page</title>
+
+    <style>
+        .e404 {
+            text-align: center;
+            font-size: 16em;
+            font-weight: bold;
+            text-shadow: -7px 7px #9fcdf9;
+        };
+
+
+    </style>
+    
+</head>
+<body class="container-fluid"
+  style="height: 100vh; background-image: url('https://source.unsplash.com/random/1800x1200/?lost');background-size: cover;background-repeat:no-repeat">
+
+
+  <div class="container d-flex justify-content-center align-items-center flex-column">
+      <p class="text-primary e404">404</p>
+        <div class="mx-10 p-5 bg-light opacity-75" >
+            <p>Something like <strong><%=error%></strong> happened, but no worries about the details.</p>
+            <p>You can always go back home</p>
+            <a href="/" class="btn btn-primary">Please, take me home</a>
+        </div>
+  </div>
+    
+</body>
+</html>

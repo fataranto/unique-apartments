@@ -21,31 +21,6 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-/* 
-// todavia no esta funcionando, con esto intento guardar los datos de los usuarios para pasárselos a la vista
-
-var requestUser = async function(req, res, next) {
-  if(decoded !== undefined){
-    req.userId = decoded.id; 
-    req.user = await User.findById(req.userId).populate("roles","-__v");
-    
-    next();
-  };
-}
-
-app.use(requestUser);
-*/
-
-/* app.use( function (req, res, next) {// Make `user` and `authenticated` available in templates
-
-//saber si algún usuario está conectado y obtener su nombre y cargarlo en el menú de la vista
- 
-}
-); */
-
-
-// fin de la función para guardar los datos de los usuarios
-
  
 
 var corsOptions = {
@@ -89,21 +64,7 @@ db.mongoose
 // index route
 app.get("/", [authJwt.verifyTokenPublic], controller.getAllApartments);
 
-// ruta original sin carga de apartamentos
-/* app.get("/", [authJwt.verifyTokenPublic], async (req, res) => {
 
-  let user = false;
-  if(req.userId) {
-    console.log("usuario: " + req.userId);
-
-    user = await User.findById(req.userId).populate("roles", "-__v");
-  }
-
-  res.status(200).render('index.ejs', {
-    user
-  })
-  
-}); */
 
 
 

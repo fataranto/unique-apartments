@@ -113,15 +113,23 @@ exports.signin = (req, res) => {
         expiresIn: 86400, // 24 hours
       }); */
 
-      var token = jwt.sign({ id: user.id, username: user.username }, config.secret, {
-        expiresIn: expiresIn, 
-      });
-
       var authorities = [];
+
+      const isAdmin = user.roles.some((role) => role.name === "admin");
+      //console.log("isAdmin: ", isAdmin);
+      const isHost = user.roles.some((role) => role.name === "host");
+
 
       for (let i = 0; i < user.roles.length; i++) {
         authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
       }
+
+      var token = jwt.sign({ id: user.id, username: user.username, isAdmin: isAdmin, isHost: isHost }, config.secret, {
+        expiresIn: expiresIn, 
+      });
+
+
+      //console.log("authorities: ", authorities);
 
       req.session.token = token;
 

@@ -116,7 +116,7 @@
 
                 <div class=" <%if(apartment._id){%> d-none <%}%>">
                     <small id="photoHelp" class="form-text text-muted">Add up to 5 pictures, you can drag them later to
-                        select the main photo</small>
+                        set the order. The first one will be the main photo</small>
                 </div>
                     <div class="form-group row g-3">
                         <div class=" <%if(apartment._id){%> d-none <%}%>">
@@ -135,7 +135,7 @@
                 
 
 
-                    <div id="photoContainer" class="border-3 border-primary">
+                    <div id="photoContainer" class="border-3 border-primary d-flex flex-row">
                         <% if(apartment.photo1) { %>
                         <img height=" 150" class="rounded-3 me-2" src="<%= apartment.photo1.url %>" alt=""
                     data-id="<%= apartment.photo1.url %>||<%= apartment.photo1.description %>">
@@ -751,7 +751,9 @@
                 button.classList.add("disabled");
             }
             let container = document.querySelector("#photoContainer");
+            let imageContainer = document.createElement("div");
             let image = document.createElement("img");
+            let closeButton = document.createElement("button");
             image.height = "150";
             image.classList.add("rounded-3");
             image.classList.add("me-2");
@@ -759,8 +761,29 @@
             let description = document.querySelector("#photo_desc").value;
             //let image = document.querySelector(`#photo${totalPhotos}`)
             image.src = photo;
-            image.setAttribute("data-id", `${photo}||${description}`);
+            imageContainer.setAttribute("data-id", `${photo}||${description}`);
             //image.classList.remove("d-none");
+            closeButton.classList.add("btn-close");
+            closeButton.classList.add("bg-light");
+            //posiciono el boton en la esquina superior derecha de la imagen
+            imageContainer.style.position = "relative";
+            imageContainer.style.display = "inline-block";
+            closeButton.style.position = "absolute";
+            closeButton.style.top = "8px";
+            closeButton.style.right = "15px";
+            closeButton.style.zIndex = "2";
+
+            
+
+
+            closeButton.addEventListener("click", () => {
+                imageContainer.remove();
+                totalPhotos--;
+                button.classList.remove("disabled");
+            }
+            );
+
+
 
             let formInputPhoto = document.querySelector(`#inputPhoto${totalPhotos}`);
             formInputPhoto.value = photo;
@@ -771,7 +794,10 @@
             document.querySelector("#photo_desc").value = "";
 
 
-            container.appendChild(image);
+            imageContainer.appendChild(image);
+            imageContainer.appendChild(closeButton);
+
+            container.appendChild(imageContainer);
 
         })
 

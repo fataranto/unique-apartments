@@ -25,13 +25,18 @@
     <h1>Dashboard</h1>
     <p>-Este es el dashboard del usuario, aquí tendrá la posibilidad de actualizar sus datos y todo lo referente a la
       gestión de los pisos que haya resrvado.</p>
+      <p>id: <%= user.id %></p>
     <p> username: <%=user.username%> </p>
     <p> Name: <%=user.name%> </p>
     <p> Last Name: <%=user.lastname%> </p>
     <p> Email: <%=user.email%> </p>
-    <p> <% if(user.roles[1]){ %>
-      <%=user.roles[1].name%>
-      <% }   %> </p>
+     <% if (user.isAdmin){ %>
+      <p>Admin</p>
+    <% } %> 
+    <% if (user.isHost){ %>
+      <p>Host</p>
+    <% } %> 
+ 
 
   </section>
 

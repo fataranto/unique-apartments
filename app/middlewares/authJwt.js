@@ -17,6 +17,14 @@ verifyToken = (req, res, next) => {
     }
     req.userId = decoded.id; //guardo el id del usuario (es el identificador único de la colección users)
     req.userUsername = decoded.username; //guardo el username del usuario
+    req.isAdmin = decoded.isAdmin; //guardo si el usuario es admin o no
+    req.isHost = decoded.isHost; //guardo si el usuario es host o no
+    req.user = {
+      id: decoded.id,
+      username: decoded.username,
+      isAdmin: decoded.isAdmin,
+      isHost: decoded.isHost
+    }
     next();
   });
 };
@@ -31,6 +39,15 @@ verifyTokenPublic = (req, res, next) => {
     if(decoded !== undefined){
       req.userId = decoded.id; 
       req.userUsername = decoded.username;
+      req.isAdmin = decoded.isAdmin;
+      req.isHost = decoded.isHost;
+      req.user = {
+        id: decoded.id,
+        username: decoded.username,
+        isAdmin: decoded.isAdmin,
+        isHost: decoded.isHost
+      }
+      //console.log(req.userId, req.userUsername, req.userRoles)
 
       return next();
     }

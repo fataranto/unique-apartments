@@ -24,9 +24,12 @@
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 
 
-            <li><a class="dropdown-item" href="/admin/user/<%= user.username %>">Dashboard</a></li>
+            <li><a class="dropdown-item" href="/admin/user/<%= user.id %>">Dashboard</a></li>
 
+            <% if (user.isAdmin || user.isHost){%>
             <li><a class="dropdown-item" href="/apartment/new-apartment">Add an Apartment</a></li>
+            <% } %>  
+
             <li><a class="dropdown-item" href="/api/auth/signout">Logout</a></li>
           </ul>
         </li>
@@ -34,7 +37,6 @@
     </div>
   </div>
 </nav>
-
 
 
 

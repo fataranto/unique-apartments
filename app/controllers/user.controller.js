@@ -21,55 +21,41 @@ exports.hostBoard = (req, res) => {
 
 exports.userDashboard = async (req, res) => {
 
-  const user = await User.findById(req.userId).populate("roles", "-__v");
+  const fullUser = await User.findById(req.userId).populate("roles", "-__v");
   //console.log(user)
 
-  //si el usuario tiene el rol admin busco todos los apartamentos
-  let apartments = [];
-  const admin = user.roles.find(role => role.name === "admin");
+    //si el usuario tiene el rol admin busco todos los apartamentos
+    let apartments = [];
+    const admin = fullUser.roles.find(role => role.name === "admin");
+    const isAdmin = admin ? true : false;
 
-  //console.log(role);
+    const host = fullUser.roles.find(role => role.name === "host");
+    const isHost = host ? true : false;
 
-  if (admin) {
-    apartments = await Apartment.find({},
-      "_id title location.city location.state");
+    //console.log(role);
 
-  } else {
-    apartments = await Apartment.find({
-      owner: req.userId
-    },"_id title location.city location.state");
-  }
+    if (admin) {
+      apartments = await Apartment.find({},
+        "_id title location.city location.state");
 
-  
-   
+    } else {
+      apartments = await Apartment.find({
+        owner: req.userId
+      },"_id title location.city location.state");
+    }
 
-apartments.length > 0 ? res.status(200).render('user-dashboard.ejs', {
-  user,
-  apartments
-}) : res.status(200).render('user-dashboard.ejs', {
-  user,
-  apartments: undefined
-})
-};
+    apartments = apartments.length >0 ? apartments : undefined;
 
-
-/*   if(apartments.length > 0) {
     res.status(200).render('user-dashboard.ejs', {
-      user,
+      user: {
+        id: req.userId,
+        username: fullUser.username,
+        name: fullUser.name,
+        lastname: fullUser.lastname,
+        email: fullUser.email,
+        isAdmin: isAdmin,
+        isHost: isHost
+      },
       apartments
     })
-  }
-  else {
-    res.status(200).render('user-dashboard.ejs', {
-      user,
-      apartments: undefined
-    })
-  } */
-
-
-  //console.log(apartments)
-
- 
-
-  //${req.params.user}  ${req.userId} -> de aquí puedo coger la ruta de usuario y el id
-//};
+};

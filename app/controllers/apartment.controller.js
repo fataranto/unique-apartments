@@ -7,14 +7,8 @@ const moment = require('moment');
 
 
 exports.getAllApartments = async (req, res) => {
-  let user = false;
-  if (req.userId) {
-    //user = await User.findById(req.userId).populate("roles", "-__v");
-    user = {
-      id: req.userId,
-      username: req.userUsername
-    }
-  }
+  let user = req.user ? req.user : false;
+
 
   const apartments = await Apartment.find().sort({
     price: 1
@@ -28,14 +22,7 @@ exports.getAllApartments = async (req, res) => {
 
 
 exports.getAddApartment = async (req, res) => {
-  let user = false;
-  if (req.userId) {
-    //user = await User.findById(req.userId).populate("roles", "-__v");
-    user = {
-      id: req.userId,
-      username: req.userUsername
-    }
-  }
+  let user = req.user ? req.user : false;
   // const user = await User.findById(req.userId).populate("roles", "-__v");
   res.status(200).render('new-apartment.ejs', {
     user,
@@ -190,14 +177,7 @@ exports.postAddApartment = async (req, res) => {
 
 
 exports.getEditApartment = async (req, res) => {
-  let user = false;
-  if (req.userId) {
-    //user = await User.findById(req.userId).populate("roles", "-__v");
-    user = {
-      id: req.userId,
-      username: req.userUsername
-    }
-  }
+  let user = req.user ? req.user : false;
   //const user = await User.findById(req.userId).populate("roles", "-__v");
   const apartment = await Apartment.findById(req.params.apartment);
   console.log(apartment);
@@ -346,33 +326,23 @@ exports.postUpdateApartment = async (req, res) => {
 }
 
 exports.getViewApartment = async (req, res) => {
-  let user = false;
-  if (req.userId) {
-    user = {
-      id: req.userId,
-      username: req.userUsername
-    }
+  let user = req.user ? req.user : false;
+
+  try {
+    const apartment = await Apartment.findById(req.params.apartment);
+    res.status(200).render('view-apartment.ejs', {
+      user,
+      apartment
+    })
+  } catch (err) {
+    res.status(400).send(err);
   }
 
-  const apartment = await Apartment.findById(req.params.apartment);
-  //console.log(apartment)
 
-  res.status(200).render('view-apartment.ejs', {
-    user,
-    apartment
-  })
-
-  //${req.params.user}  ${req.userId} -> de aquí puedo coger la ruta de usuario y el id
 };
 
 exports.postSearchResults = async (req, res) => {
-  let user = false;
-  if (req.userId) {
-    user = {
-      id: req.userId,
-      username: req.userUsername
-    }
-  }
+  let user = req.user ? req.user : false;
 
   var {
     city,

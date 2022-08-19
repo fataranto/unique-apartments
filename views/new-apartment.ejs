@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <style>
-    #photoContainer img:nth-child(1) {
+    #photoContainer > div img{
+        border: 5px solid var(--bs-secondary);
+    }
+    
+    #photoContainer div:nth-child(1) img{
         border: 5px solid var(--bs-primary);
     }
 </style>
@@ -69,40 +73,41 @@
                     <div class="col-md-2">
                         <label for="price">Price / night (€)
                         </label>
-                        <input type="number" id="price" class="form-control" name="price" value="<%= apartment.price %>"
+                        <input type="number" id="price" class="form-control" name="price" min=10 max=800 value="<%= apartment.price %>"
                             required>
                     </div>
                     <div class="col-md-3">
                         <label for="availablefrom">Available from</label>
-                        <input type="date" id="availablefrom" class="form-control" name="availablefrom"
+
+                        <input type="date" min="2022-01-01" onkeydown="return false" <% if (!apartment.availablefrom) { %> onfocus="this.min=new Date().toISOString().split('T')[0]"<% } %> id="checkin" class="form-control" name="availablefrom"
                             <% if (apartment.availablefrom) { %>
                             value="<%= apartment.availablefrom.toLocaleDateString('en-CA') %>" <% } %> required>
                     </div>
                     <div class="col-md-3">
-                        <label for="availablefrom">Available to</label>
-                        <input type="date" id="availableto" class="form-control" name="availableto"
+                        <label for="availableto">Available to</label>
+                        <input type="date" min="2022-01-01" onkeydown="return false" <% if (!apartment.availableto) { %> onfocus="this.min=new Date().toISOString().split('T')[0]"<% } %> id="checkout" class="form-control" name="availableto"
                             <% if (apartment.availableto) { %>
                             value="<%= apartment.availableto.toLocaleDateString('en-CA') %>" <% } %> required>
                     </div>
                     <div class="col-md-1">
                         <label for="capacity">Capacity</label>
                         <input type="number" id="capacity" class="form-control" name="capacity"
-                            value="<%= apartment.capacity%>" required>
+                            value="<%= apartment.capacity%>" min=1 required>
                     </div>
                     <div class="col-md-1">
                         <label for="rooms">Rooms</label>
-                        <input type="number" id="rooms" class="form-control" name="rooms" value="<%= apartment.rooms%>"
-                            required>
+                        <input type="number" id="rooms" class="form-control" name="rooms" 
+                        value="<%= apartment.rooms%>" min=1 required>
                     </div>
                     <div class="col-md-1">
                         <label for="bathrooms">Bathrooms</label>
                         <input type="number" id="bathrooms" class="form-control" name="bathrooms"
-                            value="<%= apartment.bathrooms%>" required>
+                            value="<%= apartment.bathrooms%>" min=1 required>
                     </div>
                     <div class="col-md-1">
                         <label for="meters">Sup(m<sup>2</sup>) </label>
                         <input type="number" id="meters" class="form-control" name="meters"
-                            value="<%= apartment.meters%>" required>
+                            value="<%= apartment.meters%>" min=20 required>
                     </div>
 
 
@@ -125,7 +130,7 @@
                                 <input type="text" id="photo" placeholder="url photo" class="form-control">
                             </div>
                             <div class="col-md-5">
-                                <input type="text" id="photo_desc" placeholder="photo description" class="form-control">
+                                <input type="text" id="photo_desc" placeholder="photo description" class="form-control" max="25">
                             </div>
                             <div class="col-md-2">
                                 <a class="btn btn-primary" id="photoOk">ok</a>
@@ -232,7 +237,7 @@
         <div class="form-group row g-3">
             <div class="col-md-3">
                 <label for="state">Province
-                    <select class="form-control" id="state" name="state">
+                    <select class="form-control" id="state" name="state" required>
                         
                         <option value="<% if (apartment.location) { %><%=apartment.location.state%><% } %>" 
                          disabled selected>
@@ -249,7 +254,7 @@
             </div>
             <div class="col-md-5">
                 <label for="city">City
-                    <select class="form-control" id="city" name="city">
+                    <select class="form-control" id="city" name="city" required>
                         <option value="<% if (apartment.location) { %><%=apartment.location.city%><% } %>" 
                         disabled selected>
                             <% if (apartment.location) { %>
@@ -266,13 +271,13 @@
             <div class="col-md-2">
                 <label for="lat">Latitude
                     <input class="form-control" id="lat" type="text"  name="lat" required <% if(apartment.location) { %>
-                        value="<%= apartment.location.lat %>" <% } %> >
+                        value="<%= apartment.location.lat %>" <% } %> required>
                 </label>
             </div>
             <div class="col-md-2">
                 <label for="long">Longitude
                     <input class="form-control" id="long" type="text"  name="long" required <% if(apartment.location) { %>
-                        value="<%= apartment.location.long %>" <% } %> >
+                        value="<%= apartment.location.long %>" <% } %> required>
                 </label>
             </div>
         </div>
@@ -285,7 +290,7 @@
         <div class="form-group row g-3">
             <div class="col-md-8">
                 <label for="rules">Description
-                    <textarea id="rules" name="rules" class="form-control" required><% if (apartment.rules) { %><%= apartment.rules.rules %><% } %></textarea>
+                    <textarea id="rules" name="rules" class="form-control" max=200 required><% if (apartment.rules) { %><%= apartment.rules.rules %><% } %></textarea>
                     <small id="rulesHelp" class="form-text text-muted">Please tell your guests the general rules
                         of your home</small>
                 </label>
@@ -743,25 +748,52 @@
 
 
     <script>
+        
+        const apartmentPhotos = [];
+        var apartment_photo1 = <%- apartment.photo1 %>;
+        var apartment_photo2 = <%- apartment.photo2 %>;
+        var apartment_photo3 = <%- apartment.photo3 %>;
+        var apartment_photo4 = <%- apartment.photo4 %>;
+        var apartment_photo5 = <%- apartment.photo5 %>;
+
+
+        if(apartment_photo1) { 
+            apartmentPhotos.push(apartment_photo1); 
+        } 
+        if(apartment_photo2) { 
+            apartmentPhotos.push(apartment_photo2); 
+        }
+        if(apartment_photo3) { 
+            apartmentPhotos.push(apartment_photo3); 
+        }
+        if(apartment_photo4) { 
+            apartmentPhotos.push(apartment_photo4); 
+        }
+        if(apartment_photo5) { 
+            apartmentPhotos.push(apartment_photo5); 
+        }
+
+        console.log(apartmentPhotos);
+
         let totalPhotos = 0;
         let button = document.querySelector("#photoOk");
         button.addEventListener("click", () => {
             totalPhotos++;
-            if (totalPhotos == 5) {
-                button.classList.add("disabled");
-            }
+            
             let container = document.querySelector("#photoContainer");
             let imageContainer = document.createElement("div");
             let image = document.createElement("img");
+            let info = document.createElement("div");
             let closeButton = document.createElement("button");
             image.height = "150";
             image.classList.add("rounded-3");
             image.classList.add("me-2");
-            let photo = document.querySelector("#photo").value;
-            let description = document.querySelector("#photo_desc").value;
+            let photo = document.querySelector("#photo");
+            let description = document.querySelector("#photo_desc");
             //let image = document.querySelector(`#photo${totalPhotos}`)
-            image.src = photo;
-            imageContainer.setAttribute("data-id", `${photo}||${description}`);
+            image.src = photo.value;
+            imageContainer.setAttribute("data-id", `${photo.value}||${description.value}`);
+            info.textContent = description.value;
             //image.classList.remove("d-none");
             closeButton.classList.add("btn-close");
             closeButton.classList.add("bg-light");
@@ -780,15 +812,18 @@
                 imageContainer.remove();
                 totalPhotos--;
                 button.classList.remove("disabled");
+                photo.disabled = false;
+                description.disabled = false;
             }
             );
 
 
 
             let formInputPhoto = document.querySelector(`#inputPhoto${totalPhotos}`);
-            formInputPhoto.value = photo;
+            formInputPhoto.value = photo.value;
             let formInputDescription = document.querySelector(`#inputPhotoDesc${totalPhotos}`);
-            formInputDescription.value = description;
+            console.log(description.value);
+            formInputDescription.value = description.value;
 
             document.querySelector("#photo").value = "";
             document.querySelector("#photo_desc").value = "";
@@ -796,8 +831,15 @@
 
             imageContainer.appendChild(image);
             imageContainer.appendChild(closeButton);
+            imageContainer.appendChild(info);
 
             container.appendChild(imageContainer);
+
+            if (totalPhotos == 5) {
+                button.classList.add("disabled");
+                photo.disabled = true;
+                description.disabled = true;
+            }
 
         })
 
@@ -821,6 +863,8 @@
             }
         }); //sortableJS
     </script>
+
+<script src="/js/validate-booking-dates.js"></script>
 
 
 

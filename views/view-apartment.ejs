@@ -299,7 +299,7 @@
 
       <div class="col-3 bg-light rounded shadow">
         <div class="sticky-top p-3">
-          <h3 class="text-center mt-5 mb-3"><%= apartment.price %> €/night</h3>
+          <h3 class="text-center mt-5 mb-3 text-primary"><%= apartment.price %> €/night</h3>
 
           <% if (user){ %>
           <form class="ms-auto mt-1 rounded border border-1 border-light bg-light"
@@ -323,7 +323,7 @@
             <br>
             <div class="form-group" style=" font-size: small;">
               <label>GUESTS</label><br>
-              <input type="number" class="form-control" min=1 value=1 name="guests" required>
+              <input type="number" class="form-control" min=1 max="<%= apartment.capacity %>" value=1 name="guests" required>
               <br>
             </div>
             <p id="total"></p>

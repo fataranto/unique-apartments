@@ -38,7 +38,7 @@
         <% } %>
 
         <div class="row">
-            <form method="post" data-action="
+            <form method="post" action="
                 <% if (apartment._id) { %> 
                     /apartment/<%- apartment._id %>/update
                 <% } else { %>
@@ -146,41 +146,41 @@
                         <div id="photodata" class=" <%if(!apartment._id){%> d-none <%}%>">
                             <!-- photo 1 -->
                             <label for="photourl1" class="mt-3">URL Photo 1</label>
-                            <input class="photo1 col-9 form-control" id="inputPhoto1" type="text" placeholder="url photo 1" name="photourl1">
+                            <input class="photodata photo1 col-9 form-control" id="inputPhoto1" type="text" placeholder="url photo 1" name="photourl1">
                             <label for="photodescr1">Description Photo 1</label>
-                            <input class="photo1 col-6 form-control" id="inputPhotoDesc1" type="text" placeholder="description photo 1"
+                            <input class="photodata photo1 col-6 form-control" id="inputPhotoDesc1" type="text" placeholder="description photo 1"
                             name="photodescr1">
 
                             <!-- photo 2 -->
                             <label for="photourl2" class="mt-3">URL Photo 2</label>
-                            <input class="photo2 col-9 form-control" id="inputPhoto2" type="text" placeholder="url photo 2" placeholder="url photo 2"
+                            <input class="photodata photo2 col-9 form-control" id="inputPhoto2" type="text" placeholder="url photo 2" placeholder="url photo 2"
                             name="photourl2">
                             <label for="photodescr2">Description Photo 2</label>
-                            <input class="photo2 col-6 form-control" id="inputPhotoDesc2" type="text" placeholder="description photo 2"
+                            <input class="photodata photo2 col-6 form-control" id="inputPhotoDesc2" type="text" placeholder="description photo 2"
                             name="photodescr2">
 
                             <!-- photo 3 -->
                             <label for="photourl3" class="mt-3">URL Photo 3</label>
-                            <input class="photo3 col-9 form-control" id="inputPhoto3" type="text" placeholder="url photo 3" placeholder="url photo 3"
+                            <input class="photodata photo3 col-9 form-control" id="inputPhoto3" type="text" placeholder="url photo 3" placeholder="url photo 3"
                             name="photourl3">
                             <label for="photodescr3">Description Photo 3</label>
-                            <input class="photo3 col-6 form-control" id="inputPhotoDesc3" type="text" placeholder="description photo 3"
+                            <input class="photodata photo3 col-6 form-control" id="inputPhotoDesc3" type="text" placeholder="description photo 3"
                             name="photodescr3">
 
                             <!-- photo 4 -->
                             <label for="photourl4" class="mt-3">URL Photo 4</label>
-                            <input class="photo4 col-9 form-control" id="inputPhoto4" type="text" placeholder="url photo 4" placeholder="url photo 4"
+                            <input class="photodata photo4 col-9 form-control" id="inputPhoto4" type="text" placeholder="url photo 4" placeholder="url photo 4"
                             name="photourl4">
                             <label for="photodescr4">Description Photo 4</label>
-                            <input class="photo4 col-6 form-control" id="inputPhotoDesc4" type="text" placeholder="description photo 4"
+                            <input class="photodata photo4 col-6 form-control" id="inputPhotoDesc4" type="text" placeholder="description photo 4"
                             name="photodescr4">
 
                             <!-- photo 5 -->
                             <label for="photourl4" class="mt-3">URL Photo 5</label>
-                            <input class="photo5 col-9 form-control" id="inputPhoto5" type="text" placeholder="url photo 5" placeholder="url photo 5"
+                            <input class="photodata photo5 col-9 form-control" id="inputPhoto5" type="text" placeholder="url photo 5" placeholder="url photo 5"
                             name="photourl5">
                             <label for="photodescr4">Description Photo 5</label>
-                            <input class="photo5 col-6 form-control" id="inputPhotoDesc5" type="text" placeholder="description photo 5"
+                            <input class="photodata photo5 col-6 form-control" id="inputPhotoDesc5" type="text" placeholder="description photo 5"
                             name="photodescr5">    
 
                         </div>
@@ -756,17 +756,14 @@
                     formInputDescription.value = description.value;
 
                     closeButton.addEventListener("click", (e) => {
-                        //console.log(e.target.parentElement.id);
-                        let id = e.target.parentElement.id;
-                        let photoData = document.querySelectorAll(`.${id}`);
-                        photoData.forEach(input => {
-                            input.value = "";
-                        });
-                        imageContainer.remove();
                         totalPhotos--;
                         button.classList.remove("disabled");
                         photo.disabled = false;
                         description.disabled = false;
+
+                        imageContainer.remove();
+
+                        sortImagesId();
                     }); 
 
                     document.querySelector("#photo").value = "";
@@ -831,34 +828,28 @@
 
 
                 closeButton.addEventListener("click", (e) => {
-                    //console.log(e.target);
+                    //console.log(e.target.parentElement.parentElement);
                     
-                    let id = e.target.parentElement.id;
-                     let photoData = document.querySelectorAll(`.${id}`);
+                    /* let id = e.target.parentElement.id;
+                    let photoData = document.querySelectorAll(`.${id}`);
                     photoData.forEach(input => {
                         input.value = "";
-                    }); 
+                    });  */
                     totalPhotos--;
                     button.classList.remove("disabled");
                     photo.disabled = false;
                     description.disabled = false;
 
-                    /* let photodata = document.querySelectorAll("#photodata input");
-                    photodata.forEach((e,i) => {
-                        e.value = "";
-                    }); */
-
-                    /* let imageContainer = document.querySelectorAll('#photoContainer .imageContainer');
-                    imageContainer.forEach((e,i) => {
-                        if(e.getAttribute("data-id") == photoInfo[0]+"||"+photoInfo[1]) {
-                            e.setAttribute("id", `photo${i+1}`);
-                        }
-                    }); */
-
                     imageContainer.remove();
+
+                    sortImagesId();
 
 
                 });    
+
+                
+
+                
 
                 
 
@@ -880,6 +871,26 @@
             });
              
         }
+
+        function sortImagesId() {
+                    let images = document.querySelectorAll(".imageContainer");
+                    let photodata = document.querySelectorAll(".photodata");
+                    photodata.forEach(input => {
+                        input.value = "";
+                    });
+
+                    images.forEach((e,i) => {
+                        e.setAttribute("id", `photo${i+1}`);
+                        //leo el data-id de cada imagen y lo separo por el ||
+                        let data = e.getAttribute("data-id").split("||");
+                        //console.log(data);
+                        let formInputPhoto = document.querySelector(`#inputPhoto${i+1}`);
+                        formInputPhoto.value = data[0];
+                        let formInputDescription = document.querySelector(`#inputPhotoDesc${i+1}`);
+                        formInputDescription.value = data[1];
+                        
+                    });
+                }
           
 
 

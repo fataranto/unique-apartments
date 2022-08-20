@@ -46,7 +46,30 @@
   <section class="container">
     <h3>My apartaments</h3>
 
- 
+             <!-- creo el modal para eliminar apartamento-->
+             <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Are you sure you want to delete this apartment?</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <form id="deleteForm" action="" method="POST">
+                      <input type="hidden" name="_method" value="DELETE">
+                      <input type="hidden" name="userId" value="<%= user.id %>">
+                      <input type="submit" class="btn btn-danger" value="Delete">
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
 
     <table id="myApartments" class="table table-hover text-nowrap table-striped">
       <thead>
@@ -58,6 +81,7 @@
         </tr>
       </thead>
       <tbody>
+        
         <% apartments.forEach(function(apartment){ %>
 
         <tr>
@@ -67,7 +91,12 @@
           <td><%=apartment.location.city%></td>
           <td>
             <a href="/apartment/<%=apartment._id%>/edit" class="btn btn-primary">Edit</a>
-            <a href="/apartment/<%=apartment._id%>/delete" class="btn btn-danger">Delete</a>
+
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-targetId="/apartment/<%=apartment._id%>/delete">Delete</button>
+
+
+
+            <!-- <a href="/apartment/<%=apartment._id%>/delete" class="btn btn-danger">Delete</a> -->
           </td>
         </tr>
 
@@ -79,7 +108,25 @@
   <% } %>
 
 
+<script>
+  var deleteModal = document.getElementById('deleteModal')
+  deleteModal.addEventListener('show.bs.modal', function (event) {
+  // Button that triggered the modal
+  var button = event.relatedTarget
+  // Extract info from data-bs-* attributes
+  var target = button.getAttribute('data-bs-targetId')
+  // If necessary, you could initiate an AJAX request here
+  // and then do the updating in a callback.
+  //
+  // Update the modal's content.
 
+  //cargo en form acction la ruta del delete
+  var form = document.getElementById('deleteForm')
+  form.action = target
+
+
+})
+</script>
 
 
 

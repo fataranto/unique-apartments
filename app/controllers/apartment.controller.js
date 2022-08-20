@@ -439,3 +439,11 @@ exports.postBookApartment = async (req, res) => {
   
   res.redirect("/");
 }
+
+exports.postDeleteApartment = async (req, res) => {
+  await Apartment.findByIdAndDelete(req.params.apartment);
+  //obtengo todos los bookings del apartamento que se va a borrar
+
+  res.redirect(`/admin/user/${req.body.userId}`);
+}
+

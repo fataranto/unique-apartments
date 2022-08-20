@@ -26,5 +26,7 @@ module.exports = function(app) {
 
   app.post("/apartment/:apartment/book", [authJwt.verifyToken], controller.postBookApartment);
 
+  app.post("/apartment/:apartment/delete", [authJwt.verifyToken], controller.postDeleteApartment);
+
 
 };

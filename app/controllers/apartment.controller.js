@@ -6,6 +6,7 @@ const moment = require('moment');
 
 
 
+
 exports.getAllApartments = async (req, res) => {
   let user = req.user ? req.user : false;
 
@@ -183,15 +184,15 @@ exports.getEditApartment = async (req, res) => {
   //si el usuario no es el dueño del apartamento, muestro error por consola
   if (apartment.owner != req.userId) {
     res.status(400).render('error.ejs', {
-      error: "Error: Page not found or not authorized" 
-  })
+      error: "Error: Page not found or not authorized"
+    })
   } else {
-  //console.log(apartment);
-  res.status(200).render('new-apartment.ejs', {
-    user,
-    apartment
-  })
-}
+    //console.log(apartment);
+    res.status(200).render('new-apartment.ejs', {
+      user,
+      apartment
+    })
+  }
 }
 
 exports.postUpdateApartment = async (req, res) => {
@@ -343,7 +344,7 @@ exports.getViewApartment = async (req, res) => {
     })
   } catch (err) {
     res.status(400).render('error.ejs', {
-        error: err 
+      error: err
     })
   }
 };
@@ -378,26 +379,41 @@ exports.postSearchResults = async (req, res) => {
 
   var apartments = await Apartment.find({
 
-        $and:[
-          {'location.city': city},
-          {'location.state': state},
-          {'capacity': {$gte: guests}},
-          {'availablefrom': {$lte: checkin}},
-          {'availableto': {$gte: checkout}},
-        ]             
-      });
+    $and: [{
+        'location.city': city
+      },
+      {
+        'location.state': state
+      },
+      {
+        'capacity': {
+          $gte: guests
+        }
+      },
+      {
+        'availablefrom': {
+          $lte: checkin
+        }
+      },
+      {
+        'availableto': {
+          $gte: checkout
+        }
+      },
+    ]
+  });
 
 
   //si no hay resultados busco todos los apartamentos de ese state
-   if (apartments.length > 0) {
+  if (apartments.length > 0) {
     message = `we've found something for you!`;
   } else {
     apartments = await Apartment.find({
       'location.state': state
     });
     message = `The search didn't match any results, but we found something in the province of ${state} that you might be interested in.`;
-  } 
-  
+  }
+
   if (apartments.length === 0) {
     apartments = await Apartment.find();
     message = `We didn't found any apartment in the province of ${state}. We have some in the rest of Catalunya`;
@@ -417,28 +433,156 @@ exports.postBookApartment = async (req, res) => {
     checkout,
     guests
   } = req.body;
-  /* console.log(req.body);
-  console.log(req.params.apartment);
-  console.log(req.userId); */
-  
-  //si la fecha de entrada es mayor que la fecha de salida, muesto error por consola
-  if (moment(checkin).isAfter(moment(checkout))) {
-    console.log("error, la fecha de entrada es mayor que la fecha de salida");
+
+  var error = undefined;
+  var message = "";
+
+
+  // si no hay fechas de entrada y salida, muestro error por consola
+  if (!error && !checkin && !checkout) {
+    error = true;
+    message = "error, no hay fechas de entrada y salida";
   }
 
-//guardo un nuevo booking en la base de datos
-  const booking = new Booking({
-    apartment: req.params.apartment,
-    user: req.userId,
-    checkin,
-    checkout,
-    guests,
-    state: "pending"
-  });
-  await booking.save();
-  
-  res.redirect("/");
+  //si la fecha de entrada es mayor que la fecha de salida, muesto error por consola
+  if (!error && moment(checkin).isAfter(moment(checkout))) {
+    error = true;
+    message = "error, la fecha de entrada es mayor que la fecha de salida";
+  }
+
+  //si la fecha de entrada es menor que la fecha de hoy, muestro error por consola
+  if (!error && moment(checkin).isBefore(moment())) {
+    error = true;
+    message = "error, la fecha de entrada es igual o menor que la fecha de hoy";
+  }
+
+  //si no hay número de huéspedes, muestro error por consola
+  if (!error && !guests) {
+    error = true;
+    message = "error, no hay número de huéspedes";
+  }
+
+  //si no hay usuario logueado, muestro error por consola
+  if (!error && !req.userId) {
+    error = true;
+    message = "error, no hay usuario logueado";
+  }
+
+  const apartment = await Apartment.findById(req.params.apartment);
+  const availablefrom = apartment.availablefrom;
+  const availableto = apartment.availableto;
+  const capacity = apartment.capacity;
+
+
+  //busco si el número de huéspedes es menor que el número de huéspedes disponibles en el apartamento
+  if (!error && guests > capacity) {
+    error = true;
+    message = "error, el número de huéspedes es mayor que el número de huéspedes disponibles en el apartamento";
+  }
+
+  let chekinOk = moment(checkin).isBetween(availablefrom, availableto);
+  let checkoutOk = moment(checkout).isBetween(availablefrom, availableto);
+
+  //console.log("chekinOk: " + chekinOk);
+  //console.log("checkoutOk: " + checkoutOk);
+
+  //busco si las fechas de entrada y salida  están disponibles en el apartamento
+  if (!error && !chekinOk || !checkoutOk) {
+    error = true;
+    message = "error, el apartamento no está disponible en esas fechas";
+  }
+
+  if (error) {
+    res.status(200).render('booking-result.ejs', {
+      apartment,
+      error,
+      message
+    });
+  } else {
+
+    //busco en la base de datos si ya existe una reserva para ese apartamento en ese periodo de tiempo
+    const bookings = await Booking.find({
+      $and: [{
+          apartment: apartment._id
+        },
+        {
+          $or: [{
+              $and: [{
+                  checkin: {
+                    $gte: moment(checkin).toDate()
+                  }
+                },
+                {
+                  checkin: {
+                    $lte: moment(checkout).toDate()
+                  }
+                }
+              ]
+            },
+            {
+              $and: [{
+                  checkout: {
+                    $gte: moment(checkin).toDate()
+                  }
+                },
+                {
+                  checkout: {
+                    $lte: moment(checkout).toDate()
+                  }
+                }
+              ]
+            },
+            //además de las fechas de entrada y salida compruebo si el "state" es "pending" o "approved"
+            {
+              $and : [{
+                  state: "pending"
+                },
+                {
+                  state: "approved"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    });
+
+    //si hay resultados, muestro error por consola
+    console.log(bookings);
+
+
+
+    if (bookings.length > 0) {
+      error = true;
+      message = "error, el apartamento ya está reservado en ese periodo de tiempo";
+      res.status(200).render('booking-result.ejs', {
+        apartment,
+        error,
+        message
+      });
+    } else {
+      const booking = new Booking({
+        user: req.userId,
+        apartment: apartment._id,
+        checkin: moment(checkin).toDate(),
+        checkout: moment(checkout).toDate(),
+        guests: guests,
+        state: "pending"
+      });
+      await booking.save();
+      message = "reserva realizada con éxito";
+      res.status(200).render('booking-result.ejs', {
+        apartment,
+        error,
+        message
+      });
+    }
+  }
 }
+
+
+
+
 
 exports.postDeleteApartment = async (req, res) => {
   await Apartment.findByIdAndDelete(req.params.apartment);
@@ -446,4 +590,3 @@ exports.postDeleteApartment = async (req, res) => {
 
   res.redirect(`/admin/user/${req.body.userId}`);
 }
-

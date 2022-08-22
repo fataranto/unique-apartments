@@ -6,7 +6,11 @@ const Booking = mongoose.model(
     checkin: Date,
     checkout: Date,
     guests: Number,
-    state: String, //pending, confirmed, cancelled
+    state: {
+      type: String,
+      enum: ["pending", "approved", "rejected", "cancelled"],
+      default: "pending"
+    },
     apartment: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Apartment"

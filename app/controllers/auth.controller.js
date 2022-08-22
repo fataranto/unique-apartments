@@ -3,6 +3,7 @@ const db = require("../models");
 const User = db.user;
 const Role = db.role;
 const Apartment = db.apartment;
+const eMail = require("../middlewares/sendEmail");
 
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
@@ -40,10 +41,14 @@ exports.signup = (req, res) => {
               res.status(500).json({ message: err });
               return;
             }
-            res.status(200).json({
+            eMail.sendEmail(user.name, user.email, "Wellcome to Unique Apartments")
+            .then((result) => res.status(200).json({
               message: "User successfully registered",
               user: user.id,
-            });
+            }))
+            .catch((error) => console.log(error.message));
+
+            
             //res.redirect("/");
 
           });

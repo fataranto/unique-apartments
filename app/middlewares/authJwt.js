@@ -62,7 +62,10 @@ verifyTokenPublic = (req, res, next) => {
 isAdmin = (req, res, next) => {
   User.findById(req.userId).exec((err, user) => {
     if (err) {
-      res.status(500).send({ message: err });
+      res.status(500).render('error.ejs', 
+      { error: err 
+    });
+      
       return;
     }
 
@@ -72,7 +75,9 @@ isAdmin = (req, res, next) => {
       },
       (err, roles) => {
         if (err) {
-          res.status(500).send({ message: err });
+          res.status(500).render('error.ejs', 
+      { error: err 
+    });
           return;
         }
 
@@ -83,7 +88,9 @@ isAdmin = (req, res, next) => {
           }
         }
 
-        res.status(403).send({ message: "Require Admin Role!" });
+        res.status(403).render('error.ejs', {
+          error: "Require Admin Role!"
+        })
         return;
       }
     );
@@ -93,7 +100,9 @@ isAdmin = (req, res, next) => {
 isHost = (req, res, next) => {
   User.findById(req.userId).exec((err, user) => {
     if (err) {
-      res.status(500).send({ message: err });
+      res.status(500).render('error.ejs', 
+      { error: err 
+    });
       return;
     }
 
@@ -103,7 +112,9 @@ isHost = (req, res, next) => {
       },
       (err, roles) => {
         if (err) {
-          res.status(500).send({ message: err });
+          res.status(500).render('error.ejs', 
+      { error: err 
+    });
           return;
         }
 

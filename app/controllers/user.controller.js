@@ -91,9 +91,9 @@ exports.userDashboard = async (req, res) => {
 
 exports.userDashboardProfile = async (req, res) => {
 
-  console.log(req.params.user);
+  console.log(req.userId);
   try {
-    const fullUser = await User.findById(req.params.user).populate("roles", "-__v");
+    const fullUser = await User.findById(req.userId).populate("roles", "-__v");
     //console.log(user)
 
     //si el usuario tiene el rol admin busco todos los apartamentos
@@ -227,3 +227,24 @@ exports.userDashboardBookings = async (req, res) => {
   })
 
 };
+
+exports.userDashboardUsers = async (req, res) => {
+
+  fullUser = await User.findById(req.userId).populate("roles", "-__v");
+
+
+  const users = await User.find({}, "_id username name lastname email roles").populate("roles", "-__v");
+
+  res.status(200).render('user-dashboard-users.ejs', {
+    user: {
+      id: req.userId,
+      username: fullUser.username,
+      name: fullUser.name,
+      lastname: fullUser.lastname,
+      email: fullUser.email,
+      isAdmin: isAdmin,
+      isHost: isHost
+    },
+    users
+  })
+}

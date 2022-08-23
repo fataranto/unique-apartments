@@ -58,8 +58,12 @@ $(document).ready(function () {
       </section>
     
       <section class="container">
+          <% if(!user.isAdmin && guestBookings.length == 0 && hostBookings.length== 0) { %>
+            <h3>You have no bookings</h3>
+          <% } %>
+
         <% if (user.isAdmin){ %>
-          <div class="mt-7">
+          <div class="mt-7  card p-3 bg-light">
             <h3>Admin Bookings</h3>
             <table id="adminBookings" class="table table-hover text-nowrap table-striped">
               <thead>
@@ -71,7 +75,7 @@ $(document).ready(function () {
                   <th>Checkin</th>
                   <th>Checkout</th>
                   <th>Status</th>
-                  <th>Actions</th>
+                  <th>Approve / Reject</th>
                 </tr>
               </thead>
             
@@ -89,11 +93,11 @@ $(document).ready(function () {
                       <a href="/bookings/<%= booking.id %>/approve" class="btn btn-success
                         <% if(booking.state == 'approved' ){ %>
                           disabled
-                          <% } %>" >Approve</a>
+                          <% } %>" ><i class="bi bi-check-circle"></i></a>
                       <a href="/bookings/<%= booking.id %>/reject" class="btn btn-danger
                         <% if(booking.state == 'rejected' ){ %>
                         disabled
-                        <% } %>">Reject</a>
+                        <% } %>"><i class="bi bi-x-octagon"></i></a>
                     </td>
                   </tr>
                   <% }); %>

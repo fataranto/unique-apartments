@@ -11,10 +11,19 @@
                   <i class="fs-5 bi-person-circle dashboardNavIcon"></i> <span class="ms-1 d-none dashboardNavText">Profile</span> </a>
               
           </li>
+          <% if (user.isAdmin){ %>
+          <li>
+            <a href="/admin/admin/<%= user.id %>/users" class="nav-link align-middle px-0 opacity-50">
+                <i class="fs-5 bi-people-fill dashboardNavIcon"></i> <span class="ms-1 d-none dashboardNavText">Users</span> </a>
+            
+        </li>
+        <% } %>
+        <% if (user.isAdmin || user.isHost){ %>
           <li>
               <a href="/admin/user/<%= user.id %>/apartments" class="nav-link align-middle px-0 opacity-50">
                   <i class="fs-5 bi-house-heart dashboardNavIcon"></i> <span class="ms-1 d-none dashboardNavText">Apartments</span></a>
           </li>
+          <% } %>
           <li>
               <a href="/admin/user/<%= user.id %>/bookings" class="nav-link align-middle px-0 opacity-50">
                   <i class="fs-5 bi-calendar-heart dashboardNavIcon"></i> <span class="ms-1 d-none dashboardNavText">Bookings</span></a>

@@ -40,8 +40,8 @@
         <p>Role: Host</p>
         <% } %>
         <% if (!user.isHost && !user.isAdmin){ %>
-          <p>Role: User</p>
-          <% } %>
+        <p>Role: User</p>
+        <% } %>
 
 
 
@@ -55,9 +55,7 @@
               <div class="card-body">
                 <div class="d-flex justify-content-between p-md-1">
                   <div class="d-flex flex-row">
-                    <div class="align-self-center">
-                      <i class="fas fa-pencil-alt text-info fa-3x me-4"></i>
-                    </div>
+
                     <div>
                       <h4>Total Apartments</h4>
                     </div>
@@ -74,9 +72,7 @@
               <div class="card-body">
                 <div class="d-flex justify-content-between p-md-1">
                   <div class="d-flex flex-row">
-                    <div class="align-self-center">
-                      <i class="far fa-comment-alt text-warning fa-3x me-4"></i>
-                    </div>
+
                     <div>
                       <h4>Total Bookings</h4>
                     </div>
@@ -103,16 +99,15 @@
                     <h3 class="text-info"><%= totalApartmentsBarcelona %></h3>
                     <p class="mb-0">Barcelona</p>
                   </div>
-                  <div class="align-self-center">
-                    <i class="fas fa-book-open text-info fa-3x"></i>
-                  </div>
+
                 </div>
                 <div class="px-md-1">
                   <div class="progress mt-3 mb-1 rounded" style="height: 7px">
-                    
+
                     <% var porcentajeBarcelona = (totalApartmentsBarcelona * 100) / totalApartments %>
 
-                    <div class="progress-bar bg-info" role="progressbar" style="width: <%= porcentajeBarcelona %>%" ></div>
+                    <div class="progress-bar bg-info" role="progressbar" style="width: <%= porcentajeBarcelona %>%">
+                    </div>
 
                   </div>
                 </div>
@@ -127,15 +122,14 @@
                     <h3 class="text-warning"><%= totalApartmentsGirona %></h3>
                     <p class="mb-0">Girona</p>
                   </div>
-                  <div class="align-self-center">
-                    <i class="far fa-comments text-warning fa-3x"></i>
-                  </div>
+
                 </div>
                 <div class="px-md-1">
                   <div class="progress mt-3 mb-1 rounded" style="height: 7px">
                     <% var porcentajeGirona = (totalApartmentsGirona * 100) / totalApartments %>
 
-                    <div class="progress-bar bg-warning" role="progressbar" style="width: <%= porcentajeBarcelona %>%" ></div>
+                    <div class="progress-bar bg-warning" role="progressbar" style="width: <%= porcentajeBarcelona %>%">
+                    </div>
                   </div>
                 </div>
               </div>
@@ -149,15 +143,14 @@
                     <h3 class="text-success"><%= totalApartmentsLleida %></h3>
                     <p class="mb-0">Lleida</p>
                   </div>
-                  <div class="align-self-center">
-                    <i class="fas fa-mug-hot text-success fa-3x"></i>
-                  </div>
+
                 </div>
                 <div class="px-md-1">
                   <div class="progress mt-3 mb-1 rounded" style="height: 7px">
                     <% var porcentajeLleida = (totalApartmentsLleida * 100) / totalApartments %>
 
-                    <div class="progress-bar bg-success" role="progressbar" style="width: <%= porcentajeLleida %>%" ></div>
+                    <div class="progress-bar bg-success" role="progressbar" style="width: <%= porcentajeLleida %>%">
+                    </div>
                   </div>
                 </div>
               </div>
@@ -171,15 +164,14 @@
                     <h3 class="text-danger"><%= totalApartmentsTarragona %></h3>
                     <p class="mb-0">Tarragona</p>
                   </div>
-                  <div class="align-self-center">
-                    <i class="fas fa-map-signs text-danger fa-3x"></i>
-                  </div>
+
                 </div>
                 <div class="px-md-1">
                   <div class="progress mt-3 mb-1 rounded" style="height: 7px">
                     <% var porcentajeTarragona = (totalApartmentsTarragona * 100) / totalApartments %>
 
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: <%= porcentajeTarragona %>%" ></div>
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: <%= porcentajeTarragona %>%">
+                    </div>
                   </div>
                 </div>
               </div>

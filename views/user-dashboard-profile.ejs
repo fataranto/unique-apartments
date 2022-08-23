@@ -29,7 +29,7 @@
 
     <main class="col py-3">
     
-      <section class="container">
+      <section class="container d-none">
         <h1>Profile</h1>
         <p>-Este es el dashboard del usuario, aquí tendrá la posibilidad de actualizar sus datos y todo lo referente a la
           gestión de los pisos que haya resrvado.</p>
@@ -47,6 +47,75 @@
     
     
       </section>
+      <section class="container">
+        <h1>Profile</h1>
+        <div class="container">
+          <div class="row justify-content-center">
+
+            <form id="userUpdasteForm" class="ms-auto mt-4 rounded border border-1 border-light bg-light"
+      style="max-width: 640px; padding: 30px 30px 60px 30px; color: #484848;" onsubmit="return setUserUpdateAction(this, event)">
+
+              <!-- User input -->
+              <div class="form-outline mb-4">
+             
+
+                <input type="text" class="form-control" name="username" minlength="4" maxlength="8" pattern="^[a-zA-Z]\w{3,7}" title="Username should start with a letter and can only contain regular characters, digits and '_'" placeholder="<%=user.username%>"  disabled/>
+                <label class="form-label">Username</label>
+              </div>
+
+              <!-- Email input -->
+              <div class="form-outline mb-4">
+
+                <input type="email" class="form-control" name="email" placeholder="<%=user.email%>" disabled/>
+                <label class="form-label" for="form1Example1">Email</label>
+              </div>
+
+
+
+              <!-- Name input -->
+              <div class="form-outline mb-4">
+
+                <input type="text" class="form-control" name="name" minlength="2" maxlength="30" pattern="^[a-zA-Z][a-zA-Z\s]*$" title="Use only letters and spaces" value="<%=user.name%>" required/>
+                <label class="form-label" for="form1Example1">Name</label>
+              </div>
+
+              <!-- Lastname input -->
+              <div class="form-outline mb-4">
+
+                <input type="text" class="form-control" name="lastname" minlength="2" maxlength="30" pattern="^[a-zA-Z][a-zA-Z\s]*$" title="Use only letters and spaces" value="<%=user.lastname%>" required/>
+                <label class="form-label" for="form1Example1">Last name</label>
+              </div>
+
+              
+
+              <!-- Password input -->
+              <div class="form-outline mb-4">
+                <input type="password" class="form-control" name="password" aria-label="Password" minlength="4" maxlength="12" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{4,12}$" title="Password should have between 4 and 12 characters and contain at least one lowercase, one uppercase and a digit" required/>
+                <label class="form-label" for="form1Example2">Password</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="user" name="roles" checked
+                  style="display:none" />
+                <input class="form-check-input" type="checkbox" value="host" name="roles" <% if (user.isHost){ %>
+                  checked <% } %>/>
+                <label class="form-check-label" for="form1Example3">
+                  Make me host
+                </label>
+              </div>
+
+              <div id="SignupAlert" class="alert alert-danger d-none" role="alert"></div>
+              <!-- Submit button -->
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Update</button>
+              </div>
+
+            </form>
+
+          </div>
+
+        </div>
+      </section>
   
     </main>
   </div>
@@ -55,6 +124,75 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    async function setUserUpdateAction(form, event) {
+    event.preventDefault();
+    try {
+      const display = document.querySelector('#SignupAlert');
+      display.innerHTML = '';
+      const username = form.querySelector('input[name="username"]').value;
+      const name = form.querySelector('input[name="name"]').value;
+      const lastname = form.querySelector('input[name="lastname"]').value;
+      const email = form.querySelector('input[name="email"]').value;
+      const password = form.querySelector('input[name="password"]').value;
+      const roles = form.querySelectorAll('input[name="roles"]');
+
+      const rolesArray = [];
+      for (const role of roles) {
+        if (role.checked) {
+          rolesArray.push(role.value);
+        }
+      }
+
+
+      const data = {
+        username: username,
+        name: name,
+        lastname: lastname,
+        email: email,
+        password: password,
+        roles: rolesArray
+      };
+
+      const url = '/api/auth/<%=user.id%>/userUpdate';
+      const method = 'POST';
+      const headers = {
+        'Content-Type': 'application/json'
+      };
+      const body = JSON.stringify(data);
+      const options = {
+        method: method,
+        headers: headers,
+        body: body
+      };
+      const res = await fetch(url, options);
+
+      const json = await res.json();
+      console.log(json);
+      console.log(res.status);
+
+      if (res.status === 400 || res.status === 401 || res.status === 404 || res.status === 500) {
+
+        display.classList.remove('d-none');
+        display.innerHTML = json.message;
+        return;
+      }
+
+      if (res.status === 200) {
+        display.classList.remove('d-none');
+        display.innerHTML = json.message;
+        console.log(display);
+      }
+      location.assign('/admin/user/<%=user.id%>/profile'); 
+      //location.assign('/'); 
+
+    } catch (e) {
+      console.log(e.message);
+    }
+  }
+
+</script>
 
 
 </body>

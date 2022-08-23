@@ -70,14 +70,14 @@
               <!-- Name input -->
               <div class="form-outline mb-4">
 
-                <input type="text" class="form-control" name="name" minlength="2" maxlength="30" pattern="^[a-zA-Z·]{2,30}" title="Use only letters and spaces" required/>
+                <input type="text" class="form-control" name="name" minlength="2" maxlength="30" pattern="^[a-zA-Z][a-zA-Z\s]*$" title="Use only letters and spaces" required/>
                 <label class="form-label" for="form1Example1">Name</label>
               </div>
 
               <!-- Lastname input -->
               <div class="form-outline mb-4">
 
-                <input type="text" class="form-control" name="lastname" minlength="2" maxlength="30" pattern="^[a-zA-Z·]{4,30}" title="Use only letters and spaces" required/>
+                <input type="text" class="form-control" name="lastname" minlength="2" maxlength="30" pattern="^[a-zA-Z][a-zA-Z\s]*$" title="Use only letters and spaces" required/>
                 <label class="form-label" for="form1Example1">Last name</label>
               </div>
 

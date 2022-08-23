@@ -168,3 +168,82 @@ exports.signout = async (req, res) => {
     this.next(err);
   }
 };
+
+exports.userUpdate = async (req, res) => {
+const {
+  username,
+  name,
+  lastname,
+  email,
+  password,
+  roles,
+} = req.body;
+
+const user = await User.findById (req.params.user);
+
+if (!user) {
+  return res.status(404).json({
+    message: "User Not found.",
+  });
+}
+
+user.name = name;
+user.lastname = lastname;
+user.password = bcrypt.hashSync(req.body.password, 8)
+
+await user.save();
+
+if (req.body.roles) {
+  Role.find(
+    {
+      name: { $in: req.body.roles },
+    },
+    (err, roles) => {
+      if (err) {
+        res.status(500).json({ message: err });
+        return;
+      }
+
+      user.roles = roles.map((role) => role._id);
+      user.save((err) => {
+        if (err) {
+          res.status(500).json({ message: err });
+          return;
+        }
+        //res.redirect("/");
+
+      });
+    }
+  );
+} else {
+  Role.findOne({ name: "user" }, (err, role) => {
+    if (err) {
+      res.status(500).json({ message: err });
+      return;
+    }
+
+    user.roles = [role._id];
+    user.save((err) => {
+      if (err) {
+        res.status(500).json({ message: err });
+        return;
+      }
+
+      res.status(200).json({
+        message: "User updated successfully!",
+        user: user.id,
+      }); 
+
+
+      //console.log("user 2: ", user);
+      //res.send({ message: "User was registered successfully!" });
+
+     // res.redirect("/");
+      
+    });
+  });
+}
+
+res.status(200).json({ message: "User updated successfully!" }); 
+};
+

@@ -23,7 +23,6 @@ exports.getAllApartments = async (req, res) => {
   })
 }
 
-
 exports.getAddApartment = async (req, res) => {
   let user = req.user ? req.user : false;
   // const user = await User.findById(req.userId).populate("roles", "-__v");
@@ -32,7 +31,6 @@ exports.getAddApartment = async (req, res) => {
     apartment: {}
   })
 };
-
 
 exports.postAddApartment = async (req, res) => {
   const {
@@ -177,7 +175,6 @@ exports.postAddApartment = async (req, res) => {
   res.redirect("/");
 
 }
-
 
 exports.getEditApartment = async (req, res) => {
   let user = req.user ? req.user : false;
@@ -605,10 +602,6 @@ exports.postBookApartment = async (req, res) => {
     }
   }
 }
-
-
-
-
 
 exports.postDeleteApartment = async (req, res) => {
   await Apartment.findByIdAndDelete(req.params.apartment);

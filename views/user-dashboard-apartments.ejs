@@ -29,7 +29,7 @@
 
     <main class="col py-3">
     
-      <section class="container">
+      <section class="container d-none">
         <h1>Apartments</h1>
         <p>-Este es el dashboard del usuario, aquí tendrá la posibilidad de actualizar sus datos y todo lo referente a la
           gestión de los pisos que haya resrvado.</p>
@@ -51,8 +51,10 @@
       <!-- Si hay apartamentos los listo en una tabla con un boton que enlace a la edición del apartamento y otro para elimarlo de la bbdd-->
     
       <% if(apartments){ %>
-      <section class="container">
-        <h3>My apartaments</h3>
+        <h1>Apartaments</h1>
+
+      <section class="container mt-5">
+        
     
                  <!-- creo el modal para eliminar apartamento-->
                  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

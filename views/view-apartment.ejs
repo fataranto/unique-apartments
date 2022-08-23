@@ -103,7 +103,8 @@
             <% if (apartment.rooms == 1) { %> Room <% } else { %> Rooms <% } %> <span class="mx-2">|</span> <img
               src="/imgs/bathroom.svg" alt="" style="width: 25px; margin-right: 1px;"> <%= apartment.bathrooms %>
             <% if (apartment.bathrooms == 1) { %> Bathroom <% } else { %> Bathrooms <% } %> <span class="mx-2">|</span>
-            <%= apartment.meters %> m<sup>2</sup></p>
+            <%= apartment.meters %> m<sup>2</sup><span class="mx-2">|</span><img src="/imgs/calendar.svg" alt="" style="width: 22px; margin-right: 10px; margin-left: 130px;"><%= (apartment.availablefrom).toLocaleString('es-ES',{dateStyle:"short"}) %> - <%= (apartment.availableto).toLocaleString('es-ES',{dateStyle:"short"}) %>
+          </p>
         </div>
         <hr>
 

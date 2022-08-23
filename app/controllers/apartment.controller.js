@@ -178,10 +178,13 @@ exports.postAddApartment = async (req, res) => {
 
 exports.getEditApartment = async (req, res) => {
   let user = req.user ? req.user : false;
-  //const user = await User.findById(req.userId).populate("roles", "-__v");
+  const userRoles = await User.findById(req.userId).populate("roles", "-__v");
+  const admin = userRoles.roles.find(role => role.name === "admin");
+  //console.log("admin: ", admin);
+
   const apartment = await Apartment.findById(req.params.apartment);
-  //si el usuario no es el dueño del apartamento, muestro error por consola
-  if (apartment.owner != req.userId) {
+  //console.log(userRoles.roles);
+  if (apartment.owner != req.userId && admin == undefined) {
     res.status(400).render('error.ejs', {
       error: "Error: Page not found or not authorized"
     })

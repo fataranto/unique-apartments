@@ -51,7 +51,9 @@
       <!-- Si hay apartamentos los listo en una tabla con un boton que enlace a la edición del apartamento y otro para elimarlo de la bbdd-->
     
       <% if(apartments){ %>
-        <h1>Apartaments</h1>
+        <section class="container">
+          <h1>Apartaments</h1>
+        </section>
 
       <section class="container mt-5">
         
@@ -81,38 +83,32 @@
                   </div>
                 </div>
     
-        <table id="myApartments" class="table table-hover text-nowrap table-striped">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>State</th>
-              <th>City</th>
-              <th>Edit / Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-    
-            <% apartments.forEach(function(apartment){ %>
-    
-            <tr>
-    
-              <td><a href="/apartment/<%=apartment._id%>"><%=apartment.title%></a></td>
-              <td><%=apartment.location.state%></td>
-              <td><%=apartment.location.city%></td>
-              <td>
-                <a href="/apartment/<%=apartment._id%>/edit" class="btn btn-primary">Edit</a>
-    
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-targetId="/apartment/<%=apartment._id%>/delete">Delete</button>
-    
-    
-    
-                <!-- <a href="/apartment/<%=apartment._id%>/delete" class="btn btn-danger">Delete</a> -->
-              </td>
-            </tr>
-    
-            <% }); %>
-          </tbody>
-        </table>
+        <div class="mt-5 card bg-light p-3">
+          <table id="myApartments" class="table table-hover text-nowrap table-striped">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>State</th>
+                <th>City</th>
+                <th>Edit / Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% apartments.forEach(function(apartment){ %>
+              <tr>
+                <td><a href="/apartment/<%=apartment._id%>"><%=apartment.title%></a></td>
+                <td><%=apartment.location.state%></td>
+                <td><%=apartment.location.city%></td>
+                <td>
+                  <a href="/apartment/<%=apartment._id%>/edit" class="btn btn-primary">Edit</a>
+                  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-targetId="/apartment/<%=apartment._id%>/delete">Delete</button>
+                  <!-- <a href="/apartment/<%=apartment._id%>/delete" class="btn btn-danger">Delete</a> -->
+                </td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
         <script>
           var deleteModal = document.getElementById('deleteModal')
           deleteModal.addEventListener('show.bs.modal', function (event) {

@@ -14,6 +14,12 @@
   $(document).ready(function () {
     $('#adminBookings').DataTable();
 });
+$(document).ready(function () {
+    $('#hostBookings').DataTable();
+});
+$(document).ready(function () {
+    $('#guestBookings').DataTable();
+});
 </script>
 
 
@@ -52,50 +58,135 @@
       </section>
     
       <section class="container">
-        <% if (isAdmin){ %>
-          <h3>Admin Bookings</h3>
-          <table id="adminBookings" class="table table-hover text-nowrap table-striped">
-            <thead>
-              <tr>
-                
-                
-                <th>Apartment</th>
-                <th>Guets</th>
-                <th>Checkin</th>
-                <th>Checkout</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-           
-            <tbody>
-              <% bookings.forEach(function(booking){ %>
+        <% if (user.isAdmin){ %>
+          <div class="mt-7">
+            <h3>Admin Bookings</h3>
+            <table id="adminBookings" class="table table-hover text-nowrap table-striped">
+              <thead>
                 <tr>
-                  
-                  
-                  <td><%= booking.apartment.title %></td>
-                  <td><%= booking.guests %></td>
-                  <td><%= booking.checkin.toLocaleDateString() %></td>
-                  <td><%= booking.checkout.toLocaleDateString() %></td>
-                  <td><%= booking.state %></td>
-                  <td>
-                    <a href="/bookings/<%= booking.id %>/aprove" class="btn btn-primary">Aprove</a>
-                    <a href="/bookings/<%= booking.id %>/reject" class="btn btn-danger">Reject</a>
-                  </td>
+            
+            
+                  <th>Apartment</th>
+                  <th>Guets</th>
+                  <th>Checkin</th>
+                  <th>Checkout</th>
+                  <th>Status</th>
+                  <th>Actions</th>
                 </tr>
-                <% }); %>
-            </tbody>
-          
-          </table>
-
+              </thead>
+            
+              <tbody>
+                <% bookings.forEach(function(booking){ %>
+                  <tr>
+            
+            
+                    <td><%= booking.apartment.title %></td>
+                    <td><%= booking.guests %></td>
+                    <td><%= booking.checkin.toLocaleDateString() %></td>
+                    <td><%= booking.checkout.toLocaleDateString() %></td>
+                    <td><%= booking.state %></td>
+                    <td>
+                      <a href="/bookings/<%= booking.id %>/approve" class="btn btn-success
+                        <% if(booking.state == 'approved' ){ %>
+                          disabled
+                          <% } %>" >Approve</a>
+                      <a href="/bookings/<%= booking.id %>/reject" class="btn btn-danger
+                        <% if(booking.state == 'rejected' ){ %>
+                        disabled
+                        <% } %>">Reject</a>
+                    </td>
+                  </tr>
+                  <% }); %>
+              </tbody>
+            
+            </table>
+          </div>
 
 
         <% } else { %>
             <% if (guestBookings.length > 0) { %>
-                <h3>My bookings where I'm guest</h3>
+                <div class="mt-7 card p-3 bg-light">
+                  <h3>My bookings where I'm guest</h3>
+                  <table id="guestBookings" class="table table-hover text-nowrap table-striped">
+                    <thead>
+                      <tr>
+                  
+                  
+                        <th>Apartment</th>
+                        <th>Guets</th>
+                        <th>Checkin</th>
+                        <th>Checkout</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                  
+                    <tbody>
+                      <% guestBookings.forEach(function(booking){ %>
+                        <tr>
+                  
+                  
+                          <td><%= booking.apartment.title %></td>
+                          <td><%= booking.guests %></td>
+                          <td><%= booking.checkin.toLocaleDateString() %></td>
+                          <td><%= booking.checkout.toLocaleDateString() %></td>
+                          <td><%= booking.state %></td>
+                          <td>
+                            <a href="/bookings/<%= booking.id %>/cancel" class="btn btn-danger
+                              <% if(booking.state == 'cancelled' ){ %>
+                              disabled
+                              <% } %>">Cancel</a>
+                          </td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                  
+                  </table>
+                </div>
             <% } %>
             <% if (hostBookings.length > 0) { %>
-                <h3>My bookings where I'm host</h3>
+                <div class="mt-7 card p-3 bg-light">
+                  <h3>My bookings where I'm host</h3>
+                  <table id="hostBookings" class="table table-hover text-nowrap table-striped">
+                    <thead>
+                      <tr>
+                  
+                  
+                        <th>Apartment</th>
+                        <th>Guets</th>
+                        <th>Checkin</th>
+                        <th>Checkout</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                  
+                    <tbody>
+                      <% hostBookings.forEach(function(booking){ %>
+                        <tr>
+                  
+                  
+                          <td><%= booking.apartment.title %></td>
+                          <td><%= booking.guests %></td>
+                          <td><%= booking.checkin.toLocaleDateString() %></td>
+                          <td><%= booking.checkout.toLocaleDateString() %></td>
+                          <td><%= booking.state %></td>
+                          <td>
+                            <a href="/bookings/<%= booking.id %>/approve" class="btn btn-success
+                              <% if(booking.state == 'approved' ){ %>
+                                disabled
+                                <% } %>" >Approve</a>
+                            <a href="/bookings/<%= booking.id %>/reject" class="btn btn-danger
+                              <% if(booking.state == 'rejected' ){ %>
+                              disabled
+                              <% } %>">Reject</a>
+                          </td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                  
+                  </table>
+                </div>
           <% } %>
         <% } %>
 

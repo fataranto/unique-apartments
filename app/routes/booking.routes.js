@@ -1,5 +1,5 @@
 const { authJwt } = require("../middlewares");
-const controller = require("../controllers/apartment.controller");
+const controller = require("../controllers/booking.controller");
 
 
 module.exports = function(app) {
@@ -11,5 +11,8 @@ module.exports = function(app) {
     next();
   });
 
+  app.get("/bookings/:booking/approve", [authJwt.verifyToken, authJwt.isHost], controller.getAproveBooking);
+  app.get("/bookings/:booking/reject", [authJwt.verifyToken, authJwt.isHost], controller.getRejectBooking);
 
-  app.get("/apartment/new-apartment", [authJwt.verifyToken, authJwt.isHost], controller.getAddApartment);
+
+};

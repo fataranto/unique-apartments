@@ -22,13 +22,10 @@ oauth2Client.setCredentials({
 sendEmail = async (name, email, subject, message) => {
     try {
         const contentHTML = `
-            <h1>Nuevo mensaje de contacto</h1>
-            <ul>
-                <li>Nombre: ${name}</li>
-                <li>Email: ${email}</li>
-                
-            </ul>    
-                <p>Mensaje: ${message}</p>
+              
+                ${message}
+                <br>
+                <a href="https://unique-apartments-test.herokuapp.com/">Unique Apartments</a>
             
             `;
         const access_token = await oauth2Client.getAccessToken();

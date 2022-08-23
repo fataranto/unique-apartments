@@ -1,0 +1,49 @@
+    <aside class="col-auto px-sm-2 px-0 bg-light shadow-sm position-fixed" style="margin-left: 0.75rem; z-index: 5;">
+      <div class="d-flex flex-column align-items-center align-items-sm-start px-2 pt-2 text-white sticky-top">
+        <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+          <li class="nav-item">
+              <a href="/admin/user/<%= user.id %>" class="nav-link align-middle px-0 opacity-50">
+                <i class="fs-5 bi-speedometer2 dashboardNavIcon"></i> <span class="ms-1 d-none dashboardNavText ">Dashboard</span>
+              </a>
+          </li>
+          <li>
+              <a href="/admin/user/<%= user.id %>/profile" class="nav-link align-middle px-0 opacity-50">
+                  <i class="fs-5 bi-person-circle dashboardNavIcon"></i> <span class="ms-1 d-none dashboardNavText">Profile</span> </a>
+              
+          </li>
+          <li>
+              <a href="/admin/user/<%= user.id %>/apartments" class="nav-link align-middle px-0 opacity-50">
+                  <i class="fs-5 bi-house-heart dashboardNavIcon"></i> <span class="ms-1 d-none dashboardNavText">Apartments</span></a>
+          </li>
+          <li>
+              <a href="#" class="nav-link align-middle px-0 opacity-50">
+                  <i class="fs-5 bi-calendar-heart dashboardNavIcon"></i> <span class="ms-1 d-none dashboardNavText">Bookings</span></a>
+          </li>
+          <li>
+              <a href="#" class="nav-link align-middle px-0 opacity-50">
+                  <i class="fs-5 bi-chat-right-text dashboardNavIcon"></i> <span class="ms-1 d-none dashboardNavText">Messages</span> </a>
+          </li>
+      </ul>
+
+      </div>
+    </aside>
+    <style>
+      aside li a:hover {
+        opacity: 1 !important;
+      }
+    </style>
+    <script>
+
+      //cuando pasa el mouse sobre el elemento aside le asigna la clase col-xl-2 y también le asigna la clase col-xl-2 a todos los elementos con la clase dashboardNavText
+      $(document).ready(function(){
+        $("aside").mouseover(function(){
+          $("aside").addClass("col-xl-2");
+          $(".dashboardNavText").addClass("d-sm-inline");
+        });
+        $("aside").mouseout(function(){
+          $("aside").removeClass("col-xl-2");
+          $(".dashboardNavText").removeClass("d-sm-inline");
+        });
+      });
+      
+      </script>

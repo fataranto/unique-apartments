@@ -1,18 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
 
-   
-    
-    <h1><% if(error) { %> Booking was unsuccessful <% } else { %> Booking Success <% } %></h1>
+<%- include('./partials/head'); %>
+
+
+
+</head>
+
+<body class="container-fluid">
+
+
+  <div class="container mt-5">
+
+    <h1><%= apartment.title %></h1>  
+    <hr>
+        <div>
+          <p><img src="/imgs/bed.svg" alt="" style="width: 25px; margin-right: 3px;"> <%= apartment.capacity %>
+            <% if (apartment.capacity == 1) { %> Bed <% } else { %> Beds <% } %> <span class="mx-2">|</span> <img
+              src="/imgs/rooms.svg" alt="" style="width: 25px; margin-right: -2px;"> <%= apartment.rooms %>
+            <% if (apartment.rooms == 1) { %> Room <% } else { %> Rooms <% } %> <span class="mx-2">|</span> <img
+              src="/imgs/bathroom.svg" alt="" style="width: 25px; margin-right: 1px;"> <%= apartment.bathrooms %>
+            <% if (apartment.bathrooms == 1) { %> Bathroom <% } else { %> Bathrooms <% } %> <span class="mx-2">|</span>
+            <%= apartment.meters %> m<sup>2</sup></p>
+        </div>
+        <hr>
+        
+    <h3 class="<% if(error) { %> text-danger <% } %>"><% if(error) { %> Booking was unsuccessful <% } else { %> Booking Success <% } %></h3>
     <p><%= message %></p>
-    <p><%= error %></p>
+
+    <div>     
+        <a href="/apartment/<%= apartment.id %>" class="btn btn-primary">Go back to the apartment</a>
+        <a href="/" class="btn btn-primary">Home</a>
+    </div>
 
 </body>
 </html>

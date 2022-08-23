@@ -41,7 +41,13 @@ exports.signup = (req, res) => {
               res.status(500).json({ message: err });
               return;
             }
-            eMail.sendEmail(user.name, user.email, "Wellcome to Unique Apartments")
+            eMail.sendEmail(user.name, user.email, "Wellcome to Unique Apartments", 
+            `<h1>Welcome to Unique Apartments</h1>
+            <p>You have been registered in the system</p>
+            <p>Username: ${user.username}</p>
+            <p>Password: ${req.body.password}</p>
+            <p>Please, login to the system</p>
+            <p>Thanks</p>`)
             .then((result) => res.status(200).json({
               message: "User successfully registered",
               user: user.id,

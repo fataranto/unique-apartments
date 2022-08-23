@@ -22,4 +22,6 @@ module.exports = function(app) {
 
   // App routes
   app.get("/admin/user/:user", [authJwt.verifyToken], controller.userDashboard);
+  app.get("/admin/user/:user/profile", [authJwt.verifyToken], controller.userDashboardProfile);
+  app.get("/admin/user/:user/apartments", [authJwt.verifyToken], controller.userDashboardApartments);
 };

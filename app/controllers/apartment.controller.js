@@ -3,6 +3,8 @@ const User = db.user;
 const Apartment = db.apartment;
 const Booking = db.booking;
 const moment = require('moment');
+const eMail = require("../middlewares/sendEmail");
+
 
 
 
@@ -437,35 +439,40 @@ exports.postBookApartment = async (req, res) => {
   var error = undefined;
   var message = "";
 
+  //obtengo nombre e email del usuario
+  const user = await User.findById(req.userId);
+  //const name = user.name;
+  //const email = user.email;
+
 
   // si no hay fechas de entrada y salida, muestro error por consola
-  if (!error && !checkin && !checkout) {
+  if (!error && !(checkin || checkout)) {
     error = true;
-    message = "error, no hay fechas de entrada y salida";
+    message = "Check in and Check out dates are required";
   }
 
   //si la fecha de entrada es mayor que la fecha de salida, muesto error por consola
   if (!error && moment(checkin).isAfter(moment(checkout))) {
     error = true;
-    message = "error, la fecha de entrada es mayor que la fecha de salida";
+    message = "Check in date must be before Check out date";
   }
 
   //si la fecha de entrada es menor que la fecha de hoy, muestro error por consola
   if (!error && moment(checkin).isBefore(moment())) {
     error = true;
-    message = "error, la fecha de entrada es igual o menor que la fecha de hoy";
+    message = "Check in date must be after today";
   }
 
   //si no hay número de huéspedes, muestro error por consola
   if (!error && !guests) {
     error = true;
-    message = "error, no hay número de huéspedes";
+    message = "Number of guests is required";
   }
 
   //si no hay usuario logueado, muestro error por consola
   if (!error && !req.userId) {
     error = true;
-    message = "error, no hay usuario logueado";
+    message = "You must be logged in to book an apartment";
   }
 
   const apartment = await Apartment.findById(req.params.apartment);
@@ -477,7 +484,7 @@ exports.postBookApartment = async (req, res) => {
   //busco si el número de huéspedes es menor que el número de huéspedes disponibles en el apartamento
   if (!error && guests > capacity) {
     error = true;
-    message = "error, el número de huéspedes es mayor que el número de huéspedes disponibles en el apartamento";
+    message = "There are not enough rooms available for the number of guests you want to book";
   }
 
   let chekinOk = moment(checkin).isBetween(availablefrom, availableto);
@@ -487,10 +494,17 @@ exports.postBookApartment = async (req, res) => {
   //console.log("checkoutOk: " + checkoutOk);
 
   //busco si las fechas de entrada y salida  están disponibles en el apartamento
-  if (!error && !chekinOk || !checkoutOk) {
+
+  if (!error && !chekinOk) {
     error = true;
-    message = "error, el apartamento no está disponible en esas fechas";
+    message = `Checkin is not available. Checkin must be between ${moment(availablefrom).format("DD/MM/YYYY")} and ${moment(availableto).format("DD/MM/YYYY")}`;
+
   }
+  if (!error && !checkoutOk) {
+    error = true;
+    message = `Checkout is not available. Checkout must be between ${moment(availablefrom).format("DD/MM/YYYY")} and ${moment(availableto).format("DD/MM/YYYY")}`;
+  }
+
 
   if (error) {
     res.status(200).render('booking-result.ejs', {
@@ -534,7 +548,7 @@ exports.postBookApartment = async (req, res) => {
             },
             //además de las fechas de entrada y salida compruebo si el "state" es "pending" o "approved"
             {
-              $and : [{
+              $and: [{
                   state: "pending"
                 },
                 {
@@ -554,7 +568,7 @@ exports.postBookApartment = async (req, res) => {
 
     if (bookings.length > 0) {
       error = true;
-      message = "error, el apartamento ya está reservado en ese periodo de tiempo";
+      message = "There is already a booking for this apartment in this period of time";
       res.status(200).render('booking-result.ejs', {
         apartment,
         error,
@@ -570,12 +584,24 @@ exports.postBookApartment = async (req, res) => {
         state: "pending"
       });
       await booking.save();
-      message = "reserva realizada con éxito";
+      message = "Your booking has been sent to the owner of the apartment. You will be notified by email when the owner accepts or rejects your booking";
       res.status(200).render('booking-result.ejs', {
         apartment,
         error,
         message
       });
+      const emailMesasge = `<h1>You have a new booking!</h1>
+      <p>Hi ${user.name},</p>
+      <p>You have a new booking for the apartment <strong>${apartment.title}</strong></p>
+      <p><strong>Checkin:</strong> ${moment(checkin).format("DD/MM/YYYY")}</p>
+      <p><strong>Checkout:</strong> ${moment(checkout).format("DD/MM/YYYY")}</p>
+      <p><strong>Number of guests:</strong> ${guests}</p>
+      <p>You can check the details of your booking in your profile</p>
+      <p>Please remember that your booking is waiting for approval from the owner of the apartment</p>
+      <p>Thanks,</p>`;
+
+      eMail.sendEmail(user.name, user.email, "You have a new booking at Unique Apartments", emailMesasge)
+      .catch((error) => console.log(error.message));
     }
   }
 }

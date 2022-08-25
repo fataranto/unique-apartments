@@ -9,7 +9,7 @@ const Message = db.message;
 exports.postSendMessage = async (req, res) => {
     const { apartment, receiver, messageText } = req.body;
 
-    console.log("data",req.body);
+    //console.log("data",req.body);
 
     const user = req.userId;
     //get email from receiver
@@ -23,7 +23,7 @@ exports.postSendMessage = async (req, res) => {
     //get apartment name from apartment id
     let apartmentData, apartmentName;
         apartmentData = await Apartment.findById(apartment);
-        apartmentName = apartmentData.name;
+        apartmentName = apartmentData.title;
     
 
     const message = new Message({
@@ -59,13 +59,13 @@ exports.postConversation = async (req, res) => {
 
 
     const messages = await Message.find({$or: [{sender: sender, receiver: req.userId}, {sender: req.userId, receiver: sender}]}).populate('sender').populate('receiver');
-    console.log("getMessages",messages);
+    //console.log("getMessages",messages);
 
     
 
 
 
-    console.log("messages",messages);
+    //console.log("messages",messages);
     
 
      res.status(200).json(messages);

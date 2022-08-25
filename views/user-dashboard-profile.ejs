@@ -182,8 +182,8 @@
       const res = await fetch(url, options);
 
       const json = await res.json();
-      console.log(json);
-      console.log(res.status);
+      //console.log(json);
+      //console.log(res.status);
 
       if (res.status === 400 || res.status === 401 || res.status === 404 || res.status === 500) {
 
@@ -195,7 +195,7 @@
       if (res.status === 200) {
         display.classList.remove('d-none');
         display.innerHTML = json.message;
-        console.log(display);
+        //console.log(display);
       }
       location.assign('/admin/user/<%=user.id%>'); 
       //location.assign('/'); 

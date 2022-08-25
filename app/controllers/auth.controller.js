@@ -194,7 +194,7 @@ user.password = bcrypt.hashSync(req.body.password, 8)
 await user.save();
 
 if (req.body.roles) {
-  console.log("roles: ", roles);
+  //console.log("roles: ", roles);
   Role.find(
     {
       name: { $in: req.body.roles },

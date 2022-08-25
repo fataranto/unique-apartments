@@ -55,7 +55,7 @@
     
         const city = document.querySelector('#city');
         const selected = city.options[city.selectedIndex].value;
-        console.log(!selected);
+        //console.log(!selected);
         const state = document.querySelector('#state');
 
         state.addEventListener('change', function (e) {

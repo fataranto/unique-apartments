@@ -86,7 +86,7 @@ exports.postAddApartment = async (req, res) => {
     photodescr4,
     photodescr5
   } = req.body;
-  console.log(req.body);
+  //console.log(req.body);
 
   const apartment = new Apartment({
     title,
@@ -169,7 +169,7 @@ exports.postAddApartment = async (req, res) => {
     owner: req.userId
   });
 
-  console.log("apartment: ", apartment)
+  //console.log("apartment: ", apartment)
 
   await apartment.save();
   res.redirect("/");
@@ -251,7 +251,7 @@ exports.postUpdateApartment = async (req, res) => {
     photodescr4,
     photodescr5
   } = req.body;
-  console.log(req.body);
+  //console.log(req.body);
 
   const apartment = await Apartment.findById(req.params.apartment);
   apartment.title = title;
@@ -362,7 +362,7 @@ exports.postSearchResults = async (req, res) => {
     guests
   } = req.body;
 
-  console.log(req.body);
+  //console.log(req.body);
 
   var message = "";
 
@@ -562,7 +562,7 @@ exports.postBookApartment = async (req, res) => {
     });
 
     //si hay resultados, muestro error por consola
-    console.log(bookings);
+    //console.log(bookings);
 
 
 

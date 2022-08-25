@@ -28,6 +28,5 @@ module.exports = function(app) {
   app.get("/admin/user/:user/bookings", [authJwt.verifyToken], controller.userDashboardBookings);
   app.get("/admin/admin/:user/users", [authJwt.verifyToken, authJwt.isAdmin], controller.userDashboardUsers);
   app.get("/admin/user/:user/messages", [authJwt.verifyToken], controller.userDashboardMessages);
-  //app.get("/admin/user/:user/updateConversation", [authJwt.verifyToken], controller.userDashboardUpdateConversation);
 
 };

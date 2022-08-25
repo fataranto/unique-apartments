@@ -134,7 +134,7 @@ exports.userDashboardProfile = async (req, res) => {
     }
 
     //apartments = apartments.length > 0 ? apartments : undefined;
-    console.log(user);
+    //console.log(user);
     res.status(200).render('user-dashboard-profile.ejs', {
       userProfile,
       userProfileIsAdmin,
@@ -161,7 +161,7 @@ exports.userDashboardProfile = async (req, res) => {
 
 exports.userDashboardApartments = async (req, res) => {
 
-  console.log(req.params.user);
+  //console.log(req.params.user);
   try {
     const fullUser = await User.findById(req.params.user).populate("roles", "-__v");
     //console.log(user)
@@ -223,16 +223,16 @@ exports.userDashboardBookings = async (req, res) => {
   const isHost = host ? true : false;
 
   const bookings = await Booking.find().populate("apartment", "_id title location.city location.state owner");
-  console.log(bookings);
+  //console.log(bookings);
 
 
   if (host) {
     hostBookings = bookings.filter(booking => booking.apartment.owner == req.params.user);
-    console.log("hostBookings", hostBookings);
+    //console.log("hostBookings", hostBookings);
   }
 
   guestBookings = bookings.filter(booking => booking.user == req.params.user);
-  console.log("guestBookings", guestBookings);
+  //console.log("guestBookings", guestBookings);
 
   res.status(200).render('user-dashboard-bookings.ejs', {
     user: {
@@ -314,10 +314,16 @@ exports.userDashboardMessages = async (req, res) => {
       }
     });
 
-    const conversationsUnique = [... new Set(conversationsFilter.map(data => data.id))];
+    const uniqueIds = new Set();
+    const conversationsUnique = conversationsFilter.filter(e => {
+      const duplicate = uniqueIds.has(e.username);
+      uniqueIds.add(e.username);
+      return !duplicate;
+    });
 
 
-    console.log("conversationsUnique", conversationsUnique);
+
+    //console.log("conversationsUnique", conversationsUnique);
 
 
     //console.log("conversations", conversations); //array de usuarios con los que tengo conversaciones

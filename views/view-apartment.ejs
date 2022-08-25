@@ -417,9 +417,9 @@
       const showTotal = document.querySelector('#total');
       showTotal.innerHTML = '';
       showTotal.innerHTML = `<p class="small"><span class="fw-bold" >Total: </span>${thePrice} € x ${nights} nights = ${total} €</p>`;
-      console.log(checkinDate);
-      console.log("total: ", total);
-      console.log("nights: ", nights);
+      //console.log(checkinDate);
+      //console.log("total: ", total);
+      //console.log("nights: ", nights);
     }
   }; 
 
@@ -446,7 +446,7 @@
       apartment: apartment,
       receiver: receiver
     };
-    console.log(data);
+    //console.log(data);
     fetch('/message/send', {
       method: 'POST',
       headers: {
@@ -455,7 +455,7 @@
       body: JSON.stringify(data)
     }).then(res => res.json())
       .then(data => {
-        console.log(data);
+        //console.log(data);
         messageText.value = '';
         collapse.click();
       }).catch(err => console.log(err));

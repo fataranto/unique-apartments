@@ -13,222 +13,219 @@
 <script>
   $(document).ready(function () {
     $('#myApartments').DataTable();
-});
+  });
 </script>
 
 <style type="text/css">
-
   .card {
-      background: #fff;
-      transition: .5s;
-      border: 0;
-      margin-bottom: 30px;
-      border-radius: .55rem;
-      position: relative;
-      width: 100%;
-      box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+    background: #fff;
+    transition: .5s;
+    border: 0;
+    margin-bottom: 30px;
+    border-radius: .55rem;
+    position: relative;
+    width: 100%;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
   }
+
   .chat-app .people-list {
-      width: 280px;
-      position: absolute;
-      left: 0;
-      top: 0;
-      padding: 20px;
-      z-index: 7
+    width: 280px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 20px;
+    z-index: 7
   }
-  
+
   .chat-app .chat {
-      margin-left: 280px;
-      border-left: 1px solid #eaeaea;
-      width: 490px;
-      max-width: 490px;
+    margin-left: 280px;
+    border-left: 1px solid #eaeaea;
+    width: 490px;
+    max-width: 490px;
 
   }
-  
+
   .people-list {
-      -moz-transition: .5s;
-      -o-transition: .5s;
-      -webkit-transition: .5s;
-      transition: .5s
+    -moz-transition: .5s;
+    -o-transition: .5s;
+    -webkit-transition: .5s;
+    transition: .5s
   }
-  
+
   .people-list .chat-list li {
-      padding: 10px 15px;
-      list-style: none;
-      border-radius: 3px
+    padding: 10px 15px;
+    list-style: none;
+    border-radius: 3px
   }
-  
+
   .people-list .chat-list li:hover {
-      background: #efefef;
-      cursor: pointer
+    background: #efefef;
+    cursor: pointer
   }
-  
+
   .people-list .chat-list li.active {
-      background: #efefef
+    background: #efefef
   }
-  
-  
+
+
   .people-list .chat-list img {
-      width: 45px;
-      border-radius: 50%
+    width: 45px;
+    border-radius: 50%
   }
-  
+
   .people-list img {
-      float: left;
-      border-radius: 50%
+    float: left;
+    border-radius: 50%
   }
-  
+
   .people-list .about {
-      float: left;
-      padding-left: 8px
+    float: left;
+    padding-left: 8px
   }
-  
+
   .people-list .status {
-      color: #999;
-      font-size: 13px
+    color: #999;
+    font-size: 13px
   }
-  
+
   .chat .chat-header {
-      padding: 15px 20px;
-      border-bottom: 2px solid #f4f7f6
+    padding: 15px 20px;
+    border-bottom: 2px solid #f4f7f6
   }
-  
+
   .chat .chat-header img {
-      float: left;
-      border-radius: 40px;
-      width: 40px
+    float: left;
+    border-radius: 40px;
+    width: 40px
   }
-  
+
   .chat .chat-header .chat-about {
-      float: left;
-      padding-left: 10px
+    float: left;
+    padding-left: 10px
   }
-  
+
   .chat .chat-history {
-      padding: 20px;
-      border-bottom: 2px solid #fff
+    padding: 20px;
+    border-bottom: 2px solid #fff
   }
-  
+
   .chat .chat-history ul {
-      padding: 0
+    padding: 0
   }
-  
+
   .chat .chat-history ul li {
-      list-style: none;
-      margin-bottom: 30px
+    list-style: none;
+    margin-bottom: 30px
   }
-  
+
   .chat .chat-history ul li:last-child {
-      margin-bottom: 0px
+    margin-bottom: 0px
   }
-  
+
   .chat .chat-history .message-data {
-      margin-bottom: 15px
+    margin-bottom: 15px
   }
-  
+
   .chat .chat-history .message-data img {
-      border-radius: 40px;
-      width: 40px
+    border-radius: 40px;
+    width: 40px
   }
-  
+
   .chat .chat-history .message-data-time {
-      color: #48494c;
-      padding-left: 6px;
-      font-size: 13px
+    color: #48494c;
+    padding-left: 6px;
+    font-size: 13px
   }
-  
+
   .chat .chat-history .message {
-      color: #444;
-      padding: 18px 20px;
-      line-height: 26px;
-      font-size: 16px;
-      border-radius: 7px;
-      display: inline-block;
-      position: relative
+    color: #444;
+    padding: 18px 20px;
+    line-height: 26px;
+    font-size: 16px;
+    border-radius: 7px;
+    display: inline-block;
+    position: relative
   }
-  
+
   .chat .chat-history .message:after {
-      bottom: 100%;
-      left: 7%;
-      border: solid transparent;
-      content: " ";
-      height: 0;
-      width: 0;
-      position: absolute;
-      pointer-events: none;
-      border-bottom-color: #fff;
-      border-width: 10px;
-      margin-left: -10px
+    bottom: 100%;
+    left: 7%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-bottom-color: #fff;
+    border-width: 10px;
+    margin-left: -10px
   }
-  
+
   .chat .chat-history .my-message {
-      background: #efefef
+    background: #efefef
   }
-  
+
   .chat .chat-history .my-message:after {
-      bottom: 100%;
-      left: 30px;
-      border: solid transparent;
-      content: " ";
-      height: 0;
-      width: 0;
-      position: absolute;
-      pointer-events: none;
-      border-bottom-color: #efefef;
-      border-width: 10px;
-      margin-left: -10px
+    bottom: 100%;
+    left: 30px;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-bottom-color: #efefef;
+    border-width: 10px;
+    margin-left: -10px
   }
-  
+
   .chat .chat-history .other-message {
-      background: #e8f1f3;
-      text-align: right
+    background: #e8f1f3;
+    text-align: right
   }
-  
+
   .chat .chat-history .other-message:after {
-      border-bottom-color: #e8f1f3;
-      left: 93%
+    border-bottom-color: #e8f1f3;
+    left: 93%
   }
-  
+
   .chat .chat-message {
-      padding: 20px
+    padding: 20px
   }
-  
+
   .online,
   .offline,
   .me {
-      margin-right: 2px;
-      font-size: 8px;
-      vertical-align: middle
+    margin-right: 2px;
+    font-size: 8px;
+    vertical-align: middle
   }
-  
+
   .online {
-      color: #86c541
+    color: #86c541
   }
-  
+
   .offline {
-      color: #e47297
+    color: #e47297
   }
-  
+
   .me {
-      color: #1d8ecd
+    color: #1d8ecd
   }
-  
+
   .float-right {
-      float: right
+    float: right
   }
-  
+
   .clearfix:after {
-      visibility: hidden;
-      display: block;
-      font-size: 0;
-      content: " ";
-      clear: both;
-      height: 0
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0
   }
-  
-
-
-  </style>
+</style>
 
 
 
@@ -242,125 +239,130 @@
 
 
     <main class="col py-3">
-    
+
       <section class="container d-none">
         <h1>Profile</h1>
-        <p>-Este es el dashboard del usuario, aquí tendrá la posibilidad de actualizar sus datos y todo lo referente a la
+        <p>-Este es el dashboard del usuario, aquí tendrá la posibilidad de actualizar sus datos y todo lo referente a
+          la
           gestión de los pisos que haya resrvado.</p>
-          <p>id: <%= user.id %></p>
+        <p>id: <%= user.id %></p>
         <p> username: <%=user.username%> </p>
         <p> Name: <%=user.name%> </p>
         <p> Last Name: <%=user.lastname%> </p>
         <p> Email: <%=user.email%> </p>
-         <% if (user.isAdmin){ %>
-          <p>Admin</p>
+        <% if (user.isAdmin){ %>
+        <p>Admin</p>
         <% } %>
         <% if (user.isHost){ %>
-          <p>Host</p>
+        <p>Host</p>
         <% } %>
-    
-    
+
+
       </section>
       <section class="container">
         <h1>Messages</h1>
         <div class="container">
           <div class="row clearfix float-end">
-              <div class="col-lg-12">
-                  <div class="card chat-app">
-                      <div id="plist" class="people-list">
-                          <div class="input-group">
-                              <div class="input-group-prepend">
-                                  <p>Conversations</p>
-                              </div>
-                          </div>
-                          <ul id="conversationList" class="list-unstyled chat-list mt-2 mb-0">
-                            <% conversations.forEach(function(conversation){ %>
-
-                              <li class="clearfix" data-apartment= <%= conversation.apartment%> data-user=<%= conversation.id%> >
-                                
-                                  <div class="about">
-                                    <i class="bi bi-person-circle"></i><span class="ms-2 small"><%= conversation.username.substring(0,20)+'...'%></span>
-                                  </div>
-                              </li>
-                            
-                            <% }); %>
-                              
-                          </ul>
-                      </div>
-                      <div class="chat">
-                          <div class="chat-header clearfix">
-                              <div class="row">
-                                  <div class="col-lg-9">
-                                      
-                                      <div class="chat-about">
-                                          <h6 class="m-b-0"><i class="bi bi-person-circle"></i><span class="ms-2"><%=user.fullName%></span></h6>
-                                      </div>
-                                  </div>
-
-                              </div>
-                          </div>
-                          <div class="chat">
-
-                          </div>
-                          <div class="chat-history">
-                              <ul class="m-b-0">
-                                                                
-                              
-                              </ul>
-                          </div>
-                          <div class="chat-message clearfix mt-8">
-                              <div class="input-group mb-0">
-                                  <div class="input-group-prepend">
-                                      <span id="sendAnswerMessage" class="input-group-text btn btn-primary"><i class="bi bi-send-fill"></i></span>
-                                  </div>
-                                  <input id="answerMessage" type="text" class="form-control" placeholder="Enter text here...">                                    
-                              </div>
-                          </div>
-                      </div>
+            <div class="col-lg-12">
+              <div class="card chat-app">
+                <div id="plist" class="people-list">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <p>Conversations</p>
+                    </div>
                   </div>
+                  <ul id="conversationList" class="list-unstyled chat-list mt-2 mb-0">
+                    <% conversations.forEach(function(conversation){ %>
+
+                    <li class="clearfix" data-apartment=<%= conversation.apartment%> data-user=<%= conversation.id%>>
+
+                      <div class="about">
+                        <i class="bi bi-person-circle"></i><span
+                          class="ms-2 small"><%= conversation.username.substring(0,20)+'...'%></span>
+                      </div>
+                    </li>
+
+                    <% }); %>
+
+                  </ul>
+                </div>
+                <div class="chat">
+                  <div class="chat-header clearfix">
+                    <div class="row">
+                      <div class="col-lg-9">
+
+                        <div class="chat-about">
+                          <h6 class="m-b-0"><i class="bi bi-person-circle"></i><span
+                              class="ms-2"><%=user.fullName%></span></h6>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="chat">
+
+                  </div>
+                  <div class="chat-history">
+                    <ul class="m-b-0">
+
+
+                    </ul>
+                  </div>
+                  <div class="chat-message clearfix mt-8">
+                    <div class="input-group mb-0">
+                      <div class="input-group-prepend">
+                        <span id="sendAnswerMessage" class="input-group-text btn btn-primary"><i
+                            class="bi bi-send-fill"></i></span>
+                      </div>
+                      <input id="answerMessage" type="text" class="form-control" placeholder="Enter text here...">
+                    </div>
+                  </div>
+                </div>
               </div>
+            </div>
           </div>
-          </div>
+        </div>
       </section>
-  
+
     </main>
   </div>
 
 
-<script>
-//cada "conversationList li" tiene un data-user que es el id del usuario con el que se habla
-//cuando se hace click en uno de ellos, se carga el chat con el usuario correspondiente
-//hago una consulta fetch a "/message/conversation" y envío "sender" = user.id y "receiver" = conversation.id
-//y me devuelve una lista de mensajes
-//muestro por consola el mensaje y el usuario que lo ha enviado
+  <script>
+    //cada "conversationList li" tiene un data-user que es el id del usuario con el que se habla
+    //cuando se hace click en uno de ellos, se carga el chat con el usuario correspondiente
+    //hago una consulta fetch a "/message/conversation" y envío "sender" = user.id y "receiver" = conversation.id
+    //y me devuelve una lista de mensajes
+    //muestro por consola el mensaje y el usuario que lo ha enviado
 
-const conversationList = document.querySelectorAll('#conversationList li');
-conversationList.forEach(function(conversation){
-  conversation.addEventListener('click', function(){
-    const answerMessage = document.querySelector('#answerMessage');
-    const sender = conversation.getAttribute('data-user');
-    const apartment = conversation.getAttribute('data-apartment');
-    answerMessage.setAttribute('data-user', sender);
-    answerMessage.setAttribute('data-apartment', apartment);
-  
-    fetch('/message/conversation', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        sender: sender
-      })
-    })
-    .then(res => res.json())
-    .then(data => {
-      console.log(data);
-      const chat = document.querySelector('.chat-history ul');
-      chat.innerHTML = '';
-      data.forEach(function(message){
-        const date = message.date.toString().substr(5,5) + ' ' + message.date.toString().substr(11,5);
-        if (message.sender._id == sender){
-          chat.innerHTML += `
+    const conversationList = document.querySelectorAll('#conversationList li');
+    conversationList.forEach(function (conversation) {
+      conversation.addEventListener('click', function () {
+        const answerMessage = document.querySelector('#answerMessage');
+        const sender = conversation.getAttribute('data-user');
+        const apartment = conversation.getAttribute('data-apartment');
+        answerMessage.setAttribute('data-user', sender);
+        answerMessage.setAttribute('data-apartment', apartment);
+
+        fetch('/message/conversation', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              sender: sender
+            })
+          })
+          .then(res => res.json())
+          .then(data => {
+            //console.log(data);
+            const chat = document.querySelector('.chat-history ul');
+            chat.innerHTML = '';
+            data.forEach(function (message) {
+              const date = message.date.toString().substr(5, 5) + ' ' + message.date.toString().substr(11,
+                5);
+              if (message.sender._id == sender) {
+                chat.innerHTML += `
             <li class="cleafix">
                 <div class="message-data text-end">
                   <span class="message-data-time" >${date} ${message.sender.name}</span>
@@ -370,8 +372,8 @@ conversationList.forEach(function(conversation){
                 </div>
             </li>
           `;
-        } else {
-          chat.innerHTML += `
+              } else {
+                chat.innerHTML += `
             <li class="clearfix">
                 <div class="message-data">
                   <span class="message-data-time" >${date}</span>
@@ -381,80 +383,70 @@ conversationList.forEach(function(conversation){
                 </div>
             </li>
           `;
-        }
+              }
+            });
+          });
       });
     });
-  });
-}
-);
 
 
-//cuando se envia un mensaje, se envía al servidor mediante un fetch a "/message/send"
-//y se envía el mensaje y el usuario que lo ha enviado
-//se muestra por consola el mensaje y el usuario que lo ha enviado
-const sendAnswerMessage = document.querySelector('#sendAnswerMessage');
-sendAnswerMessage.addEventListener('click', function(){
-  const answerMessage = document.querySelector('#answerMessage');
-  const receiver = answerMessage.getAttribute('data-user');
-  const apartment = answerMessage.getAttribute('data-apartment');
-  const messageText = answerMessage.value;
-  answerMessage.value = '';
-  fetch('/message/send', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      receiver,
-      messageText,
-      apartment
-    })
-  })
-  .then(res => res.json())
-  .then(data => {
-    console.log(data);
-    const chat = document.querySelector('.chat-history ul');
-    chat.innerHTML = '';
-    data.forEach(function(message){
-      const date = message.date.toString().substr(5,5) + ' ' + message.date.toString().substr(11,5);
-      if (message.sender._id == sender){
-        chat.innerHTML += `
-          <li class="cleafix">
-              <div class="message-data text-end">
-                <span class="message-data-time" >${date} ${message.sender.name}</span>
-              </div>
-              <div class="message other-message float-right">
-                ${message.messageText}
-              </div>
-          </li>
-        `;
-      } else {
-        chat.innerHTML += `
+    //cuando se envia un mensaje, se envía al servidor mediante un fetch a "/message/send"
+    //y se envía el mensaje y el usuario que lo ha enviado
+    //se muestra por consola el mensaje y el usuario que lo ha enviado
+    const sendAnswerMessage = document.querySelector('#sendAnswerMessage');
+    sendAnswerMessage.addEventListener('click', function () {
+      const answerMessage = document.querySelector('#answerMessage');
+      const receiver = answerMessage.getAttribute('data-user');
+      const apartment = answerMessage.getAttribute('data-apartment');
+      const messageText = answerMessage.value;
+      answerMessage.value = '';
+      fetch('/message/send', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            receiver,
+            messageText,
+            apartment
+          })
+        })
+        .then(res => res.json())
+        .then(data => {
+          //console.log(data);
+          const chat = document.querySelector('.chat-history ul');
+          const date = data.date.toString().substr(5, 5) + ' ' + data.date.toString().substr(11, 5);
+          chat.innerHTML += `
           <li class="clearfix">
               <div class="message-data">
                 <span class="message-data-time" >${date}</span>
               </div>
               <div class="message my-message">
-                ${message.messageText}
+                ${data.messageText}
               </div>
           </li>
         `;
+        });
+    });
+
+    //con la tecla enter se envía el mensaje
+    const answerMessage = document.querySelector('#answerMessage');
+    answerMessage.addEventListener('keyup', function (e) {
+      if (e.keyCode === 13) {
+        sendAnswerMessage.click();
       }
     });
-  });
-}
-);
 
+    //al cargar la pagina se carga el chat con el primer usuario de la lista
+    try {
+      conversationList[0].click();
+    } catch (error) {
+      console.log("no conversations");
+    }
 
+  </script>
 
-
- 
-
- 
-
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 
 
 

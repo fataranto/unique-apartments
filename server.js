@@ -77,6 +77,7 @@ require("./app/routes/auth.routes")(app);
 require("./app/routes/user.routes")(app);
 require("./app/routes/apartment.routes")(app);
 require("./app/routes/booking.routes")(app);
+require("./app/routes/message.routes")(app);
 
 app.use((req, res) =>{
   res.status(404).render('error.ejs', 

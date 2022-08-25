@@ -2,34 +2,34 @@
       <div class="d-flex flex-column align-items-center align-items-sm-start px-2 pt-2 text-white sticky-top">
         <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
           <li class="nav-item">
-              <a href="/admin/user/<%= user.id %>" class="nav-link align-middle px-0 opacity-50">
+              <a href="/admin/user/<%= user.id %>" class="nav-link align-middle px-0 opacity-50 <% if(page=='dashboard'){%>opacity-100<%}%>">
                 <i class="fs-5 bi-speedometer2 dashboardNavIcon"></i> <span class="ms-1 d-none dashboardNavText ">Dashboard</span>
               </a>
           </li>
           <li>
-              <a href="/admin/user/<%= user.id %>/profile" class="nav-link align-middle px-0 opacity-50">
+              <a href="/admin/user/<%= user.id %>/profile" class="nav-link align-middle px-0 opacity-50<% if(page=='profile'){%>opacity-100<%}%>">
                   <i class="fs-5 bi-person-circle dashboardNavIcon"></i> <span class="ms-1 d-none dashboardNavText">Profile</span> </a>
               
           </li>
           <% if (user.isAdmin){ %>
           <li>
-            <a href="/admin/admin/<%= user.id %>/users" class="nav-link align-middle px-0 opacity-50">
+            <a href="/admin/admin/<%= user.id %>/users" class="nav-link align-middle px-0 opacity-50<% if(page=='users'){%>opacity-100<%}%>">
                 <i class="fs-5 bi-people-fill dashboardNavIcon"></i> <span class="ms-1 d-none dashboardNavText">Users</span> </a>
             
         </li>
         <% } %>
         <% if (user.isAdmin || user.isHost){ %>
           <li>
-              <a href="/admin/user/<%= user.id %>/apartments" class="nav-link align-middle px-0 opacity-50">
+              <a href="/admin/user/<%= user.id %>/apartments" class="nav-link align-middle px-0 opacity-50<% if(page=='apartments'){%>opacity-100<%}%>">
                   <i class="fs-5 bi-house-heart dashboardNavIcon"></i> <span class="ms-1 d-none dashboardNavText">Apartments</span></a>
           </li>
           <% } %>
           <li>
-              <a href="/admin/user/<%= user.id %>/bookings" class="nav-link align-middle px-0 opacity-50">
+              <a href="/admin/user/<%= user.id %>/bookings" class="nav-link align-middle px-0 opacity-50<% if(page=='bookings'){%>opacity-100<%}%>">
                   <i class="fs-5 bi-calendar-heart dashboardNavIcon"></i> <span class="ms-1 d-none dashboardNavText">Bookings</span></a>
           </li>
           <li>
-              <a href="#" class="nav-link align-middle px-0 opacity-50">
+              <a href="/admin/user/<%= user.id %>/messages" class="nav-link align-middle px-0 opacity-50<% if(page=='messages'){%>opacity-100<%}%>">
                   <i class="fs-5 bi-chat-right-heart dashboardNavIcon"></i> <span class="ms-1 d-none dashboardNavText">Messages</span> </a>
           </li>
       </ul>

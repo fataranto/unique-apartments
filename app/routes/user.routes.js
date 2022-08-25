@@ -23,7 +23,11 @@ module.exports = function(app) {
   // App routes
   app.get("/admin/user/:user", [authJwt.verifyToken], controller.userDashboard);
   app.get("/admin/user/:user/profile", [authJwt.verifyToken], controller.userDashboardProfile);
+  app.get("/admin/admin/:user/profile/:action", [authJwt.verifyToken, authJwt.isAdmin], controller.userDashboardProfile);
   app.get("/admin/user/:user/apartments", [authJwt.verifyToken], controller.userDashboardApartments);
   app.get("/admin/user/:user/bookings", [authJwt.verifyToken], controller.userDashboardBookings);
   app.get("/admin/admin/:user/users", [authJwt.verifyToken, authJwt.isAdmin], controller.userDashboardUsers);
+  app.get("/admin/user/:user/messages", [authJwt.verifyToken], controller.userDashboardMessages);
+  //app.get("/admin/user/:user/updateConversation", [authJwt.verifyToken], controller.userDashboardUpdateConversation);
+
 };

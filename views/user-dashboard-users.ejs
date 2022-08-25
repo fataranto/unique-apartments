@@ -64,7 +64,7 @@
                   <td><% if (user.roles.find(role => role.name == "admin" )){ %> <i class="bi bi-check-lg"></i> <% } %></td>
                   <td><% if (user.roles.find(role => role.name == "host" )){ %> <i class="bi bi-check-lg"></i> <% } %></td>
                   <td><% if (user.roles.find(role => role.name == "user" )){ %> <i class="bi bi-check-lg"></i> <% } %></td>
-                    <td><a href="/admin/user/<%= user.id %>/profile" class="btn btn-primary"><i class="bi bi-pencil"></i></a></td>
+                    <td><a href="/admin/admin/<%= user.id %>/profile/edit" class="btn btn-primary"><i class="bi bi-pencil"></i></a></td>
               <% }); %>
 
             </tbody>

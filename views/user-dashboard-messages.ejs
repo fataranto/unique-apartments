@@ -16,6 +16,220 @@
 });
 </script>
 
+<style type="text/css">
+
+  .card {
+      background: #fff;
+      transition: .5s;
+      border: 0;
+      margin-bottom: 30px;
+      border-radius: .55rem;
+      position: relative;
+      width: 100%;
+      box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+  }
+  .chat-app .people-list {
+      width: 280px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      padding: 20px;
+      z-index: 7
+  }
+  
+  .chat-app .chat {
+      margin-left: 280px;
+      border-left: 1px solid #eaeaea;
+      width: 490px;
+      max-width: 490px;
+
+  }
+  
+  .people-list {
+      -moz-transition: .5s;
+      -o-transition: .5s;
+      -webkit-transition: .5s;
+      transition: .5s
+  }
+  
+  .people-list .chat-list li {
+      padding: 10px 15px;
+      list-style: none;
+      border-radius: 3px
+  }
+  
+  .people-list .chat-list li:hover {
+      background: #efefef;
+      cursor: pointer
+  }
+  
+  .people-list .chat-list li.active {
+      background: #efefef
+  }
+  
+  
+  .people-list .chat-list img {
+      width: 45px;
+      border-radius: 50%
+  }
+  
+  .people-list img {
+      float: left;
+      border-radius: 50%
+  }
+  
+  .people-list .about {
+      float: left;
+      padding-left: 8px
+  }
+  
+  .people-list .status {
+      color: #999;
+      font-size: 13px
+  }
+  
+  .chat .chat-header {
+      padding: 15px 20px;
+      border-bottom: 2px solid #f4f7f6
+  }
+  
+  .chat .chat-header img {
+      float: left;
+      border-radius: 40px;
+      width: 40px
+  }
+  
+  .chat .chat-header .chat-about {
+      float: left;
+      padding-left: 10px
+  }
+  
+  .chat .chat-history {
+      padding: 20px;
+      border-bottom: 2px solid #fff
+  }
+  
+  .chat .chat-history ul {
+      padding: 0
+  }
+  
+  .chat .chat-history ul li {
+      list-style: none;
+      margin-bottom: 30px
+  }
+  
+  .chat .chat-history ul li:last-child {
+      margin-bottom: 0px
+  }
+  
+  .chat .chat-history .message-data {
+      margin-bottom: 15px
+  }
+  
+  .chat .chat-history .message-data img {
+      border-radius: 40px;
+      width: 40px
+  }
+  
+  .chat .chat-history .message-data-time {
+      color: #48494c;
+      padding-left: 6px;
+      font-size: 13px
+  }
+  
+  .chat .chat-history .message {
+      color: #444;
+      padding: 18px 20px;
+      line-height: 26px;
+      font-size: 16px;
+      border-radius: 7px;
+      display: inline-block;
+      position: relative
+  }
+  
+  .chat .chat-history .message:after {
+      bottom: 100%;
+      left: 7%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+      border-bottom-color: #fff;
+      border-width: 10px;
+      margin-left: -10px
+  }
+  
+  .chat .chat-history .my-message {
+      background: #efefef
+  }
+  
+  .chat .chat-history .my-message:after {
+      bottom: 100%;
+      left: 30px;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+      border-bottom-color: #efefef;
+      border-width: 10px;
+      margin-left: -10px
+  }
+  
+  .chat .chat-history .other-message {
+      background: #e8f1f3;
+      text-align: right
+  }
+  
+  .chat .chat-history .other-message:after {
+      border-bottom-color: #e8f1f3;
+      left: 93%
+  }
+  
+  .chat .chat-message {
+      padding: 20px
+  }
+  
+  .online,
+  .offline,
+  .me {
+      margin-right: 2px;
+      font-size: 8px;
+      vertical-align: middle
+  }
+  
+  .online {
+      color: #86c541
+  }
+  
+  .offline {
+      color: #e47297
+  }
+  
+  .me {
+      color: #1d8ecd
+  }
+  
+  .float-right {
+      float: right
+  }
+  
+  .clearfix:after {
+      visibility: hidden;
+      display: block;
+      font-size: 0;
+      content: " ";
+      clear: both;
+      height: 0
+  }
+  
+
+
+  </style>
+
 
 
 </head>
@@ -29,8 +243,8 @@
 
     <main class="col py-3">
     
-      <section class="container">
-        <h1>Dashboard</h1>
+      <section class="container d-none">
+        <h1>Profile</h1>
         <p>-Este es el dashboard del usuario, aquí tendrá la posibilidad de actualizar sus datos y todo lo referente a la
           gestión de los pisos que haya resrvado.</p>
           <p>id: <%= user.id %></p>
@@ -47,505 +261,201 @@
     
     
       </section>
-    
-      <!-- Si hay apartamentos los listo en una tabla con un boton que enlace a la edición del apartamento y otro para elimarlo de la bbdd-->
-    
-      <% if(apartments){ %>
       <section class="container">
-        <h3>My apartaments</h3>
-    
-                 <!-- creo el modal para eliminar apartamento-->
-                 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
+        <h1>Messages</h1>
+        <div class="container">
+          <div class="row clearfix float-end">
+              <div class="col-lg-12">
+                  <div class="card chat-app">
+                      <div id="plist" class="people-list">
+                          <div class="input-group">
+                              <div class="input-group-prepend">
+                                  <p>Conversations</p>
+                              </div>
+                          </div>
+                          <ul id="conversationList" class="list-unstyled chat-list mt-2 mb-0">
+                            <% conversations.forEach(function(conversation){ %>
+
+                              <li class="clearfix" data-apartment= <%= conversation.apartment%> data-user=<%= conversation.id%> >
+                                
+                                  <div class="about">
+                                    <i class="bi bi-person-circle"></i><span class="ms-2 small"><%= conversation.username.substring(0,20)+'...'%></span>
+                                  </div>
+                              </li>
+                            
+                            <% }); %>
+                              
+                          </ul>
                       </div>
-                      <div class="modal-body">
-                        <p>Are you sure you want to delete this apartment?</p>
+                      <div class="chat">
+                          <div class="chat-header clearfix">
+                              <div class="row">
+                                  <div class="col-lg-9">
+                                      
+                                      <div class="chat-about">
+                                          <h6 class="m-b-0"><i class="bi bi-person-circle"></i><span class="ms-2"><%=user.fullName%></span></h6>
+                                      </div>
+                                  </div>
+
+                              </div>
+                          </div>
+                          <div class="chat">
+
+                          </div>
+                          <div class="chat-history">
+                              <ul class="m-b-0">
+                                                                
+                              
+                              </ul>
+                          </div>
+                          <div class="chat-message clearfix mt-8">
+                              <div class="input-group mb-0">
+                                  <div class="input-group-prepend">
+                                      <span id="sendAnswerMessage" class="input-group-text btn btn-primary"><i class="bi bi-send-fill"></i></span>
+                                  </div>
+                                  <input id="answerMessage" type="text" class="form-control" placeholder="Enter text here...">                                    
+                              </div>
+                          </div>
                       </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <form id="deleteForm" action="" method="POST">
-                          <input type="hidden" name="_method" value="DELETE">
-                          <input type="hidden" name="userId" value="<%= user.id %>">
-                          <input type="submit" class="btn btn-danger" value="Delete">
-                        </form>
-                      </div>
-                    </div>
                   </div>
-                </div>
-    
-        <table id="myApartments" class="table table-hover text-nowrap table-striped">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>State</th>
-              <th>City</th>
-              <th>Edit / Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-    
-            <% apartments.forEach(function(apartment){ %>
-    
-            <tr>
-    
-              <td><a href="/apartment/<%=apartment._id%>"><%=apartment.title%></a></td>
-              <td><%=apartment.location.state%></td>
-              <td><%=apartment.location.city%></td>
-              <td>
-                <a href="/apartment/<%=apartment._id%>/edit" class="btn btn-primary">Edit</a>
-    
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-targetId="/apartment/<%=apartment._id%>/delete">Delete</button>
-    
-    
-    
-                <!-- <a href="/apartment/<%=apartment._id%>/delete" class="btn btn-danger">Delete</a> -->
-              </td>
-            </tr>
-    
-            <% }); %>
-          </tbody>
-        </table>
-        <script>
-          var deleteModal = document.getElementById('deleteModal')
-          deleteModal.addEventListener('show.bs.modal', function (event) {
-          // Button that triggered the modal
-          var button = event.relatedTarget
-          // Extract info from data-bs-* attributes
-          var target = button.getAttribute('data-bs-targetId')
-          // If necessary, you could initiate an AJAX request here
-          // and then do the updating in a callback.
-          //
-          // Update the modal's content.
-    
-          //cargo en form acction la ruta del delete
-          var form = document.getElementById('deleteForm')
-          form.action = target
-    
-    
-        })
-        </script>
+              </div>
+          </div>
+          </div>
       </section>
-      <% } %>
-    
-    
-      <!-- *********  dashboard example  ***********-->
-      <!--Main Navigation-->
-    
-    
-      <!--Main layout-->
-    
-          <!--Section: Sales Performance KPIs-->
-          <section class="container">
-            <div class="mb-4">
-              <div class="card">
-                <div class="card-header text-center py-3">
-                  <h5 class="mb-0 text-center">
-                    <strong>Sales Performance KPIs</strong>
-                  </h5>
-                </div>
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <table class="table table-hover text-nowrap">
-                      <thead>
-                        <tr>
-                          <th scope="col"></th>
-                          <th scope="col">Product Detail Views</th>
-                          <th scope="col">Unique Purchases</th>
-                          <th scope="col">Quantity</th>
-                          <th scope="col">Product Revenue</th>
-                          <th scope="col">Avg. Price</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <th scope="row">Value</th>
-                          <td>18,492</td>
-                          <td>228</td>
-                          <td>350</td>
-                          <td>$4,787.64</td>
-                          <td>$13.68</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">Percentage change</th>
-                          <td>
-                            <span class="text-danger">
-                              <i class="fas fa-caret-down me-1"></i><span>-48.8%%</span>
-                            </span>
-                          </td>
-                          <td>
-                            <span class="text-success">
-                              <i class="fas fa-caret-up me-1"></i><span>14.0%</span>
-                            </span>
-                          </td>
-                          <td>
-                            <span class="text-success">
-                              <i class="fas fa-caret-up me-1"></i><span>46.4%</span>
-                            </span>
-                          </td>
-                          <td>
-                            <span class="text-success">
-                              <i class="fas fa-caret-up me-1"></i><span>29.6%</span>
-                            </span>
-                          </td>
-                          <td>
-                            <span class="text-danger">
-                              <i class="fas fa-caret-down me-1"></i><span>-11.5%</span>
-                            </span>
-                          </td>
-                        </tr>
-                        <tr>
-                          <th scope="row">Absolute change</th>
-                          <td>
-                            <span class="text-danger">
-                              <i class="fas fa-caret-down me-1"></i><span>-17,654</span>
-                            </span>
-                          </td>
-                          <td>
-                            <span class="text-success">
-                              <i class="fas fa-caret-up me-1"></i><span>28</span>
-                            </span>
-                          </td>
-                          <td>
-                            <span class="text-success">
-                              <i class="fas fa-caret-up me-1"></i><span>111</span>
-                            </span>
-                          </td>
-                          <td>
-                            <span class="text-success">
-                              <i class="fas fa-caret-up me-1"></i><span>$1,092.72</span>
-                            </span>
-                          </td>
-                          <td>
-                            <span class="text-danger">
-                              <i class="fas fa-caret-down me-1"></i><span>$-1.78</span>
-                            </span>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-          <!--Section: Sales Performance KPIs-->
-    
-          <!--Section: Minimal statistics cards-->
-          <section class="container">
-            <div class="row">
-              <div class="col-xl-3 col-sm-6 col-12 mb-4">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between px-md-1">
-                      <div class="align-self-center">
-                        <i class="fas fa-pencil-alt text-info fa-3x"></i>
-                      </div>
-                      <div class="text-end">
-                        <h3>278</h3>
-                        <p class="mb-0">New Posts</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-3 col-sm-6 col-12 mb-4">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between px-md-1">
-                      <div class="align-self-center">
-                        <i class="far fa-comment-alt text-warning fa-3x"></i>
-                      </div>
-                      <div class="text-end">
-                        <h3>156</h3>
-                        <p class="mb-0">New Comments</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-3 col-sm-6 col-12 mb-4">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between px-md-1">
-                      <div class="align-self-center">
-                        <i class="fas fa-chart-line text-success fa-3x"></i>
-                      </div>
-                      <div class="text-end">
-                        <h3>64.89 %</h3>
-                        <p class="mb-0">Bounce Rate</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-3 col-sm-6 col-12 mb-4">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between px-md-1">
-                      <div class="align-self-center">
-                        <i class="fas fa-map-marker-alt text-danger fa-3x"></i>
-                      </div>
-                      <div class="text-end">
-                        <h3>423</h3>
-                        <p class="mb-0">Total Visits</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xl-3 col-sm-6 col-12 mb-4">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between px-md-1">
-                      <div>
-                        <h3 class="text-danger">278</h3>
-                        <p class="mb-0">New Projects</p>
-                      </div>
-                      <div class="align-self-center">
-                        <i class="fas fa-rocket text-danger fa-3x"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-3 col-sm-6 col-12 mb-4">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between px-md-1">
-                      <div>
-                        <h3 class="text-success">156</h3>
-                        <p class="mb-0">New Clients</p>
-                      </div>
-                      <div class="align-self-center">
-                        <i class="far fa-user text-success fa-3x"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-3 col-sm-6 col-12 mb-4">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between px-md-1">
-                      <div>
-                        <h3 class="text-warning">64.89 %</h3>
-                        <p class="mb-0">Conversion Rate</p>
-                      </div>
-                      <div class="align-self-center">
-                        <i class="fas fa-chart-pie text-warning fa-3x"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-3 col-sm-6 col-12 mb-4">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between px-md-1">
-                      <div>
-                        <h3 class="text-info">423</h3>
-                        <p class="mb-0">Support Tickets</p>
-                      </div>
-                      <div class="align-self-center">
-                        <i class="far fa-life-ring text-info fa-3x"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xl-3 col-sm-6 col-12 mb-4">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between px-md-1">
-                      <div>
-                        <h3 class="text-info">278</h3>
-                        <p class="mb-0">New Posts</p>
-                      </div>
-                      <div class="align-self-center">
-                        <i class="fas fa-book-open text-info fa-3x"></i>
-                      </div>
-                    </div>
-                    <div class="px-md-1">
-                      <div class="progress mt-3 mb-1 rounded" style="height: 7px">
-                        <div class="progress-bar bg-info" role="progressbar" style="width: 80%" aria-valuenow="80"
-                          aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-3 col-sm-6 col-12 mb-4">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between px-md-1">
-                      <div>
-                        <h3 class="text-warning">156</h3>
-                        <p class="mb-0">New Comments</p>
-                      </div>
-                      <div class="align-self-center">
-                        <i class="far fa-comments text-warning fa-3x"></i>
-                      </div>
-                    </div>
-                    <div class="px-md-1">
-                      <div class="progress mt-3 mb-1 rounded" style="height: 7px">
-                        <div class="progress-bar bg-warning" role="progressbar" style="width: 35%" aria-valuenow="35"
-                          aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-3 col-sm-6 col-12 mb-4">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between px-md-1">
-                      <div>
-                        <h3 class="text-success">64.89 %</h3>
-                        <p class="mb-0">Bounce Rate</p>
-                      </div>
-                      <div class="align-self-center">
-                        <i class="fas fa-mug-hot text-success fa-3x"></i>
-                      </div>
-                    </div>
-                    <div class="px-md-1">
-                      <div class="progress mt-3 mb-1 rounded" style="height: 7px">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 60%" aria-valuenow="60"
-                          aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-3 col-sm-6 col-12 mb-4">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between px-md-1">
-                      <div>
-                        <h3 class="text-danger">423</h3>
-                        <p class="mb-0">Total Visits</p>
-                      </div>
-                      <div class="align-self-center">
-                        <i class="fas fa-map-signs text-danger fa-3x"></i>
-                      </div>
-                    </div>
-                    <div class="px-md-1">
-                      <div class="progress mt-3 mb-1 rounded" style="height: 7px">
-                        <div class="progress-bar bg-danger" role="progressbar" style="width: 40%" aria-valuenow="40"
-                          aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-          <!--Section: Minimal statistics cards-->
-    
-          <!--Section: Statistics with subtitles-->
-          <section class="container">
-            <div class="row">
-              <div class="col-xl-6 col-md-12 mb-4">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between p-md-1">
-                      <div class="d-flex flex-row">
-                        <div class="align-self-center">
-                          <i class="fas fa-pencil-alt text-info fa-3x me-4"></i>
-                        </div>
-                        <div>
-                          <h4>Total Posts</h4>
-                          <p class="mb-0">Monthly blog posts</p>
-                        </div>
-                      </div>
-                      <div class="align-self-center">
-                        <h2 class="h1 mb-0">18,000</h2>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-6 col-md-12 mb-4">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between p-md-1">
-                      <div class="d-flex flex-row">
-                        <div class="align-self-center">
-                          <i class="far fa-comment-alt text-warning fa-3x me-4"></i>
-                        </div>
-                        <div>
-                          <h4>Total Comments</h4>
-                          <p class="mb-0">Monthly blog posts</p>
-                        </div>
-                      </div>
-                      <div class="align-self-center">
-                        <h2 class="h1 mb-0">84,695</h2>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xl-6 col-md-12 mb-4">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between p-md-1">
-                      <div class="d-flex flex-row">
-                        <div class="align-self-center">
-                          <h2 class="h1 mb-0 me-4">$76,456.00</h2>
-                        </div>
-                        <div>
-                          <h4>Total Sales</h4>
-                          <p class="mb-0">Monthly Sales Amount</p>
-                        </div>
-                      </div>
-                      <div class="align-self-center">
-                        <i class="far fa-heart text-danger fa-3x"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-6 col-md-12 mb-4">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between p-md-1">
-                      <div class="d-flex flex-row">
-                        <div class="align-self-center">
-                          <h2 class="h1 mb-0 me-4">$36,000.00</h2>
-                        </div>
-                        <div>
-                          <h4>Total Cost</h4>
-                          <p class="mb-0">Monthly Cost</p>
-                        </div>
-                      </div>
-                      <div class="align-self-center">
-                        <i class="fas fa-wallet text-success fa-3x"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-    
+  
     </main>
   </div>
 
 
+<script>
+//cada "conversationList li" tiene un data-user que es el id del usuario con el que se habla
+//cuando se hace click en uno de ellos, se carga el chat con el usuario correspondiente
+//hago una consulta fetch a "/message/conversation" y envío "sender" = user.id y "receiver" = conversation.id
+//y me devuelve una lista de mensajes
+//muestro por consola el mensaje y el usuario que lo ha enviado
 
+const conversationList = document.querySelectorAll('#conversationList li');
+conversationList.forEach(function(conversation){
+  conversation.addEventListener('click', function(){
+    const answerMessage = document.querySelector('#answerMessage');
+    const sender = conversation.getAttribute('data-user');
+    const apartment = conversation.getAttribute('data-apartment');
+    answerMessage.setAttribute('data-user', sender);
+    answerMessage.setAttribute('data-apartment', apartment);
+  
+    fetch('/message/conversation', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        sender: sender
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+      const chat = document.querySelector('.chat-history ul');
+      chat.innerHTML = '';
+      data.forEach(function(message){
+        const date = message.date.toString().substr(5,5) + ' ' + message.date.toString().substr(11,5);
+        if (message.sender._id == sender){
+          chat.innerHTML += `
+            <li class="cleafix">
+                <div class="message-data text-end">
+                  <span class="message-data-time" >${date} ${message.sender.name}</span>
+                </div>
+                <div class="message other-message float-right">
+                  ${message.messageText}
+                </div>
+            </li>
+          `;
+        } else {
+          chat.innerHTML += `
+            <li class="clearfix">
+                <div class="message-data">
+                  <span class="message-data-time" >${date}</span>
+                </div>
+                <div class="message my-message">
+                  ${message.messageText}
+                </div>
+            </li>
+          `;
+        }
+      });
+    });
+  });
+}
+);
+
+
+//cuando se envia un mensaje, se envía al servidor mediante un fetch a "/message/send"
+//y se envía el mensaje y el usuario que lo ha enviado
+//se muestra por consola el mensaje y el usuario que lo ha enviado
+const sendAnswerMessage = document.querySelector('#sendAnswerMessage');
+sendAnswerMessage.addEventListener('click', function(){
+  const answerMessage = document.querySelector('#answerMessage');
+  const receiver = answerMessage.getAttribute('data-user');
+  const apartment = answerMessage.getAttribute('data-apartment');
+  const messageText = answerMessage.value;
+  answerMessage.value = '';
+  fetch('/message/send', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      receiver,
+      messageText,
+      apartment
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    console.log(data);
+    const chat = document.querySelector('.chat-history ul');
+    chat.innerHTML = '';
+    data.forEach(function(message){
+      const date = message.date.toString().substr(5,5) + ' ' + message.date.toString().substr(11,5);
+      if (message.sender._id == sender){
+        chat.innerHTML += `
+          <li class="cleafix">
+              <div class="message-data text-end">
+                <span class="message-data-time" >${date} ${message.sender.name}</span>
+              </div>
+              <div class="message other-message float-right">
+                ${message.messageText}
+              </div>
+          </li>
+        `;
+      } else {
+        chat.innerHTML += `
+          <li class="clearfix">
+              <div class="message-data">
+                <span class="message-data-time" >${date}</span>
+              </div>
+              <div class="message my-message">
+                ${message.messageText}
+              </div>
+          </li>
+        `;
+      }
+    });
+  });
+}
+);
+
+
+
+
+ 
+
+ 
+
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+
 
 
 </body>

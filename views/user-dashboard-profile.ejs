@@ -48,7 +48,7 @@
     
       </section>
       <section class="container">
-        <h1>Profile</h1>
+        <h1>Profile <%=action%></h1>
         <div class="container">
           <div class="row justify-content-center">
 
@@ -59,14 +59,14 @@
               <div class="form-outline mb-4">
              
 
-                <input type="text" class="form-control" name="username" minlength="4" maxlength="8" pattern="^[a-zA-Z]\w{3,7}" title="Username should start with a letter and can only contain regular characters, digits and '_'" placeholder="<%=user.username%>"  disabled/>
+                <input type="text" class="form-control" name="username" minlength="4" maxlength="8" pattern="^[a-zA-Z]\w{3,7}" title="Username should start with a letter and can only contain regular characters, digits and '_'" placeholder="<%=userProfile.username%>"  disabled/>
                 <label class="form-label">Username</label>
               </div>
 
               <!-- Email input -->
               <div class="form-outline mb-4">
 
-                <input type="email" class="form-control" name="email" placeholder="<%=user.email%>" disabled/>
+                <input type="email" class="form-control" name="email" placeholder="<%=userProfile.email%>" disabled/>
                 <label class="form-label" for="form1Example1">Email</label>
               </div>
 
@@ -75,39 +75,41 @@
               <!-- Name input -->
               <div class="form-outline mb-4">
 
-                <input type="text" class="form-control" name="name" minlength="2" maxlength="30" pattern="^[a-zA-Z][a-zA-Z\s]*$" title="Use only letters and spaces" value="<%=user.name%>" required/>
+                <input type="text" class="form-control" name="name" minlength="2" maxlength="30" pattern="^[a-zA-Z][a-zA-Z\u00C0-\u017F\s]*$" title="Use only letters and spaces" value="<%=userProfile.name%>" <% if (action != "edit"){ %> disabled <% } %> required/>
                 <label class="form-label" for="form1Example1">Name</label>
               </div>
 
               <!-- Lastname input -->
               <div class="form-outline mb-4">
 
-                <input type="text" class="form-control" name="lastname" minlength="2" maxlength="30" pattern="^[a-zA-Z][a-zA-Z\s]*$" title="Use only letters and spaces" value="<%=user.lastname%>" required/>
+                <input type="text" class="form-control" name="lastname" minlength="2" maxlength="30" pattern="^[a-zA-Z][a-zA-Z\u00C0-\u017F\s]*$" title="Use only letters and spaces" value="<%=userProfile.lastname%>" <% if (action != "edit"){ %> disabled <% } %> required/>
                 <label class="form-label" for="form1Example1">Last name</label>
               </div>
 
               
 
               <!-- Password input -->
-              <div class="form-outline mb-4">
+              <div class="form-outline mb-4 <% if (action != 'edit'){ %> d-none <% } %>">
                 <input type="password" class="form-control" name="password" aria-label="Password" minlength="4" maxlength="12" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{4,12}$" title="Password should have between 4 and 12 characters and contain at least one lowercase, one uppercase and a digit" required/>
                 <label class="form-label" for="form1Example2">Password</label>
               </div>
 
-              <div class="form-check">
+              <div class="form-check<% if (action != 'edit'){ %> d-none <% } %>">
                 <div>
                   <input class="form-check-input" type="checkbox" value="user" name="roles" checked
                     style="display:none" />
                 </div>
-                <div <% if (!user.isAdmin){ %>style="display:none" <% } %>>
-                  <input class="form-check-input" type="checkbox" value="admin" name="roles" <% if (user.isAdmin){ %>
+
+
+                <div>
+                  <input class="form-check-input" type="checkbox" value="admin" name="roles" <% if (userProfile.roles.find(role => role.name == "admin" )){ %>
                     checked <% } %> />
                       <label class="form-check-label" for="form1Example3">
                         Make me admin
                       </label>
                 </div>
                 <div>
-                  <input class="form-check-input" type="checkbox" value="host" name="roles" <% if (user.isHost){ %>
+                  <input class="form-check-input" type="checkbox" value="host" name="roles" <% if (userProfile.roles.find(role => role.name == "host" )){ %>
                     checked <% } %>/>
                   <label class="form-check-label" for="form1Example3">
                     Make me host
@@ -117,7 +119,7 @@
 
               <div id="SignupAlert" class="alert alert-danger d-none" role="alert"></div>
               <!-- Submit button -->
-              <div class="modal-footer">
+              <div class="modal-footer <% if (action != 'edit'){ %> d-none <% } %>">
                 <button type="submit" class="btn btn-primary">Update</button>
               </div>
 
@@ -166,7 +168,7 @@
         roles: rolesArray
       };
 
-      const url = '/api/auth/<%=user.id%>/userUpdate';
+      const url = '/api/auth/<%=userProfile.id%>/userUpdate';
       const method = 'POST';
       const headers = {
         'Content-Type': 'application/json'
@@ -195,7 +197,7 @@
         display.innerHTML = json.message;
         console.log(display);
       }
-      location.assign('/admin/user/<%=user.id%>/profile'); 
+      location.assign('/admin/user/<%=user.id%>'); 
       //location.assign('/'); 
 
     } catch (e) {

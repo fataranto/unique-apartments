@@ -339,7 +339,7 @@ exports.getViewApartment = async (req, res) => {
   let user = req.user ? req.user : false;
 
   try {
-    const apartment = await Apartment.findById(req.params.apartment);
+    const apartment = await Apartment.findById(req.params.apartment).populate("owner", "-__v");
     res.status(200).render('view-apartment.ejs', {
       user,
       apartment

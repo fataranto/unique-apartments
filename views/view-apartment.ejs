@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
   integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
   crossorigin="" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
 
 <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
@@ -303,9 +304,37 @@
           <h3 class="text-center mt-5 mb-3 text-primary"><%= apartment.price %> €/night</h3>
 
           <% if (user){ %>
+            <p>
+              <span><i class="bi bi-house-heart"></i> <%=apartment.owner.name%></span>
+
+            <span class="float-end">
+              <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                <i class="bi bi-chat-right-heart"></i>
+              </a>
+            </span>
+            </p>
+            
+            <div class="collapse" id="collapseExample">
+              <div class="card card-body">                
+                  <div class="mb-3">
+                    <label for="messageText" class="form-label small">Questions? Send me a message!</label>
+                    <textarea class="form-control" id="messageText" name="messageText" rows="3"></textarea>
+                    <input class="d-none" type="text" id="apartment" name="apartment" value=<%=apartment._id%>>
+                    <input class="d-none" type="text" id="receiver" name="receiver" value=<%=apartment.owner._id%>>
+                  </div>
+                  <button id="send" type="submit" class="btn btn-primary">Send</button>
+
+              </div>
+            </div>
+
           <form class="ms-auto mt-1 rounded border border-1 border-light bg-light"
             style="color: #484848;" method="POST"
             action="/apartment/<%= apartment._id %>/book">
+            
+            
+
+
+
             <h4 class="mt-3 text-center" >Make a reservation</h4>
 
             <!-- check in - check out -->
@@ -393,6 +422,45 @@
       console.log("nights: ", nights);
     }
   }; 
+
+</script>
+
+<script>
+  //send message
+  messageText.addEventListener('keyup', function(e) {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      document.querySelector('#send').click();
+    }
+  });
+
+  document.querySelector('#send').addEventListener('click', function(e) {
+    e.preventDefault();
+    const messageText = document.querySelector('#messageText');
+    const message = messageText.value;
+    const apartment = '<%=apartment._id%>';
+    const receiver = '<%=apartment.owner._id%>';
+    const collapse = document.querySelector('a[href="#collapseExample"]');
+    const data = {
+      messageText: message,
+      apartment: apartment,
+      receiver: receiver
+    };
+    console.log(data);
+    fetch('/message/send', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }).then(res => res.json())
+      .then(data => {
+        console.log(data);
+        messageText.value = '';
+        collapse.click();
+      }).catch(err => console.log(err));
+  }
+  );
 
 </script>
 

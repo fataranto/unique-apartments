@@ -13,10 +13,10 @@ Any user can update his profile from the private area. Username and email cannot
 
 
 ## Some extra tools i'm using:
--Bootstrap 5 + Sass 
--Autoprefixer
--Postcss
--Purgecss" 
+-Bootstrap 5 + Sass   
+-Autoprefixer  
+-Postcss  
+-Purgecss"   
 -[Leaflet](https://leafletjs.com/) → Maps  
 -[Sortable](https://github.com/SortableJS/Sortable) → Sort images  
 -[Nodemailer](https://nodemailer.com/) → Send emails  

@@ -34,6 +34,5 @@ npm install
 npm start
 ```
 
-[Process](https://www.notion.so/Proyecto-apartamentos-tur-sticos-aba2aebe6a164719a5bdbfd09bca72c0)
 The project can be visited at [https://unique-apartments-test.herokuapp.com/](https://unique-apartments-test.herokuapp.com/)
 

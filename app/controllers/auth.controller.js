@@ -2,7 +2,6 @@ const config = require("../config/auth.config");
 const db = require("../models");
 const User = db.user;
 const Role = db.role;
-const Apartment = db.apartment;
 const eMail = require("../middlewares/sendEmail");
 
 var jwt = require("jsonwebtoken");
@@ -53,10 +52,6 @@ exports.signup = (req, res) => {
               user: user.id,
             }))
             .catch((error) => console.log(error.message));
-
-            
-            //res.redirect("/");
-
           });
         }
       );
@@ -79,11 +74,6 @@ exports.signup = (req, res) => {
             user: user.id,
           });
 
-          //console.log("user 2: ", user);
-          //res.send({ message: "User was registered successfully!" });
-
-         // res.redirect("/");
-          
         });
       });
     }
@@ -116,24 +106,23 @@ exports.signin = (req, res) => {
         return res.status(401).json({ message: "Invalid Password!" });
       }
 
+      //add this functionality to ser the session expirement time to 7 days if the cuser check the remember me checkbox
+      //if not set the session expirement time to 1 day
       const expiresIn = req.body.rememberMe ? "7d" : 86400; // 86400 = 1 day
 
       //console.log("rememberMe: ", req.body.rememberMe);
 
-      /* var token = jwt.sign({ id: user.id, username: user.username }, config.secret, {
-        expiresIn: 86400, // 24 hours
-      }); */
-
       var authorities = [];
 
+      //save the user roles in the session
       const isAdmin = user.roles.some((role) => role.name === "admin");
       //console.log("isAdmin: ", isAdmin);
       const isHost = user.roles.some((role) => role.name === "host");
 
 
-      for (let i = 0; i < user.roles.length; i++) {
-        authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
-      }
+     user.roles.forEach((role) => {
+        authorities.push("ROLE_" + role.name.toUpperCase());
+      });
 
       var token = jwt.sign({ id: user.id, username: user.username, isAdmin: isAdmin, isHost: isHost }, config.secret, {
         expiresIn: expiresIn, 
@@ -143,18 +132,11 @@ exports.signin = (req, res) => {
       //console.log("authorities: ", authorities);
 
       req.session.token = token;
-
-      //mostrar por consola la fecha de expiracion del token
-      /* var expirationDate = (jwt.decode(token).exp)*1000;
-      const date = new Date(expirationDate);
-      console.log("Fecha de expiracion del token: ", date.toLocaleString()); */      
-
+      //login is called using fetch in the frontend
       res.status(200).json({
         message: "User successfully Logged in",
         user: user.id,
       });
-
-      //res.redirect("/");
 
     });
 };
@@ -171,12 +153,8 @@ exports.signout = async (req, res) => {
 
 exports.userUpdate = async (req, res) => {
 const {
-  username,
   name,
   lastname,
-  email,
-  password,
-  roles,
 } = req.body;
 
 const user = await User.findById (req.params.user);
@@ -194,7 +172,6 @@ user.password = bcrypt.hashSync(req.body.password, 8)
 await user.save();
 
 if (req.body.roles) {
-  //console.log("roles: ", roles);
   Role.find(
     {
       name: { $in: req.body.roles },
@@ -211,7 +188,6 @@ if (req.body.roles) {
           res.status(500).json({ message: err });
           return;
         }
-        //res.redirect("/");
 
       });
     }
@@ -234,12 +210,6 @@ if (req.body.roles) {
         message: "User updated successfully!",
         user: user.id,
       }); 
-
-
-      //console.log("user 2: ", user);
-      //res.send({ message: "User was registered successfully!" });
-
-     // res.redirect("/");
       
     });
   });

@@ -1,7 +1,5 @@
 const db = require("../models");
-const {
-  authJwt
-} = require("../middlewares");
+const {authJwt} = require("../middlewares");
 const User = db.user;
 const Role = db.role;
 const Apartment = db.apartment;
@@ -26,24 +24,15 @@ exports.hostBoard = (req, res) => {
 };
 
 exports.userDashboard = async (req, res) => {
-
   //console.log(req.params.user);
   try {
     const fullUser = await User.findById(req.params.user).populate("roles", "-__v");
-    //console.log(user)
 
-    //si el usuario tiene el rol admin busco todos los apartamentos
     let apartments = [];
     let totalApartments, totalApartmentsBarcelona, totalApartmentsGirona, totalApartmentsLleida, totalApartmentsTarragona;
-    const admin = fullUser.roles.find(role => role.name === "admin");
-    const isAdmin = admin ? true : false;
 
-    const host = fullUser.roles.find(role => role.name === "host");
-    const isHost = host ? true : false;
-
-    //console.log(role);
-
-    if (admin) {
+    //if user is admin find all apartments and count them by province
+    if (req.isAdmin) {
       apartments = await Apartment.find({},
         "_id title location.city location.state");
 
@@ -54,8 +43,9 @@ exports.userDashboard = async (req, res) => {
       totalApartmentsLleida = apartments.filter(apartment => apartment.location.state === "Lleida").length;
       totalApartmentsTarragona = apartments.filter(apartment => apartment.location.state === "Tarragona").length;
 
-
-    } else {
+    } 
+    //if user is host find all his apartments
+    if (req.isHost) {
       apartments = await Apartment.find({
         owner: req.userId
       }, "_id title location.city location.state");
@@ -65,10 +55,6 @@ exports.userDashboard = async (req, res) => {
 
     const totalBookings = await Booking.countDocuments();
 
-
-
-
-
     res.status(200).render('user-dashboard.ejs', {
       user: {
         id: req.userId,
@@ -76,8 +62,8 @@ exports.userDashboard = async (req, res) => {
         name: fullUser.name,
         lastname: fullUser.lastname,
         email: fullUser.email,
-        isAdmin: isAdmin,
-        isHost: isHost
+        isAdmin: req.isAdmin,
+        isHost: req.isHost
       },
       apartments,
       totalApartments,
@@ -97,44 +83,44 @@ exports.userDashboard = async (req, res) => {
 
 exports.userDashboardProfile = async (req, res) => {
 
-  const loggedUserIsAdmin = req.isAdmin;
-  var user;
-  //console.log("loggedUserIsAdmin", loggedUserIsAdmin);
+  var user, userProfile;
 
 
-  //console.log(req.userId);
   try {
-    if (loggedUserIsAdmin) {
+    //if logged user is admin he can get any user profile
+    if (req.isAdmin) {
       userProfile = await User.findById(req.params.user).populate("roles", "-__v");
     } else {
+      //if logged user is not admin he can only get his own profile
       userProfile = await User.findById(req.userId).populate("roles", "-__v");
     }
+    //if user is admin and he is getting other user profile I would need to pass the logged user to the view as well
     user = await User.findById(req.userId).populate("roles", "-__v");
 
+    //get user profile roles
     const userProfileAdmin = userProfile.roles.find(role => role.name === "admin");
+    //console.log(userProfileAdmin);
     const userProfileIsAdmin = userProfileAdmin ? true : false;
 
     const userProfileHost = userProfile.roles.find(role => role.name === "host");
     const userProfileIsHost = userProfileHost ? true : false;
 
-    //const fullUser = await User.findById(req.userId).populate("roles", "-__v");
-    //console.log(user)
 
-    //si el usuario tiene el rol admin busco todos los apartamentos
+    //if user is admin or host find all or his apartments
     let apartments = [];
 
-    if (loggedUserIsAdmin) {
+    if (req.isAdmin) {
       apartments = await Apartment.find({},
         "_id title location.city location.state");
 
-    } else {
+    } 
+    if (req.isHost) {
       apartments = await Apartment.find({
         owner: req.userId
       }, "_id title location.city location.state");
     }
 
-    //apartments = apartments.length > 0 ? apartments : undefined;
-    //console.log(user);
+
     res.status(200).render('user-dashboard-profile.ejs', {
       userProfile,
       userProfileIsAdmin,
@@ -166,21 +152,15 @@ exports.userDashboardApartments = async (req, res) => {
     const fullUser = await User.findById(req.params.user).populate("roles", "-__v");
     //console.log(user)
 
-    //si el usuario tiene el rol admin busco todos los apartamentos
+    //if user is admin find all apartments
     let apartments = [];
-    const admin = fullUser.roles.find(role => role.name === "admin");
-    const isAdmin = admin ? true : false;
 
-    const host = fullUser.roles.find(role => role.name === "host");
-    const isHost = host ? true : false;
-
-    //console.log(role);
-
-    if (admin) {
+    if (req.isAdmin) {
       apartments = await Apartment.find({},
         "_id title location.city location.state");
+      }
 
-    } else {
+    if (req.isHost) {
       apartments = await Apartment.find({
         owner: req.userId
       }, "_id title location.city location.state");
@@ -213,36 +193,27 @@ exports.userDashboardBookings = async (req, res) => {
   //console.log(req.params.user);
   var hostBookings = [];
   var guestBookings = [];
-  const fullUser = await User.findById(req.params.user).populate("roles", "-__v");
+  const fullUser = await User.findById(req.userId).populate("roles", "-__v");
   //console.log(fullUser)
-
-  const admin = fullUser.roles.find(role => role.name === "admin");
-  const isAdmin = admin ? true : false;
-
-  const host = fullUser.roles.find(role => role.name === "host");
-  const isHost = host ? true : false;
 
   const bookings = await Booking.find().populate("apartment", "_id title location.city location.state owner");
   //console.log(bookings);
 
 
-  if (host) {
-    hostBookings = bookings.filter(booking => booking.apartment.owner == req.params.user);
+  if (req.isHost) {
+    hostBookings = bookings.filter(booking => booking.apartment.owner == req.userId);
     //console.log("hostBookings", hostBookings);
   }
 
-  guestBookings = bookings.filter(booking => booking.user == req.params.user);
+  guestBookings = bookings.filter(booking => booking.user == req.userId);
   //console.log("guestBookings", guestBookings);
 
   res.status(200).render('user-dashboard-bookings.ejs', {
     user: {
       id: req.userId,
       username: fullUser.username,
-      name: fullUser.name,
-      lastname: fullUser.lastname,
-      email: fullUser.email,
-      isAdmin: isAdmin,
-      isHost: isHost
+      isAdmin: req.isAdmin,
+      isHost: req.isHost
     },
     apartments: undefined,
     bookings,
@@ -257,7 +228,6 @@ exports.userDashboardUsers = async (req, res) => {
 
   fullUser = await User.findById(req.userId).populate("roles", "-__v");
 
-
   const users = await User.find({}, "_id username name lastname email roles").populate("roles", "-__v");
 
   res.status(200).render('user-dashboard-users.ejs', {
@@ -265,10 +235,7 @@ exports.userDashboardUsers = async (req, res) => {
       id: req.userId,
       username: fullUser.username,
       name: fullUser.name,
-      lastname: fullUser.lastname,
-      email: fullUser.email,
-      isAdmin: isAdmin,
-      isHost: isHost
+      isAdmin: req.isAdmin,
     },
     users,
     page: "users"
@@ -277,8 +244,7 @@ exports.userDashboardUsers = async (req, res) => {
 
 exports.userDashboardMessages = async (req, res) => {
 
-  //busco todos los mensajes del usuario, tanto como sender como receiver
-
+  //get all messages from user, both as sender and receiver
   try {
     const messages = await Message.find({
       $or: [{
@@ -289,7 +255,8 @@ exports.userDashboardMessages = async (req, res) => {
     }).populate("sender", "_id username name lastname email").populate("receiver", "_id username name lastname email");
     //console.log("messages", messages);
 
-    //filtro mensajes y creo un array de usuarios en los que tanto el sender como el receiver no son el usuario actual y me quedo solo con el id y el username y el apartment
+
+    //filter messages and create an array of users in which both the sender and the receiver are not the current user and I only stay with the id and the username and the apartment
     const conversations = messages.filter(message => message.sender._id != req.userId).map(message => {
       return {
         id: message.sender._id,
@@ -303,7 +270,7 @@ exports.userDashboardMessages = async (req, res) => {
         apartment: message.apartment
       }
     }));
-    //filtro conversations para eliminar todos los ducplicados
+    //filter conversations to remove all duplicates
     const conversationsFilter = conversations.filter((conversation, index) => {
       return conversations.findIndex(conversation2 => conversation2.id == conversation.id) == index;
     }).map(conversation => {
@@ -322,13 +289,7 @@ exports.userDashboardMessages = async (req, res) => {
     });
 
 
-
-    //console.log("conversationsUnique", conversationsUnique);
-
-
-    //console.log("conversations", conversations); //array de usuarios con los que tengo conversaciones
-
-    //obtengo nombre y apellidos del usuario actual
+    //get the name and last name of the current user
     const fullUser = await User.findById(req.userId).populate("roles", "-__v");
     const fullName = fullUser.name + " " + fullUser.lastname;
 

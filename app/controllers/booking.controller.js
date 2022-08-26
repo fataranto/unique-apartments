@@ -1,17 +1,13 @@
 const db = require("../models");
-const User = db.user;
-const Apartment = db.apartment;
 const Booking = db.booking;
-const moment = require('moment');
 const eMail = require("../middlewares/sendEmail");
-const { appengine } = require("googleapis/build/src/apis/appengine");
 
 exports.getUpdateBooking = async (req, res) => {
     //console.log("req.params.booking",req.params.booking);
     var newStatus;
     switch (req.query.q) {
-        case "approved": newStatus = "approved"; break;
-        case "rejected": newStatus = "rejected"; break;
+        case "approve": newStatus = "approved"; break;
+        case "reject": newStatus = "rejected"; break;
         case "cancel": newStatus = "cancelled"; break;
         default: newStatus = "pending";
         break;

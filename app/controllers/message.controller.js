@@ -12,19 +12,6 @@ exports.postSendMessage = async (req, res) => {
     //console.log("data",req.body);
 
     const user = req.userId;
-    //get email from receiver
-    const receiverData = await User.findById(receiver);
-    const receiverEmail = receiverData.email;
-    const receiverName = receiverData.name;
-
-    const senderData = await User.findById(user);
-    const senderName = senderData.name;
-
-    //get apartment name from apartment id
-    let apartmentData, apartmentName;
-        apartmentData = await Apartment.findById(apartment);
-        apartmentName = apartmentData.title;
-    
 
     const message = new Message({
         apartment,
@@ -33,6 +20,21 @@ exports.postSendMessage = async (req, res) => {
         messageText
     });
     await message.save();
+
+    //send email to receiver
+    //get email from receiver
+    const receiverData = await User.findById(receiver);
+    const receiverEmail = receiverData.email;
+    const receiverName = receiverData.name;
+
+    //get name from sender
+    const senderData = await User.findById(user);
+    const senderName = senderData.name;
+
+    //get apartment name from apartment id
+    let apartmentData, apartmentName;
+        apartmentData = await Apartment.findById(apartment);
+        apartmentName = apartmentData.title;
 
     const emailMessage = 
     `<h1>You have a new message</h1>
@@ -45,29 +47,17 @@ exports.postSendMessage = async (req, res) => {
     eMail.sendEmail(senderName, receiverEmail, "You have a new message at Unique Apartments", emailMessage);
 
     res.status(200).json(message);
-    //res.redirect('back');
 }
 
 exports.postConversation = async (req, res) => {
     //get all messages from conversation between two users
+    //this is hot to update the conversation, but to get a list of all conversations
     const sender = req.body.sender;
     //console.log("sender",sender);
     //console.log("receiver",req.userId);
 
-    //obtengo todos los mensajes en donde soy el emisor o el receptor y el otros usuario es el emisor o el receptor
-    //
-
-
+    //get all messages from conversation between two users 
     const messages = await Message.find({$or: [{sender: sender, receiver: req.userId}, {sender: req.userId, receiver: sender}]}).populate('sender').populate('receiver');
     //console.log("getMessages",messages);
-
-    
-
-
-
-    //console.log("messages",messages);
-    
-
      res.status(200).json(messages);
-
 }

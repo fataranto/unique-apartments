@@ -12,7 +12,6 @@ const eMail = require("../middlewares/sendEmail");
 exports.getAllApartments = async (req, res) => {
   let user = req.user ? req.user : false;
 
-
   const apartments = await Apartment.find().sort({
     price: 1
   });
@@ -25,7 +24,6 @@ exports.getAllApartments = async (req, res) => {
 
 exports.getAddApartment = async (req, res) => {
   let user = req.user ? req.user : false;
-  // const user = await User.findById(req.userId).populate("roles", "-__v");
   res.status(200).render('new-apartment.ejs', {
     user,
     apartment: {}
@@ -174,7 +172,7 @@ exports.postAddApartment = async (req, res) => {
   await apartment.save();
   res.redirect("/");
 
-  //envío un email al usuario que ha creado el apartamento
+  //send an email to the user
   const user = await User.findById(req.userId);
   const emailMessage = `
       <h1>Your apartment has been created!</h1>
@@ -182,7 +180,6 @@ exports.postAddApartment = async (req, res) => {
       <p>Your apartment <strong>${apartment.title}</strong> is now online.</p>
       <p>Thanks,</p>`;
   eMail.sendEmail(user.name, user.email, "Your apartment has been created", emailMessage);
-
 
 }
 
@@ -376,15 +373,15 @@ exports.postSearchResults = async (req, res) => {
 
   var message = "";
 
-  // si no hay fecha de entrada, se pone la fecha de hoy
+  // if no checkin date, set today's date
   if (!checkin) {
     checkin = moment().format("YYYY-MM-DD");
   }
-  // si no hay fecha de salida, se pone la fecha de entrada + 1 día
+  // if no checkout date, set today's date + 1
   if (!checkout) {
     checkout = moment(checkin).add(1, "days").format("YYYY-MM-DD");
   }
-  // si no hay número de huéspedes, se pone 1
+  // if no guests, set 1
   if (!guests) {
     guests = 1;
   }
@@ -416,7 +413,7 @@ exports.postSearchResults = async (req, res) => {
   });
 
 
-  //si no hay resultados busco todos los apartamentos de ese state
+  //if no results, search all apartments in that state
   if (apartments.length > 0) {
     message = `we've found something for you!`;
   } else {
@@ -449,37 +446,29 @@ exports.postBookApartment = async (req, res) => {
   var error = undefined;
   var message = "";
 
-  //obtengo nombre e email del usuario
   const user = await User.findById(req.userId);
-  //const name = user.name;
-  //const email = user.email;
 
 
-  // si no hay fechas de entrada y salida, muestro error por consola
   if (!error && !(checkin || checkout)) {
     error = true;
     message = "Check in and Check out dates are required";
   }
 
-  //si la fecha de entrada es mayor que la fecha de salida, muesto error por consola
   if (!error && moment(checkin).isAfter(moment(checkout))) {
     error = true;
     message = "Check in date must be before Check out date";
   }
 
-  //si la fecha de entrada es menor que la fecha de hoy, muestro error por consola
   if (!error && moment(checkin).isBefore(moment())) {
     error = true;
     message = "Check in date must be after today";
   }
 
-  //si no hay número de huéspedes, muestro error por consola
   if (!error && !guests) {
     error = true;
     message = "Number of guests is required";
   }
 
-  //si no hay usuario logueado, muestro error por consola
   if (!error && !req.userId) {
     error = true;
     message = "You must be logged in to book an apartment";
@@ -491,7 +480,7 @@ exports.postBookApartment = async (req, res) => {
   const capacity = apartment.capacity;
 
 
-  //busco si el número de huéspedes es menor que el número de huéspedes disponibles en el apartamento
+  //search if the number of guests is less than the number of guests available in the apartment
   if (!error && guests > capacity) {
     error = true;
     message = "There are not enough rooms available for the number of guests you want to book";
@@ -503,8 +492,7 @@ exports.postBookApartment = async (req, res) => {
   //console.log("chekinOk: " + chekinOk);
   //console.log("checkoutOk: " + checkoutOk);
 
-  //busco si las fechas de entrada y salida  están disponibles en el apartamento
-
+  // search if the checkin and checkout dates are available in the apartment
   if (!error && !chekinOk) {
     error = true;
     message = `Checkin is not available. Checkin must be between ${moment(availablefrom).format("DD/MM/YYYY")} and ${moment(availableto).format("DD/MM/YYYY")}`;
@@ -524,7 +512,7 @@ exports.postBookApartment = async (req, res) => {
     });
   } else {
 
-    //busco en la base de datos si ya existe una reserva para ese apartamento en ese periodo de tiempo
+    //search in the database if there is already a reservation for that apartment in that period of time
     const bookings = await Booking.find({
       $and: [{
           apartment: apartment._id
@@ -556,7 +544,7 @@ exports.postBookApartment = async (req, res) => {
                 }
               ]
             },
-            //además de las fechas de entrada y salida compruebo si el "state" es "pending" o "approved"
+            //also check if the state is "pending" or "approved"
             {
               $and: [{
                   state: "pending"
@@ -570,9 +558,6 @@ exports.postBookApartment = async (req, res) => {
         }
       ]
     });
-
-    //si hay resultados, muestro error por consola
-    //console.log(bookings);
 
 
 
@@ -611,28 +596,24 @@ exports.postBookApartment = async (req, res) => {
       <p>Thanks,</p>`;
 
       eMail.sendEmail(user.name, user.email, "You have a new booking at Unique Apartments", emailMessage)
-      .catch((error) => console.log(error.message));
+        .catch((error) => console.log(error.message));
     }
   }
 }
 
 exports.postDeleteApartment = async (req, res) => {
-  //primero compruebo si el usuario logueado es el dueño del apartamento o si es admin
+  //check if the user is the owner of the apartment or admin
   const apartment = await Apartment.findById(req.params.apartment);
   if (apartment.owner == req.userId || req.isAdmin) {
-    //cargo la informacion del usuario logueado
     const user = await User.findById(req.userId);
-
-
-    //si es el dueño o el admin, borro el apartamento
-     await Apartment.findByIdAndDelete(req.params.apartment);
-     res.redirect(`/admin/user/${req.body.userId}/apartments`);
-     const emailMessage = `
+    await Apartment.findByIdAndDelete(req.params.apartment);
+    res.redirect(`/admin/user/${req.body.userId}/apartments`);
+    const emailMessage = `
      <h1>Your apartment has been deleted!</h1>
      <p>Hi ${user.name},</p>
      <p>Your apartment <strong>${apartment.title}</strong> has been deleted from our database.</p>
      <p>Thanks,</p>`;
- eMail.sendEmail(user.name, user.email, "Your apartment has been deleted", emailMessage);
+    eMail.sendEmail(user.name, user.email, "Your apartment has been deleted", emailMessage);
 
   } else {
     res.status(400).render('error.ejs', {

@@ -12,6 +12,5 @@ module.exports = function(app) {
   });
 
   app.post("/message/send", [authJwt.verifyToken], controller.postSendMessage);
-  //creo una ruta para recuprar la conersacion entre dos usuarios
   app.post("/message/conversation", [authJwt.verifyToken], controller.postConversation);
 };

@@ -398,14 +398,15 @@
 
 
 <% if (user){ %>
+
 <script>
- 
+ //if user is logged can send messages to the host and book the apartment
+
   checkin.addEventListener('change', calculatePrice);
 
   checkout.addEventListener('change', calculatePrice);
 
-
-   //despues de seleccionar la fecha de checkout, calculamos la cantidad de noches que se reservan
+  //when the user is typing in the guests field, the price is calculated
    function calculatePrice() {
     const checkinDate = checkin.valueAsDate;
     const checkoutDate = checkout.valueAsDate;

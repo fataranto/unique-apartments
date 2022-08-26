@@ -4,6 +4,7 @@ const db = require("../models");
 const User = db.user;
 const Role = db.role;
 
+// check if user is logged in
 verifyToken = (req, res, next) => {
   let token = req.session.token;
 
@@ -19,10 +20,10 @@ verifyToken = (req, res, next) => {
       { error: "Error: Unauthorized" 
     });
     }
-    req.userId = decoded.id; //guardo el id del usuario (es el identificador único de la colección users)
-    req.userUsername = decoded.username; //guardo el username del usuario
-    req.isAdmin = decoded.isAdmin; //guardo si el usuario es admin o no
-    req.isHost = decoded.isHost; //guardo si el usuario es host o no
+    req.userId = decoded.id; 
+    req.userUsername = decoded.username; 
+    req.isAdmin = decoded.isAdmin; 
+    req.isHost = decoded.isHost; 
     req.user = {
       id: decoded.id,
       username: decoded.username,
@@ -33,6 +34,7 @@ verifyToken = (req, res, next) => {
   });
 };
 
+// there some areas that are not protected by the middleware
 verifyTokenPublic = (req, res, next) => {
   let token = req.session.token;
   if (!token) {
@@ -59,6 +61,7 @@ verifyTokenPublic = (req, res, next) => {
   });
 };
 
+// only admin can access this
 isAdmin = (req, res, next) => {
   User.findById(req.userId).exec((err, user) => {
     if (err) {
@@ -97,6 +100,7 @@ isAdmin = (req, res, next) => {
   });
 };
 
+// only admin or host can access this
 isHost = (req, res, next) => {
   User.findById(req.userId).exec((err, user) => {
     if (err) {

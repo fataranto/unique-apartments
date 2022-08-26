@@ -1,3 +1,5 @@
+<!-- sidebar menu in Dashboarad area   -->  
+    
     <aside class="col-auto px-sm-2 px-0 bg-light shadow-sm position-fixed" style="margin-left: 0.75rem; z-index: 5;">
       <div class="d-flex flex-column align-items-center align-items-sm-start px-2 pt-2 text-white sticky-top">
         <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
@@ -43,7 +45,8 @@
     </style>
     <script>
 
-      //cuando pasa el mouse sobre el elemento aside le asigna la clase col-xl-2 y también le asigna la clase col-xl-2 a todos los elementos con la clase dashboardNavText
+      //expands and contracts the sidebar menu on hover
+      //when the mouse passes over the aside element it assigns the class col-xl-2 to the aside element and also assigns the class col-xl-2 to all elements with the class dashboardNavText
       $(document).ready(function(){
         $("aside").mouseover(function(){
           $("aside").addClass("col-xl-2");

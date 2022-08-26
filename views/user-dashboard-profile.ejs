@@ -29,24 +29,7 @@
 
     <main class="col py-3">
     
-      <section class="container d-none">
-        <h1>Profile</h1>
-        <p>-Este es el dashboard del usuario, aquí tendrá la posibilidad de actualizar sus datos y todo lo referente a la
-          gestión de los pisos que haya resrvado.</p>
-          <p>id: <%= user.id %></p>
-        <p> username: <%=user.username%> </p>
-        <p> Name: <%=user.name%> </p>
-        <p> Last Name: <%=user.lastname%> </p>
-        <p> Email: <%=user.email%> </p>
-         <% if (user.isAdmin){ %>
-          <p>Admin</p>
-        <% } %>
-        <% if (user.isHost){ %>
-          <p>Host</p>
-        <% } %>
-    
-    
-      </section>
+
       <section class="container">
         <h1>Profile <%=action%></h1>
         <div class="container">
@@ -139,6 +122,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
+  //update user profile
     async function setUserUpdateAction(form, event) {
     event.preventDefault();
     try {

@@ -692,7 +692,15 @@
 
 
     <script>
-        
+        {
+        /* 
+        This is a script to manage pictures when uploading or editing new apartment.
+        There's only one field for the URL and one for the description
+        The user can upload up to 5 pics, once the user uploads the pictures they are displayed in the form and the user can delete them or change the order by dragging them.
+        It uses the library sortable.js.
+        */
+  
+
         const apartmentPhotos = [];
         var totalPhotos = 0;
         var apartment_photo1 = [<%- apartment.photo1 %>];
@@ -831,12 +839,7 @@
 
                 closeButton.addEventListener("click", (e) => {
                     //console.log(e.target.parentElement.parentElement);
-                    
-                    /* let id = e.target.parentElement.id;
-                    let photoData = document.querySelectorAll(`.${id}`);
-                    photoData.forEach(input => {
-                        input.value = "";
-                    });  */
+
                     totalPhotos--;
                     button.classList.remove("disabled");
                     photo.disabled = false;
@@ -848,13 +851,6 @@
 
 
                 });    
-
-                
-
-                
-
-                
-
                 document.querySelector("#photo").value = "";
                 document.querySelector("#photo_desc").value = "";
 
@@ -918,19 +914,6 @@
                             
                         });
 
-                        //selecciono el elemento que contiene el data-id = element      
-
-
-
-
-                        
-
-                        //imageContainer.forEach((e,i) => {
-                          //  if(e.getAttribute("data-id") == photoInfo[0]+"||"+photoInfo[1]) {
-                            //    e.setAttribute("id", `photo${i+1}`);
-                           // }
-                        //});
-
                         //console.log("element", element);
                     });
                     //console.log(typeof order, order);
@@ -938,6 +921,7 @@
                 /* options */
             }
         }); //sortableJS
+    }
     </script>
 
 <script src="/js/validate-booking-dates.js"></script>

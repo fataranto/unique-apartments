@@ -31,8 +31,7 @@
     
 
     
-      <!-- Si hay apartamentos los listo en una tabla con un boton que enlace a la edición del apartamento y otro para elimarlo de la bbdd-->
-    
+  
       <section class="container">
         <h1>Apartaments</h1>
 
@@ -42,7 +41,6 @@
         
 
       <section class="container mt-5">
-                 <!-- creo el modal para eliminar apartamento-->
                  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -104,12 +102,7 @@
           var button = event.relatedTarget
           // Extract info from data-bs-* attributes
           var target = button.getAttribute('data-bs-targetId')
-          // If necessary, you could initiate an AJAX request here
-          // and then do the updating in a callback.
-          //
-          // Update the modal's content.
-    
-          //cargo en form acction la ruta del delete
+
           var form = document.getElementById('deleteForm')
           form.action = target
     

@@ -2,6 +2,8 @@ const db = require("../models");
 const ROLES = db.ROLES;
 const User = db.user;
 
+
+// check if the user is already registered
 checkDuplicateUsernameOrEmail = (req, res, next) => {
   // Username
   User.findOne({

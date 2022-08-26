@@ -7,7 +7,6 @@ const dbConfig = require("./app/config/db.config");
 
 const app = express();
 
-// agrego para verificar si hay un usuario conectado en el endpoint "/", para poder coger su nombre y agregarlo al menú
 const { authJwt } = require("./app/middlewares");
 
 const controller = require("./app/controllers/apartment.controller");

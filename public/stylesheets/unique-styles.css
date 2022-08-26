@@ -1,3 +1,4 @@
+/* search apartments - suggest cities while writing */
 #suggestions_container {
     z-index: 100;
     left:44px;
@@ -23,6 +24,8 @@
     cursor: pointer;
     min-width: 300px;
   }
+  /* END search apartments - suggest cities while writing */
+
 
 
   /* chat */
@@ -223,4 +226,4 @@
     clear: both;
     height: 0
   }
-  /* end chat */
+  /* END chat */

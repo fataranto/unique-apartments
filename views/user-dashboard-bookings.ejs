@@ -93,11 +93,11 @@ $(document).ready(function () {
                     <td><%= booking.checkout.toLocaleDateString() %></td>
                     <td><%= booking.state %></td>
                     <td>
-                      <a href="/bookings/<%= booking.id %>/approve" class="btn btn-success
+                      <a href="/bookings/<%= booking.id %>/?q=approve" class="btn btn-success
                         <% if(booking.state == 'approved' ){ %>
                           disabled
                           <% } %>" ><i class="bi bi-check-circle"></i></a>
-                      <a href="/bookings/<%= booking.id %>/reject" class="btn btn-danger
+                      <a href="/bookings/<%= booking.id %>/?q=reject" class="btn btn-danger
                         <% if(booking.state == 'rejected' ){ %>
                         disabled
                         <% } %>"><i class="bi bi-x-octagon"></i></a>
@@ -138,7 +138,7 @@ $(document).ready(function () {
                           <td><%= booking.checkout.toLocaleDateString() %></td>
                           <td><%= booking.state %></td>
                           <td>
-                            <a href="/bookings/<%= booking.id %>/cancel" class="btn btn-danger
+                            <a href="/bookings/<%= booking.id %>/?q=cancel" class="btn btn-danger
                               <% if(booking.state == 'cancelled' ){ %>
                               disabled
                               <% } %>">Cancel</a>
@@ -178,11 +178,11 @@ $(document).ready(function () {
                           <td><%= booking.checkout.toLocaleDateString() %></td>
                           <td><%= booking.state %></td>
                           <td>
-                            <a href="/bookings/<%= booking.id %>/approve" class="btn btn-success
+                            <a href="/bookings/<%= booking.id %>/?q=approve" class="btn btn-success
                               <% if(booking.state == 'approved' ){ %>
                                 disabled
                                 <% } %>" >Approve</a>
-                            <a href="/bookings/<%= booking.id %>/reject" class="btn btn-danger
+                            <a href="/bookings/<%= booking.id %>/?q=reject" class="btn btn-danger
                               <% if(booking.state == 'rejected' ){ %>
                               disabled
                               <% } %>">Reject</a>

@@ -11,8 +11,6 @@ module.exports = function(app) {
     next();
   });
 
-  app.get("/bookings/:booking/approve", [authJwt.verifyToken, authJwt.isHost], controller.getAproveBooking);
-  app.get("/bookings/:booking/reject", [authJwt.verifyToken, authJwt.isHost], controller.getRejectBooking);
-
+  app.get("/bookings/:booking", [authJwt.verifyToken, authJwt.isHost], controller.getUpdateBooking);
 
 };

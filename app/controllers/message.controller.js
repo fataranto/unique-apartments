@@ -34,7 +34,7 @@ exports.postSendMessage = async (req, res) => {
     });
     await message.save();
 
-    const emailMesasge = 
+    const emailMessage = 
     `<h1>You have a new message</h1>
     <p>From: ${senderName}</p>
     <p>To: ${receiverName}</p>
@@ -42,7 +42,7 @@ exports.postSendMessage = async (req, res) => {
     <p>Message: ${messageText}</p>
     <p>Please visit your profile to answer the message</p>
     <p>Thanks</p>`;
-    eMail.sendEmail(senderName, receiverEmail, "You have a new message at Unique Apartments", emailMesasge);
+    eMail.sendEmail(senderName, receiverEmail, "You have a new message at Unique Apartments", emailMessage);
 
     res.status(200).json(message);
     //res.redirect('back');

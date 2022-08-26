@@ -174,6 +174,16 @@ exports.postAddApartment = async (req, res) => {
   await apartment.save();
   res.redirect("/");
 
+  //envío un email al usuario que ha creado el apartamento
+  const user = await User.findById(req.userId);
+  const emailMessage = `
+      <h1>Your apartment has been created!</h1>
+      <p>Hi ${user.name},</p>
+      <p>Your apartment <strong>${apartment.title}</strong> is now online.</p>
+      <p>Thanks,</p>`;
+  eMail.sendEmail(user.name, user.email, "Your apartment has been created", emailMessage);
+
+
 }
 
 exports.getEditApartment = async (req, res) => {
@@ -332,7 +342,7 @@ exports.postUpdateApartment = async (req, res) => {
     description: photodescr5
   };
   await apartment.save();
-  res.redirect("/");
+  res.redirect(`/admin/user/${req.userId}/apartments`);
 }
 
 exports.getViewApartment = async (req, res) => {
@@ -590,7 +600,7 @@ exports.postBookApartment = async (req, res) => {
         error,
         message
       });
-      const emailMesasge = `<h1>You have a new booking!</h1>
+      const emailMessage = `<h1>You have a new booking!</h1>
       <p>Hi ${user.name},</p>
       <p>You have a new booking for the apartment <strong>${apartment.title}</strong></p>
       <p><strong>Checkin:</strong> ${moment(checkin).format("DD/MM/YYYY")}</p>
@@ -600,15 +610,33 @@ exports.postBookApartment = async (req, res) => {
       <p>Please remember that your booking is waiting for approval from the owner of the apartment</p>
       <p>Thanks,</p>`;
 
-      eMail.sendEmail(user.name, user.email, "You have a new booking at Unique Apartments", emailMesasge)
+      eMail.sendEmail(user.name, user.email, "You have a new booking at Unique Apartments", emailMessage)
       .catch((error) => console.log(error.message));
     }
   }
 }
 
 exports.postDeleteApartment = async (req, res) => {
-  await Apartment.findByIdAndDelete(req.params.apartment);
-  //obtengo todos los bookings del apartamento que se va a borrar
+  //primero compruebo si el usuario logueado es el dueño del apartamento o si es admin
+  const apartment = await Apartment.findById(req.params.apartment);
+  if (apartment.owner == req.userId || req.isAdmin) {
+    //cargo la informacion del usuario logueado
+    const user = await User.findById(req.userId);
 
-  res.redirect(`/admin/user/${req.body.userId}`);
+
+    //si es el dueño o el admin, borro el apartamento
+     await Apartment.findByIdAndDelete(req.params.apartment);
+     res.redirect(`/admin/user/${req.body.userId}/apartments`);
+     const emailMessage = `
+     <h1>Your apartment has been deleted!</h1>
+     <p>Hi ${user.name},</p>
+     <p>Your apartment <strong>${apartment.title}</strong> has been deleted from our database.</p>
+     <p>Thanks,</p>`;
+ eMail.sendEmail(user.name, user.email, "Your apartment has been deleted", emailMessage);
+
+  } else {
+    res.status(400).render('error.ejs', {
+      error: "Error: Page not found or not authorized"
+    })
+  }
 }
